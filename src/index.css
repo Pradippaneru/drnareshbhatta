@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-ivory: #FAF9F5;
+    --bg-soft-white: #FFFFFF;
+    --text-charcoal: #0F172A;
+    --text-graphite: #334155;
+    --navy-muted: #1E293B;
+    --teal-primary: #0D9488;
+    --teal-light: #F0FDFA;
+    --gold-accent: #D97706;
+    --soft-gray: #E2E8F0;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #FAF9F5;
+    color: #0F172A;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif-editorial {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+/* Custom Utilities for Editorial Typography and Aesthetics */
+.font-serif-editorial {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans-editorial {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Subtle Grain / Editorial Texture Effect */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF9F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #0D9488;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0F766E;
+}
+
+/* Glassmorphism Navigation */
+.nav-glass {
+  background: rgba(250, 249, 245, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
