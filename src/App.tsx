@@ -54,8 +54,8 @@ export default function App() {
 
   return (
     <ContentProvider>
-      <div className="min-h-screen bg-[#F8F6F2] text-[#171717] font-sans antialiased bg-grain selection:bg-[#C8A96A] selection:text-[#171717]">
-        {/* Sticky Top Header */}
+      <div className="min-h-screen bg-[#FAF9F5] text-[#0F172A] font-sans antialiased bg-grain selection:bg-[#DC2626] selection:text-white pb-24">
+        {/* Navigation Header & Lower Dock */}
         <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 
         {/* Main Storytelling Sections */}
