@@ -1,18 +1,26 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import config from '../../firebase-applet-config.json';
+import defaultConfig from '../../firebase-applet-config.json';
+
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY || defaultConfig?.apiKey;
+const authDomain = import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || defaultConfig?.authDomain;
+const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID || defaultConfig?.projectId;
+const storageBucket = import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || defaultConfig?.storageBucket;
+const messagingSenderId = import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || defaultConfig?.messagingSenderId;
+const appId = import.meta.env.VITE_FIREBASE_APP_ID || defaultConfig?.appId;
+const databaseId = import.meta.env.VITE_FIREBASE_DATABASE_ID || defaultConfig?.firestoreDatabaseId;
 
 const firebaseConfig = {
-  apiKey: config.apiKey,
-  authDomain: config.authDomain,
-  projectId: config.projectId,
-  storageBucket: config.storageBucket,
-  messagingSenderId: config.messagingSenderId,
-  appId: config.appId,
+  apiKey,
+  authDomain,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId,
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-export const db = config.firestoreDatabaseId 
-  ? getFirestore(app, config.firestoreDatabaseId)
+export const db = databaseId 
+  ? getFirestore(app, databaseId)
   : getFirestore(app);
