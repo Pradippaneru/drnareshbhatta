@@ -321,7 +321,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [contactMessages]);
 
   useEffect(() => {
-    localStorage.setItem('dr_naresh_portrait', profilePortrait);
+    try {
+      localStorage.setItem('dr_naresh_portrait', profilePortrait);
+    } catch (e) {
+      console.warn('LocalStorage portrait write warning:', e);
+    }
   }, [profilePortrait]);
 
   // Firebase Firestore Real-Time Sync & Seeding
@@ -623,6 +627,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const setProfilePortrait = (imgUrlOrBase64: string) => {
     setProfilePortraitState(imgUrlOrBase64);
+    try {
+      localStorage.setItem('dr_naresh_portrait', imgUrlOrBase64);
+    } catch (e) {
+      console.warn('LocalStorage write warning:', e);
+    }
     setDoc(doc(db, 'site_settings', 'main'), { profilePortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
   };
 
