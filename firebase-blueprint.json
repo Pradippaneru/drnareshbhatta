@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "site_settings": {
+      "title": "Site Settings",
+      "description": "Global site biography and profile portrait",
+      "type": "object",
+      "properties": {
+        "profilePortrait": { "type": "string" },
+        "biography": { "type": "object" }
+      }
+    },
+    "articles": {
+      "title": "Articles",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "readTime": { "type": "string" },
+        "author": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      }
+    },
+    "speeches": {
+      "title": "Speeches",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "location": { "type": "string" },
+        "date": { "type": "string" },
+        "summary": { "type": "string" },
+        "transcript": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "audioUrl": { "type": "string" }
+      }
+    },
+    "initiatives": {
+      "title": "Initiatives",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "impact": { "type": "string" },
+        "location": { "type": "string" },
+        "status": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      }
+    },
+    "milestones": {
+      "title": "Milestones",
+      "type": "object",
+      "properties": {
+        "year": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "academic_records": {
+      "title": "Academic Records",
+      "type": "object",
+      "properties": {
+        "degree": { "type": "string" },
+        "institution": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "faq_items": {
+      "title": "FAQ Items",
+      "type": "object",
+      "properties": {
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "category": { "type": "string" }
+      }
+    },
+    "media_items": {
+      "title": "Media Items",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "url": { "type": "string" },
+        "caption": { "type": "string" },
+        "date": { "type": "string" }
+      }
+    },
+    "testimonials": {
+      "title": "Testimonials",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "organization": { "type": "string" },
+        "quote": { "type": "string" },
+        "avatar": { "type": "string" }
+      }
+    }
+  }
+}

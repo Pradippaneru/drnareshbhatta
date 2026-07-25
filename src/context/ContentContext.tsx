@@ -1,7 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
+import portraitImage from '../assets/images/dr_abrar_portrait_1784881890848.jpg';
 import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
+import { 
+  collection, 
+  doc, 
+  onSnapshot, 
+  setDoc, 
+  deleteDoc
+} from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export interface BiographyData {
   name: string;
@@ -115,7 +124,7 @@ const DEFAULT_FLOW_CARDS: FlowCardItem[] = [
     handle: "@medical_lead",
     handleTag: "Clinical Lead",
     timestamp: "Present · Active",
-    avatar: pencilSketchPortrait,
+    avatar: portraitImage,
     quote: "“Medicine is not just treating illness—it is creating systemic access so no family faces illness alone.”",
     details: [
       "Established 8 mobile diagnostic clinic units equipped with digital ultrasound and ECG.",
@@ -252,7 +261,10 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const [profilePortrait, setProfilePortraitState] = useState<string>(() => {
     const saved = localStorage.getItem('dr_naresh_portrait');
-    return saved || pencilSketchPortrait;
+    if (saved && saved !== pencilSketchPortrait) {
+      return saved;
+    }
+    return portraitImage;
   });
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
@@ -312,8 +324,85 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     localStorage.setItem('dr_naresh_portrait', profilePortrait);
   }, [profilePortrait]);
 
+  // Firebase Firestore Real-Time Sync & Seeding
+  useEffect(() => {
+    let unsubscribeBio: () => void = () => {};
+    try {
+      unsubscribeBio = onSnapshot(doc(db, 'site_settings', 'main'), (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.biography) setBiography(data.biography);
+          if (data.profilePortrait) setProfilePortraitState(data.profilePortrait);
+          if (data.adminPassword) setAdminPassword(data.adminPassword);
+        } else {
+          setDoc(doc(db, 'site_settings', 'main'), {
+            biography: BIOGRAPHY,
+            profilePortrait: portraitImage,
+            adminPassword: 'admin123'
+          }).catch(console.error);
+        }
+      }, (err) => console.warn('Firestore bio listener warning:', err));
+    } catch (e) {
+      console.warn('Firestore bio error:', e);
+    }
+
+    const syncCollection = <T extends { id: string }>(
+      collName: string, 
+      setter: React.Dispatch<React.SetStateAction<T[]>>, 
+      defaultData: T[]
+    ) => {
+      try {
+        return onSnapshot(collection(db, collName), (snapshot) => {
+          if (snapshot.empty && defaultData.length > 0) {
+            defaultData.forEach(item => {
+              setDoc(doc(db, collName, item.id), item).catch(console.error);
+            });
+          } else if (!snapshot.empty) {
+            const items: T[] = [];
+            snapshot.forEach(docSnap => {
+              items.push({ ...docSnap.data(), id: docSnap.id } as T);
+            });
+            setter(items);
+          }
+        }, (err) => console.warn(`Firestore listener warning for ${collName}:`, err));
+      } catch (e) {
+        console.warn(`Firestore error for ${collName}:`, e);
+        return () => {};
+      }
+    };
+
+    const unSubFlow = syncCollection('flow_cards', setFlowCards, DEFAULT_FLOW_CARDS);
+    const unSubMilestones = syncCollection('milestones', setMilestones, MILESTONES);
+    const unSubAcademic = syncCollection('academic_records', setAcademicRecords, ACADEMIC_RECORDS);
+    const unSubImpact = syncCollection('impact_stats', setImpactStats, IMPACT_STATS);
+    const unSubTestimonials = syncCollection('testimonials', setTestimonials, TESTIMONIALS);
+    const unSubBlogs = syncCollection('blog_posts', setBlogPosts, ARTICLES);
+    const unSubSpeeches = syncCollection('speeches', setSpeeches, SPEECHES);
+    const unSubInitiatives = syncCollection('initiatives', setInitiatives, INITIATIVES);
+    const unSubMedia = syncCollection('media_items', setMediaItems, MEDIA_ITEMS);
+    const unSubMessages = syncCollection('contact_messages', setContactMessages, []);
+
+    return () => {
+      unsubscribeBio();
+      if (unSubFlow) unSubFlow();
+      if (unSubMilestones) unSubMilestones();
+      if (unSubAcademic) unSubAcademic();
+      if (unSubImpact) unSubImpact();
+      if (unSubTestimonials) unSubTestimonials();
+      if (unSubBlogs) unSubBlogs();
+      if (unSubSpeeches) unSubSpeeches();
+      if (unSubInitiatives) unSubInitiatives();
+      if (unSubMedia) unSubMedia();
+      if (unSubMessages) unSubMessages();
+    };
+  }, []);
+
   const updateBiography = (data: Partial<BiographyData>) => {
-    setBiography(prev => ({ ...prev, ...data }));
+    setBiography(prev => {
+      const updated = { ...prev, ...data };
+      setDoc(doc(db, 'site_settings', 'main'), { biography: updated }, { merge: true }).catch(console.error);
+      return updated;
+    });
   };
 
   const addFlowCard = (card: Omit<FlowCardItem, 'id'>) => {
@@ -322,62 +411,97 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       id: `card-${Date.now()}`
     };
     setFlowCards(prev => [newCard, ...prev]);
+    setDoc(doc(db, 'flow_cards', newCard.id), newCard).catch(console.error);
   };
 
   const updateFlowCard = (id: string, updated: Partial<FlowCardItem>) => {
-    setFlowCards(prev => prev.map(c => c.id === id ? { ...c, ...updated } : c));
+    setFlowCards(prev => {
+      const next = prev.map(c => c.id === id ? { ...c, ...updated } : c);
+      const item = next.find(c => c.id === id);
+      if (item) setDoc(doc(db, 'flow_cards', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteFlowCard = (id: string) => {
     setFlowCards(prev => prev.filter(c => c.id !== id));
+    deleteDoc(doc(db, 'flow_cards', id)).catch(console.error);
   };
 
   // Milestones Handlers
   const addMilestone = (milestone: Omit<Milestone, 'id'>) => {
     const item: Milestone = { ...milestone, id: `m-${Date.now()}` };
     setMilestones(prev => [item, ...prev]);
+    setDoc(doc(db, 'milestones', item.id), item).catch(console.error);
   };
   const updateMilestone = (id: string, updated: Partial<Milestone>) => {
-    setMilestones(prev => prev.map(m => m.id === id ? { ...m, ...updated } : m));
+    setMilestones(prev => {
+      const next = prev.map(m => m.id === id ? { ...m, ...updated } : m);
+      const item = next.find(m => m.id === id);
+      if (item) setDoc(doc(db, 'milestones', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
   const deleteMilestone = (id: string) => {
     setMilestones(prev => prev.filter(m => m.id !== id));
+    deleteDoc(doc(db, 'milestones', id)).catch(console.error);
   };
 
   // Academic Records Handlers
   const addAcademicRecord = (record: Omit<AcademicRecord, 'id'>) => {
     const item: AcademicRecord = { ...record, id: `a-${Date.now()}` };
     setAcademicRecords(prev => [item, ...prev]);
+    setDoc(doc(db, 'academic_records', item.id), item).catch(console.error);
   };
   const updateAcademicRecord = (id: string, updated: Partial<AcademicRecord>) => {
-    setAcademicRecords(prev => prev.map(a => a.id === id ? { ...a, ...updated } : a));
+    setAcademicRecords(prev => {
+      const next = prev.map(a => a.id === id ? { ...a, ...updated } : a);
+      const item = next.find(a => a.id === id);
+      if (item) setDoc(doc(db, 'academic_records', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
   const deleteAcademicRecord = (id: string) => {
     setAcademicRecords(prev => prev.filter(a => a.id !== id));
+    deleteDoc(doc(db, 'academic_records', id)).catch(console.error);
   };
 
   // Impact Stats Handlers
   const addImpactStat = (stat: Omit<ImpactStat, 'id'>) => {
     const item: ImpactStat = { ...stat, id: `s-${Date.now()}` };
     setImpactStats(prev => [...prev, item]);
+    setDoc(doc(db, 'impact_stats', item.id), item).catch(console.error);
   };
   const updateImpactStat = (id: string, updated: Partial<ImpactStat>) => {
-    setImpactStats(prev => prev.map(s => s.id === id ? { ...s, ...updated } : s));
+    setImpactStats(prev => {
+      const next = prev.map(s => s.id === id ? { ...s, ...updated } : s);
+      const item = next.find(s => s.id === id);
+      if (item) setDoc(doc(db, 'impact_stats', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
   const deleteImpactStat = (id: string) => {
     setImpactStats(prev => prev.filter(s => s.id !== id));
+    deleteDoc(doc(db, 'impact_stats', id)).catch(console.error);
   };
 
   // Testimonials Handlers
   const addTestimonial = (t: Omit<Testimonial, 'id'>) => {
     const item: Testimonial = { ...t, id: `t-${Date.now()}` };
     setTestimonials(prev => [item, ...prev]);
+    setDoc(doc(db, 'testimonials', item.id), item).catch(console.error);
   };
   const updateTestimonial = (id: string, updated: Partial<Testimonial>) => {
-    setTestimonials(prev => prev.map(t => t.id === id ? { ...t, ...updated } : t));
+    setTestimonials(prev => {
+      const next = prev.map(t => t.id === id ? { ...t, ...updated } : t);
+      const item = next.find(t => t.id === id);
+      if (item) setDoc(doc(db, 'testimonials', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
   const deleteTestimonial = (id: string) => {
     setTestimonials(prev => prev.filter(t => t.id !== id));
+    deleteDoc(doc(db, 'testimonials', id)).catch(console.error);
   };
 
   const addBlogPost = (post: Omit<Article, 'id'>) => {
@@ -386,14 +510,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       id: `blog-${Date.now()}`
     };
     setBlogPosts(prev => [newPost, ...prev]);
+    setDoc(doc(db, 'blog_posts', newPost.id), newPost).catch(console.error);
   };
 
   const updateBlogPost = (id: string, updated: Partial<Article>) => {
-    setBlogPosts(prev => prev.map(p => p.id === id ? { ...p, ...updated } : p));
+    setBlogPosts(prev => {
+      const next = prev.map(p => p.id === id ? { ...p, ...updated } : p);
+      const item = next.find(p => p.id === id);
+      if (item) setDoc(doc(db, 'blog_posts', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteBlogPost = (id: string) => {
     setBlogPosts(prev => prev.filter(p => p.id !== id));
+    deleteDoc(doc(db, 'blog_posts', id)).catch(console.error);
   };
 
   const addSpeech = (speech: Omit<Speech, 'id'>) => {
@@ -402,14 +533,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       id: `speech-${Date.now()}`
     };
     setSpeeches(prev => [newSpeech, ...prev]);
+    setDoc(doc(db, 'speeches', newSpeech.id), newSpeech).catch(console.error);
   };
 
   const updateSpeech = (id: string, updated: Partial<Speech>) => {
-    setSpeeches(prev => prev.map(s => s.id === id ? { ...s, ...updated } : s));
+    setSpeeches(prev => {
+      const next = prev.map(s => s.id === id ? { ...s, ...updated } : s);
+      const item = next.find(s => s.id === id);
+      if (item) setDoc(doc(db, 'speeches', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteSpeech = (id: string) => {
     setSpeeches(prev => prev.filter(s => s.id !== id));
+    deleteDoc(doc(db, 'speeches', id)).catch(console.error);
   };
 
   const addInitiative = (item: Omit<Initiative, 'id'>) => {
@@ -418,14 +556,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       id: `init-${Date.now()}`
     };
     setInitiatives(prev => [newItem, ...prev]);
+    setDoc(doc(db, 'initiatives', newItem.id), newItem).catch(console.error);
   };
 
   const updateInitiative = (id: string, updated: Partial<Initiative>) => {
-    setInitiatives(prev => prev.map(i => i.id === id ? { ...i, ...updated } : i));
+    setInitiatives(prev => {
+      const next = prev.map(i => i.id === id ? { ...i, ...updated } : i);
+      const item = next.find(i => i.id === id);
+      if (item) setDoc(doc(db, 'initiatives', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteInitiative = (id: string) => {
     setInitiatives(prev => prev.filter(i => i.id !== id));
+    deleteDoc(doc(db, 'initiatives', id)).catch(console.error);
   };
 
   const addMediaItem = (item: Omit<MediaItem, 'id'>) => {
@@ -434,14 +579,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       id: `med-${Date.now()}`
     };
     setMediaItems(prev => [newItem, ...prev]);
+    setDoc(doc(db, 'media_items', newItem.id), newItem).catch(console.error);
   };
 
   const updateMediaItem = (id: string, updated: Partial<MediaItem>) => {
-    setMediaItems(prev => prev.map(m => m.id === id ? { ...m, ...updated } : m));
+    setMediaItems(prev => {
+      const next = prev.map(m => m.id === id ? { ...m, ...updated } : m);
+      const item = next.find(m => m.id === id);
+      if (item) setDoc(doc(db, 'media_items', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteMediaItem = (id: string) => {
     setMediaItems(prev => prev.filter(m => m.id !== id));
+    deleteDoc(doc(db, 'media_items', id)).catch(console.error);
   };
 
   const addContactMessage = (msg: Omit<ContactMessage, 'id' | 'timestamp' | 'read'>) => {
@@ -452,18 +604,26 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       read: false
     };
     setContactMessages(prev => [newMsg, ...prev]);
+    setDoc(doc(db, 'contact_messages', newMsg.id), newMsg).catch(console.error);
   };
 
   const markMessageRead = (id: string) => {
-    setContactMessages(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
+    setContactMessages(prev => {
+      const next = prev.map(m => m.id === id ? { ...m, read: true } : m);
+      const item = next.find(m => m.id === id);
+      if (item) setDoc(doc(db, 'contact_messages', id), item, { merge: true }).catch(console.error);
+      return next;
+    });
   };
 
   const deleteContactMessage = (id: string) => {
     setContactMessages(prev => prev.filter(m => m.id !== id));
+    deleteDoc(doc(db, 'contact_messages', id)).catch(console.error);
   };
 
   const setProfilePortrait = (imgUrlOrBase64: string) => {
     setProfilePortraitState(imgUrlOrBase64);
+    setDoc(doc(db, 'site_settings', 'main'), { profilePortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
   };
 
   const adminLogin = (pass: string): boolean => {
@@ -496,7 +656,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setSpeeches(SPEECHES);
     setInitiatives(INITIATIVES);
     setMediaItems(MEDIA_ITEMS);
-    setProfilePortraitState(pencilSketchPortrait);
+    setProfilePortraitState(portraitImage);
     localStorage.clear();
   };
 
