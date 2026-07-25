@@ -151,29 +151,27 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             </svg>
           </motion.div>
 
-          {/* CLEAN PORTRAIT CUTOUT FRAME WITH UNIQUE BORDER CTAS */}
+          {/* SEAMLESS BLENDED PORTRAIT DISPLAY */}
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md my-4"
+            className="relative w-full max-w-md my-4 flex items-end justify-center"
           >
-            {/* Soft Shadow Base */}
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-2/3 h-6 bg-[#0F172A]/10 rounded-full blur-xl pointer-events-none"></div>
+            {/* Soft Ambient Radial Shadow behind portrait */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-gradient-to-t from-[#0F172A]/15 to-transparent rounded-full blur-xl pointer-events-none -z-10"></div>
 
-            {/* Minimal Portrait Container */}
-            <div className="relative rounded-3xl overflow-hidden bg-white/50 backdrop-blur-xs border border-[#E2E8F0] p-2 sm:p-3 shadow-lg group">
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-transparent via-[#E2E8F0]/20 to-[#E2E8F0]/60">
-                <motion.img
-                  initial={{ opacity: 0, scale: 1.03 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.9, delay: 0.3 }}
-                  src={profilePortrait || portraitImage}
-                  alt={`${biography.name} - Official Portrait`}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-[440px] sm:h-[490px] object-cover object-top filter brightness-102 contrast-102 transition-transform duration-700 group-hover:scale-102"
-                />
-              </div>
+            {/* Frameless Blended Image Container */}
+            <div className="relative w-full flex items-end justify-center group">
+              <motion.img
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9, delay: 0.3 }}
+                src={profilePortrait || portraitImage}
+                alt={`${biography.name} - Official Portrait`}
+                referrerPolicy="no-referrer"
+                className="w-auto h-[460px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
+              />
             </div>
           </motion.div>
         </div>
