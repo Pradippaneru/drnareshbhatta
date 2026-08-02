@@ -119,73 +119,91 @@ const DEFAULT_FLOW_CARDS: FlowCardItem[] = [
     id: "card-25",
     year: "'25",
     fullYear: "2025",
-    title: "Senior Clinical Lead & Healthcare Innovation",
-    subtitle: "Pioneering rural telemedicine nodes and heading preventive health screenings across underserved regions.",
-    handle: "@medical_lead",
-    handleTag: "Clinical Lead",
+    title: "Legal Reform, Governance & Pragmatic Nationalism",
+    subtitle: "Pursuing Bachelor of Laws (LLB) in Constitutional Law while advancing economic freedom, judicial reform, and meritocracy.",
+    handle: "@policy_reformer",
+    handleTag: "Policy Reformer",
     timestamp: "Present · Active",
     avatar: portraitImage,
-    quote: "“Medicine is not just treating illness—it is creating systemic access so no family faces illness alone.”",
+    quote: "“Pragmatic Nationalism: Every policy must be judged on one fundamental question: Does it improve the lives of the Nepali people?”",
     details: [
-      "Established 8 mobile diagnostic clinic units equipped with digital ultrasound and ECG.",
-      "Over 12,000 rural patients consulted with zero out-of-pocket charges.",
-      "Created digital health tracking protocols for chronic hypertension and diabetes."
+      "Pursuing LLB with a focus on constitutional governance, legislative reform, and anti-corruption frameworks.",
+      "Formulating policy blueprints for free-market capitalism, industrialization, and 5 million sustainable jobs.",
+      "Advocating for digital government, merit-based education, and universal quality healthcare."
     ],
     position: "top"
-  },
-  {
-    id: "card-24",
-    year: "'24",
-    fullYear: "2024",
-    title: "National Youth Leadership Conclave & Award",
-    subtitle: "Honored with National Youth Leadership Recognition for mobilizing 15,000+ student leaders across forums.",
-    handle: "@youth_mentor",
-    handleTag: "National Award",
-    timestamp: "1 year ago",
-    avatar: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=400&auto=format&fit=crop",
-    quote: "“When young people find authentic purpose, they move mountains. Our job as mentors is to give them momentum.”",
-    details: [
-      "Keynote speaker at the National Youth Leadership Summit addressing 1,200 student delegates.",
-      "Launched NextGen Student Leadership Fellowship with 450+ graduates.",
-      "Established 24/7 student mental health helpline and wellness initiative."
-    ],
-    position: "bottom"
   },
   {
     id: "card-23",
     year: "'23",
     fullYear: "2023",
-    title: "Rural Health Bridge & Rapid Disaster Response",
-    subtitle: "Mobilized over 800 medical volunteers for flood relief and remote health camps.",
-    handle: "@community_impact",
-    handleTag: "Impact Movement",
-    timestamp: "2 years ago",
+    title: "Jajarkot Earthquake Emergency Relief & Healthcare Protection",
+    subtitle: "Led frontline medical response during the 2023 Jajarkot earthquake and spearheaded national campaigns for healthcare worker security.",
+    handle: "@disaster_response",
+    handleTag: "Emergency Relief",
+    timestamp: "2023",
     avatar: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=400&auto=format&fit=crop",
-    quote: "“Emergency care during disasters requires courage, speed, and unwavering logistics.”",
+    quote: "“When disaster strikes, true leadership means being the first on the ground and staying until hope is restored.”",
     details: [
-      "Organized 45+ free health camps across rural districts.",
-      "Delivered emergency water purification and wound treatment kits to 3,500+ flood victims.",
-      "Trained 1,200 youth volunteers in emergency CPR and basic trauma first aid."
+      "Deployed volunteer medical teams providing emergency trauma care and relief supplies in Jajarkot.",
+      "Championed legal protections for healthcare professionals against workplace violence.",
+      "Conducted nationwide youth forums on democratic accountability and public justice."
     ],
-    position: "top"
+    position: "bottom"
   },
   {
     id: "card-21",
     year: "'21",
     fullYear: "2021",
-    title: "Medical Student Association Leadership",
-    subtitle: "Championed academic equity, peer clinical tutoring, and entrance preparation for rural youth.",
-    handle: "@academic_equity",
-    handleTag: "Student President",
-    timestamp: "4 years ago",
+    title: "COVID-19 Frontline & Medical Education Fee Reduction Movement",
+    subtitle: "Served on the pandemic frontline while coordinating national student advocacy that reduced medical school fees by NPR 2 Million.",
+    handle: "@medical_reform",
+    handleTag: "Medical Reform",
+    timestamp: "2020 - 2022",
     avatar: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400&auto=format&fit=crop",
-    quote: "“Education and healthcare are the twin pillars of human dignity.”",
+    quote: "“By making medical education affordable, we unlocked doors for thousands of brilliant future doctors across Nepal.”",
     details: [
-      "Founded MedMentors Academic Equity Network supporting 120+ medical entrance scholars.",
-      "Published 3 peer-reviewed clinical studies on public health awareness.",
-      "Graduated with High Honors in Community Medicine and Pathology."
+      "Spokesperson & Coordinator for Medical Student Struggle Committee, slashing medical fees from NPR 6M to NPR 4M.",
+      "Served continuous ICU and emergency shifts during peak COVID-19 pandemic waves.",
+      "Led the Engineering Education Fee and Quality Movement for academic standards and transparency."
+    ],
+    position: "top"
+  },
+  {
+    id: "card-18",
+    year: "'18",
+    fullYear: "2018",
+    title: "President, Kathmandu University Student Welfare Council & Doctors Network",
+    subtitle: "Elected to lead national medical student and doctor bodies, organizing 100+ free health camps across Nepal.",
+    handle: "@student_president",
+    handleTag: "Student Welfare",
+    timestamp: "2017 - 2020",
+    avatar: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=400&auto=format&fit=crop",
+    quote: "“Politics is not about power; it is about responsibility. Leadership is measured by lives improved.”",
+    details: [
+      "Past President of KU Student Welfare Council & Federation of Nepalese Medical Students.",
+      "Organized over 100 free medical camps delivering healthcare to 25,000+ rural citizens.",
+      "Actively supported civic campaigns seeking justice, transparency, and institutional accountability."
     ],
     position: "bottom"
+  },
+  {
+    id: "card-15",
+    year: "'15",
+    fullYear: "2015",
+    title: "Gorkha Earthquake Relief & Academic Distinction",
+    subtitle: "Mobilized immediate medical aid during the 2015 7.8 magnitude earthquake; Top 3 Regional SLC & Top 20 National Science.",
+    handle: "@national_leader",
+    handleTag: "Crisis Response",
+    timestamp: "2015",
+    avatar: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=400&auto=format&fit=crop",
+    quote: "“Excellence is a habit formed through discipline, intellectual curiosity, and love for the motherland.”",
+    details: [
+      "Delivered emergency trauma care and supplies to earthquake survivors across affected districts.",
+      "National Science Olympiad Winner & Represented Sudurpashchim in Table Tennis at the 5th National Games.",
+      "Pursued MBBS with honors in Community Medicine, Physiology, and Public Health."
+    ],
+    position: "top"
   }
 ];
 
@@ -194,7 +212,18 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [biography, setBiography] = useState<BiographyData>(() => {
     const saved = localStorage.getItem('dr_naresh_biography');
-    return saved ? JSON.parse(saved) : BIOGRAPHY;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.email === 'drnareshbhatta@gmail.com') {
+          parsed.email = 'nareshandroid2@gmail.com';
+        }
+        return parsed;
+      } catch {
+        return BIOGRAPHY;
+      }
+    }
+    return BIOGRAPHY;
   });
 
   const [flowCards, setFlowCards] = useState<FlowCardItem[]>(() => {
@@ -335,7 +364,14 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       unsubscribeBio = onSnapshot(doc(db, 'site_settings', 'main'), (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
-          if (data.biography) setBiography(data.biography);
+          if (data.biography) {
+            const bioData = { ...data.biography };
+            if (bioData.email === 'drnareshbhatta@gmail.com') {
+              bioData.email = 'nareshandroid2@gmail.com';
+              setDoc(doc(db, 'site_settings', 'main'), { biography: bioData }, { merge: true }).catch(console.error);
+            }
+            setBiography(bioData);
+          }
           if (data.profilePortrait) setProfilePortraitState(data.profilePortrait);
           if (data.adminPassword) setAdminPassword(data.adminPassword);
         } else {

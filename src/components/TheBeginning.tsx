@@ -1,110 +1,107 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Stethoscope, Users, HeartHandshake, Quote, Sparkles } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 export const TheBeginning: React.FC = () => {
   const { biography, profilePortrait } = useContent();
-  const story = biography.aboutStory;
 
   return (
-    <section id="story" className="py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
-      {/* Section Header */}
-      <div className="max-w-3xl mb-16">
-        <div className="text-xs uppercase tracking-widest text-[#2D3B4E] font-semibold mb-3 flex items-center gap-2">
-          <span className="w-8 h-px bg-[#2D3B4E]"></span>
-          <span>Section 01 · Emotional Narrative</span>
-        </div>
-        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#171717] tracking-tight">
-          {story.title}
+    <section id="story" className="py-20 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
+      {/* Centered Heading */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12 sm:mb-16"
+      >
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#0F172A] tracking-tight">
+          Meet Dr. Naresh Bhatta
         </h2>
-        <p className="text-lg text-[#2D3B4E] font-serif italic mt-3">
-          {story.subtitle}
-        </p>
-      </div>
+        <div className="w-16 h-0.5 bg-[#DC2626] mx-auto mt-4 rounded-full"></div>
+      </motion.div>
 
-      {/* Main Narrative Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        {/* Left Column: Deep Narrative Text */}
-        <div className="lg:col-span-7 space-y-8 text-base sm:text-lg text-[#2B2B2B] leading-relaxed font-light">
-          <p className="first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:text-[#171717]">
-            {story.narrative1}
-          </p>
-
-          <p>{story.narrative2}</p>
-
-          {/* Editorial Quote Box */}
-          <div className="p-8 my-8 rounded-2xl bg-[#FAFAF8] border-l-4 border-[#C8A96A] shadow-xs relative">
-            <Quote className="w-8 h-8 text-[#C8A96A]/30 absolute top-4 right-4" />
-            <p className="font-serif text-xl sm:text-2xl italic text-[#171717] leading-snug">
-              “When you hold a patient's hand in a village clinic, you realize that true medicine is not just science—it is an act of human solidarity.”
-            </p>
-            <div className="mt-4 text-xs uppercase tracking-widest text-[#2D3B4E] font-semibold">
-              — {biography.name}
-            </div>
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* Left Column: Portrait Photo */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-5 relative"
+        >
+          <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#E2E8F0] bg-white">
+            <img
+              src={profilePortrait}
+              alt={`${biography.name} Portrait`}
+              referrerPolicy="no-referrer"
+              className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
+            />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Column: Sketch Illustration Card & Three Pillars */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* Sketch Card */}
-          <div className="p-4 rounded-2xl bg-[#F2EFE9] border border-[#D7D7D7] shadow-xs flex items-center gap-4">
-            <div className="w-20 h-20 rounded-xl overflow-hidden border border-[#D7D7D7] shrink-0 bg-[#FAFAF8]">
-              <img
-                src={profilePortrait}
-                alt={`${biography.name} Portrait`}
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#10B981] font-bold mb-0.5">
-                <Sparkles className="w-3 h-3" />
-                <span>Primary Portrait</span>
-              </div>
-              <div className="font-serif font-bold text-base text-[#171717]">{biography.name}</div>
-              <div className="text-xs text-[#2B2B2B]/70 font-light mt-0.5">
-                {biography.title}
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#FAFAF8] border border-[#D7D7D7] hover:border-[#C8A96A] transition-colors shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#2D3B4E]/10 text-[#2D3B4E] flex items-center justify-center mb-4">
-              <Stethoscope className="w-5 h-5" />
-            </div>
-            <h3 className="font-serif text-2xl font-bold text-[#171717] mb-2">
-              Why Medicine?
+        {/* Right Column: Follow Header + Text + Message Button */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-7 space-y-6"
+        >
+          {/* Follow Naresh Header with social icons */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#DC2626]">
+              Follow Naresh:
             </h3>
-            <p className="text-sm text-[#2B2B2B] leading-relaxed font-light">
-              {story.whyMedicine}
+            <div className="flex items-center gap-4 text-[#1E293B]">
+              <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#DC2626] transition-colors p-1" title="Facebook">
+                <Facebook className="w-5 h-5 fill-current" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#DC2626] transition-colors p-1" title="Instagram">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#DC2626] transition-colors p-1" title="Twitter">
+                <Twitter className="w-5 h-5 fill-current" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#DC2626] transition-colors p-1" title="YouTube">
+                <Youtube className="w-5 h-5 fill-current" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#DC2626] transition-colors p-1" title="Telegram">
+                <Send className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Paragraphs */}
+          <div className="space-y-4 text-[15px] sm:text-base md:text-[17px] text-[#475569] font-normal leading-[1.75]">
+            <p>
+              Dr. Naresh Bhatta is a Nepali physician, public policy reformer, youth leader, and social advocate committed to building a prosperous, sovereign, and globally respected Nepal. His public life has been defined by leadership in national student movements, healthcare reform, disaster response, constitutional advocacy, and grassroots public service.
+            </p>
+
+            <p>
+              Guided by the principles of economic freedom, democratic accountability, meritocracy, and national unity, Dr. Bhatta envisions a Nepal where every citizen has the opportunity to prosper through enterprise, quality education, accessible healthcare, and transparent governance.
+            </p>
+
+            <p>
+              His long-term public mission is to help transform Nepal into one of Asia's most developed, self-reliant, and investment-friendly nations through visionary leadership, institutional reform, and people-centered governance.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#FAFAF8] border border-[#D7D7D7] hover:border-[#C8A96A] transition-colors shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#2D3B4E]/10 text-[#2D3B4E] flex items-center justify-center mb-4">
-              <Users className="w-5 h-5" />
-            </div>
-            <h3 className="font-serif text-2xl font-bold text-[#171717] mb-2">
-              Why Leadership?
-            </h3>
-            <p className="text-sm text-[#2B2B2B] leading-relaxed font-light">
-              {story.whyLeadership}
-            </p>
+          {/* Red Message CTA Button */}
+          <div className="pt-2">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#DC2626] hover:bg-[#B91C1C] text-white font-semibold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+            >
+              Message Naresh
+            </a>
           </div>
-
-          <div className="p-6 rounded-2xl bg-[#FAFAF8] border border-[#D7D7D7] hover:border-[#C8A96A] transition-colors shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#2D3B4E]/10 text-[#2D3B4E] flex items-center justify-center mb-4">
-              <HeartHandshake className="w-5 h-5" />
-            </div>
-            <h3 className="font-serif text-2xl font-bold text-[#171717] mb-2">
-              Why Serving People?
-            </h3>
-            <p className="text-sm text-[#2B2B2B] leading-relaxed font-light">
-              {story.whyServing}
-            </p>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
+
+

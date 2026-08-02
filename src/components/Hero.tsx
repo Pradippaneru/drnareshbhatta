@@ -17,36 +17,36 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       {/* Paper Grain Overlay */}
       <div className="absolute inset-0 bg-grain opacity-40 pointer-events-none -z-10"></div>
 
-      {/* 45% / 55% Split Screen Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center w-full">
+      {/* 50% / 50% Split Screen Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
         
-        {/* LEFT COLUMN (45% Width on Desktop) */}
-        <div className="lg:col-span-5 space-y-6 z-10">
+        {/* LEFT COLUMN (50% Width on Desktop) */}
+        <div className="lg:col-span-6 space-y-6 z-10">
           
           {/* Headline Name & Slogan */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-2"
+            className="space-y-3"
           >
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#0F172A] whitespace-nowrap">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#0F172A] leading-tight sm:whitespace-nowrap">
               Dr. Naresh Bhatta
             </h1>
-            <p className="font-serif italic text-xl sm:text-2xl text-[#DC2626] font-normal">
-              "Vision into reality."
-            </p>
+            <div className="text-sm sm:text-base md:text-lg xl:text-xl text-[#334155] font-normal leading-relaxed flex items-start gap-2">
+              <span className="shrink-0 text-[#334155] font-medium mt-0.5">-</span>
+              <span className="leading-relaxed">
+                <span className="inline-block whitespace-nowrap">National Leader</span>
+                <span className="mx-1.5 inline-block">|</span>
+                <span className="inline-block whitespace-nowrap">Healthcare Professional</span>
+                <span className="mx-1.5 inline-block">|</span>
+                <span className="inline-block whitespace-nowrap">Public Policy Reformer</span>
+                <span className="mx-1.5 inline-block">|</span>
+                <span className="inline-block whitespace-nowrap">Advocate for a Prosperous Nepal</span>
+              </span>
+            </div>
           </motion.div>
 
-          {/* Clean Single Paragraph */}
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base sm:text-lg text-[#334155] font-light leading-relaxed max-w-lg"
-          >
-            A dedicated physician and youth mentor championing rural healthcare access, student empowerment, and transformative community development across Nepal.
-          </motion.p>
 
           {/* CTA Buttons outside image in left column */}
           <motion.div 
@@ -73,8 +73,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN (55% Width on Desktop) */}
-        <div className="lg:col-span-7 relative flex items-center justify-center min-h-[460px] sm:min-h-[540px]">
+        {/* RIGHT COLUMN (50% Width on Desktop) */}
+        <div className="lg:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[540px]">
           
           {/* ARTISTIC NEPAL FLAG BACKGROUND (Watercolor / Brush-stroke Effect at 20-30% Opacity) */}
           <motion.div

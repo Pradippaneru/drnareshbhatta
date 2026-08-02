@@ -16,11 +16,7 @@ const NAV_ITEMS: { id: NavigationTab; label: string }[] = [
   { id: 'leadership', label: 'Leadership' },
   { id: 'academic', label: 'Academics' },
   { id: 'impact', label: 'Impact' },
-  { id: 'initiatives', label: 'Initiatives' },
   { id: 'media', label: 'Media' },
-  { id: 'speeches', label: 'Speeches' },
-  { id: 'testimonials', label: 'Endorsements' },
-  { id: 'blog', label: 'Essays' },
   { id: 'contact', label: 'Contact' },
 ];
 

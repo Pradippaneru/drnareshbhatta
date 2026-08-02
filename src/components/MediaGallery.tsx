@@ -20,15 +20,11 @@ export const MediaGallery: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
         <div>
-          <div className="text-xs uppercase tracking-widest text-[#2D3B4E] font-semibold mb-3 flex items-center gap-2">
-            <span className="w-8 h-px bg-[#2D3B4E]"></span>
-            <span>Section 07 · Documentary Moments</span>
-          </div>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#171717] tracking-tight">
             Media & Field Gallery
           </h2>
           <p className="text-base text-[#2B2B2B]/80 font-light mt-2 max-w-xl">
-            Visual archive capturing clinical care, youth leadership summits at NSU, and community health camps.
+            Visual archive capturing clinical care, youth leadership summits at Kathmandu University, and community health camps.
           </p>
         </div>
 

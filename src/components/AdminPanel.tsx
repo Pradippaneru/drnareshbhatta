@@ -957,12 +957,36 @@ export const AdminPanel: React.FC = () => {
 
                         <div>
                           <label className="block text-xs font-bold uppercase tracking-wider text-[#0F172A] mb-1">
+                            Email Address
+                          </label>
+                          <input
+                            type="email"
+                            value={bioForm.email || ''}
+                            onChange={(e) => setBioForm({ ...bioForm, email: e.target.value })}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF9F5] border border-[#E2E8F0] text-xs font-mono text-[#0F172A]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-[#0F172A] mb-1">
                             Location / Practice
                           </label>
                           <input
                             type="text"
                             value={bioForm.location}
                             onChange={(e) => setBioForm({ ...bioForm, location: e.target.value })}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF9F5] border border-[#E2E8F0] text-xs font-medium text-[#0F172A]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-[#0F172A] mb-1">
+                            Hero Tagline Subtitle
+                          </label>
+                          <input
+                            type="text"
+                            value={bioForm.heroSubtitle || ''}
+                            onChange={(e) => setBioForm({ ...bioForm, heroSubtitle: e.target.value })}
                             className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF9F5] border border-[#E2E8F0] text-xs font-medium text-[#0F172A]"
                           />
                         </div>
@@ -990,6 +1014,75 @@ export const AdminPanel: React.FC = () => {
                           onChange={(e) => setBioForm({ ...bioForm, missionStatement: e.target.value })}
                           className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF9F5] border border-[#E2E8F0] text-xs text-[#0F172A]"
                         />
+                      </div>
+
+                      {/* Story Narrative Section */}
+                      <div className="pt-4 border-t border-[#E2E8F0] space-y-3">
+                        <h4 className="font-serif text-sm font-bold text-[#0F172A]">
+                          Story Section Narrative & Values
+                        </h4>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-bold uppercase text-[#0F172A] mb-1">
+                              Story Title
+                            </label>
+                            <input
+                              type="text"
+                              value={bioForm.aboutStory?.title || ''}
+                              onChange={(e) => setBioForm({ 
+                                ...bioForm, 
+                                aboutStory: { ...bioForm.aboutStory, title: e.target.value } 
+                              })}
+                              className="w-full px-3 py-2 rounded-lg bg-[#FAF9F5] border border-[#E2E8F0] text-xs font-bold text-[#0F172A]"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-bold uppercase text-[#0F172A] mb-1">
+                              Story Subtitle
+                            </label>
+                            <input
+                              type="text"
+                              value={bioForm.aboutStory?.subtitle || ''}
+                              onChange={(e) => setBioForm({ 
+                                ...bioForm, 
+                                aboutStory: { ...bioForm.aboutStory, subtitle: e.target.value } 
+                              })}
+                              className="w-full px-3 py-2 rounded-lg bg-[#FAF9F5] border border-[#E2E8F0] text-xs text-[#0F172A]"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold uppercase text-[#0F172A] mb-1">
+                            Biography Narrative Paragraph 1
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={bioForm.aboutStory?.narrative1 || ''}
+                            onChange={(e) => setBioForm({ 
+                              ...bioForm, 
+                              aboutStory: { ...bioForm.aboutStory, narrative1: e.target.value } 
+                            })}
+                            className="w-full px-3 py-2 rounded-lg bg-[#FAF9F5] border border-[#E2E8F0] text-xs text-[#0F172A]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold uppercase text-[#0F172A] mb-1">
+                            Biography Narrative Paragraph 2
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={bioForm.aboutStory?.narrative2 || ''}
+                            onChange={(e) => setBioForm({ 
+                              ...bioForm, 
+                              aboutStory: { ...bioForm.aboutStory, narrative2: e.target.value } 
+                            })}
+                            className="w-full px-3 py-2 rounded-lg bg-[#FAF9F5] border border-[#E2E8F0] text-xs text-[#0F172A]"
+                          />
+                        </div>
                       </div>
 
                       <div className="flex items-center justify-between pt-4 border-t border-[#E2E8F0]">

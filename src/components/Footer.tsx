@@ -127,6 +127,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             © {new Date().getFullYear()} Dr. Naresh Bhatta. Phone: 9851423026. All rights reserved.
           </div>
           <div className="flex items-center gap-6 text-xs uppercase tracking-widest text-[#FAF9F5]/70">
+            <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:text-[#D97706] transition-colors">
+              Facebook
+            </a>
             <a href="#contact" onClick={() => onNavigate('contact')} className="hover:text-[#D97706] transition-colors">
               Contact & Press
             </a>

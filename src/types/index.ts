@@ -6,11 +6,7 @@ export type NavigationTab =
   | 'leadership'
   | 'academic'
   | 'impact'
-  | 'initiatives'
   | 'media'
-  | 'speeches'
-  | 'testimonials'
-  | 'blog'
   | 'contact';
 
 export interface Milestone {
@@ -49,11 +45,11 @@ export interface ImpactStat {
 
 export interface Initiative {
   id: string;
-  category: 'Healthcare' | 'Education' | 'Youth Leadership' | 'Social Programs';
+  category: string;
   title: string;
   tagline: string;
   description: string;
-  status: 'Active' | 'Expanding' | 'Upcoming';
+  status: string;
   metrics: string;
   image: string;
   fullStory: string;
@@ -62,7 +58,7 @@ export interface Initiative {
 
 export interface MediaItem {
   id: string;
-  category: 'Photography' | 'Events' | 'Community' | 'Leadership';
+  category: string;
   title: string;
   subtitle: string;
   image: string;
@@ -77,7 +73,7 @@ export interface Speech {
   location: string;
   date: string;
   duration: string;
-  category: 'Youth Leadership' | 'Medical Ethics' | 'Community Action' | 'Keynote';
+  category: string;
   videoUrl?: string;
   audioUrl?: string;
   summary: string;
@@ -91,7 +87,7 @@ export interface Testimonial {
   author: string;
   role: string;
   organization: string;
-  category: 'Patient' | 'Student' | 'Faculty' | 'Community Leader';
+  category: string;
   avatar?: string;
 }
 
@@ -99,7 +95,7 @@ export interface Article {
   id: string;
   title: string;
   subtitle: string;
-  category: 'Healthcare' | 'Leadership' | 'Youth' | 'Education' | 'Ethics';
+  category: string;
   readTime: string;
   date: string;
   excerpt: string;
@@ -111,5 +107,5 @@ export interface FAQItem {
   id: string;
   question: string;
   answer: string;
-  category: 'General' | 'Speaking' | 'Volunteer' | 'Consultation';
+  category: string;
 }

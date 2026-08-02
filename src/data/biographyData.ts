@@ -12,44 +12,177 @@ import {
 
 export const BIOGRAPHY = {
   name: "Dr. Naresh Bhatta",
-  title: "Physician · Youth Mentor · Public Health Leader · Community Advocate",
-  heroSubtitle: "A Digital Biography, Interactive Flow Journey & Movement for Human Service",
-  missionStatement: "Healing bodies through clinical excellence, empowering minds through youth leadership, and building resilient communities through selfless service.",
-  quote: "“True leadership is not measured by the height of one's pedestal, but by how many lives are lifted standing beside them.”",
-  location: "Kathmandu & Pokhara, Nepal | Global Forums",
+  title: "National Leader | Healthcare Professional | Public Policy Reformer | Advocate for a Prosperous Nepal",
+  heroSubtitle: "National Leadership Profile, Interactive Story Timeline & Vision for a Sovereign, Prosperous Nepal",
+  missionStatement: "To dedicate my life to building a prosperous, developed, democratic, and self-reliant Nepal—where economic freedom, quality public services, strong institutions, and equal opportunity empower every citizen to achieve their fullest potential.",
+  quote: "“Politics is not about power; it is about responsibility. Leadership is measured not by promises made, but by lives improved.”",
+  location: "Sudurpashchim & Kathmandu, Nepal",
   phone: "+977 9851423026",
-  email: "drnareshbhatta@gmail.com",
+  email: "nareshandroid2@gmail.com",
+  motto: "Results over rhetoric. Service over power. Nation above politics.",
+  leadershipMotto: "Results over rhetoric. Service over power. Nation above politics.",
   
   aboutStory: {
-    title: "The Beginning",
-    subtitle: "A Journey Rooted in Compassion, Discipline, and Action",
-    narrative1: "My journey did not begin in lecture halls or clinical wards, but in the quiet realization that healing requires far more than prescriptions. Navigating medical training and youth leadership forums, I witnessed how health disparities, lack of youth guidance, and systemic barriers hold back extraordinary potential in our communities.",
-    narrative2: "Combining clinical medicine with grassroots leadership became my calling. Leading student bodies taught me how to unite diverse voices toward a shared vision. In hospitals, holding the hands of anxious patients taught me humility and grace. Today, my mission stands unified: bridging healthcare access with youth leadership development.",
-    whyMedicine: "Medicine is the purest form of service. Every diagnosis is a promise of hope, every recovery a testament to human resilience.",
-    whyLeadership: "Leadership is responsibility in motion. It is creating frameworks where young dreamers find their voice and tools to drive social change.",
-    whyServing: "Service gives purpose to skill. When we give back, we build a legacy that outlasts our individual achievements."
+    title: "A Story of Courage, Public Duty, and Action",
+    subtitle: "From Top Regional Student & Frontline Doctor to National Youth Leader and Policy Reformer",
+    narrative1: "Dr. Naresh Bhatta is a Nepali physician, public policy reformer, youth leader, and social advocate committed to building a prosperous, sovereign, and globally respected Nepal. His public life has been defined by leadership in national student movements, healthcare reform, disaster response, constitutional advocacy, and grassroots public service. Guided by the principles of economic freedom, democratic accountability, meritocracy, and national unity, Dr. Bhatta envisions a Nepal where every citizen has the opportunity to prosper through enterprise, quality education, accessible healthcare, and transparent governance.",
+    narrative2: "His long-term public mission is to help transform Nepal into one of Asia's most developed, self-reliant, and investment-friendly nations through visionary leadership, institutional reform, and people-centered governance. Having served as Coordinator of the Medical Student Struggle Committee, President of Kathmandu University Student Welfare Council, Nepal Doctors Network, and Federation of Nepalese Medical Students, Dr. Bhatta spearheaded nationwide advocacy that successfully reduced medical tuition fees from NPR 6 million to NPR 4 million, made healthcare workers safer, and delivered frontline relief during the 2015 Gorkha Earthquake, COVID-19 pandemic, 2023 Jajarkot Earthquake, and over 100 free health camps.",
+    whyMedicine: "Medicine is a sacred trust. Healing a patient restores dignity to a family, while fixing healthcare policy protects an entire generation.",
+    whyLeadership: "Leadership is responsibility in motion—organizing citizens, challenging corruption, and empowering young dreamers to transform Nepal.",
+    whyServing: "Service above self. A nation becomes great when its citizens are free to enterprise, innovate, and prosper with dignity."
   }
 };
 
-export const CORE_BELIEFS = [
+export const NATIONAL_VISION = [
   {
-    title: "Empathy as First Principles",
-    description: "Whether examining a patient or addressing a youth forum, deep listening and empathetic understanding precede every decision.",
-    iconName: "HeartHandshake"
+    title: "Prosperous Nepal",
+    description: "Build a high-income Nepal through capitalism, entrepreneurship, industrialization, innovation, infrastructure development, tourism, hydropower, agriculture modernization, and technology.",
+    iconName: "TrendingUp"
   },
   {
-    title: "Institutional Integrity",
-    description: "Building trustworthy organizations requires transparent governance, uncompromising ethics, and accountable stewardship.",
+    title: "Strong Democracy",
+    description: "Protect constitutional democracy, strengthen democratic institutions, uphold the rule of law, and ensure accountable governance.",
+    iconName: "Scale"
+  },
+  {
+    title: "Good Governance",
+    description: "Create an efficient, corruption-free government that serves citizens with transparency, digital transformation, and professional public administration.",
     iconName: "ShieldCheck"
   },
   {
-    title: "Youth Empowerment",
-    description: "Young minds do not merely represent the future; they are the active catalysts of present transformation when given trust and mentorship.",
-    iconName: "Sparkles"
+    title: "Human Development",
+    description: "Guarantee quality healthcare and education as fundamental national priorities while expanding opportunities for every Nepali regardless of geography or economic status.",
+    iconName: "Stethoscope"
   },
   {
-    title: "Equitable Healthcare",
-    description: "Quality medical care is a fundamental human dignity, not a privilege reserved for the fortunate few.",
+    title: "National Sovereignty",
+    description: "Advance an independent foreign policy that safeguards Nepal's sovereignty while expanding strategic economic and diplomatic partnerships.",
+    iconName: "Globe"
+  }
+];
+
+export const PUBLIC_LEADERSHIP = [
+  { role: "Past President", organization: "Kathmandu University Student Welfare Council" },
+  { role: "Past President", organization: "Nepal Doctors Network" },
+  { role: "Past President", organization: "Federation of Nepalese Medical Students" },
+  { role: "Coordinator & Spokesperson", organization: "Medical Student Struggle Committee" },
+  { role: "National Student Leader", organization: "Engineering Education Fee and Quality Movement" }
+];
+
+export const NATIONAL_ACHIEVEMENTS = [
+  {
+    title: "Medical Education Reform",
+    description: "Provided leadership in nationwide advocacy that contributed to reducing undergraduate medical education fees from approximately NPR 6 million to NPR 4 million, helping make medical education more affordable for future generations."
+  },
+  {
+    title: "Education Reform",
+    description: "Led campaigns promoting affordability, academic quality, and accountability within Nepal's higher education system."
+  },
+  {
+    title: "Healthcare Worker Protection",
+    description: "Advocated for stronger legal protections against violence directed toward healthcare professionals."
+  },
+  {
+    title: "Constitutional & Democratic Advocacy",
+    description: "Participated in peaceful civic movements supporting constitutional governance, democratic values, responsible public leadership, and accountability."
+  },
+  {
+    title: "Public Justice",
+    description: "Actively supported campaigns seeking justice, transparency, and institutional accountability in nationally significant public issues, including the Nirmala Panta case."
+  }
+];
+
+export const HUMANITARIAN_LEADERSHIP = [
+  {
+    title: "COVID-19 Response",
+    description: "Served on the frontline during the COVID-19 pandemic, contributing to emergency healthcare delivery and public health efforts."
+  },
+  {
+    title: "Jajarkot Earthquake (2023)",
+    description: "Participated in volunteer medical relief missions providing emergency healthcare and humanitarian assistance."
+  },
+  {
+    title: "Gorkha Earthquake (2015)",
+    description: "Contributed to emergency medical response and relief efforts for affected communities."
+  },
+  {
+    title: "Community Service",
+    description: "Organized and participated in more than 100 free health camps, extending healthcare services to rural and underserved populations throughout Nepal."
+  }
+];
+
+export const POLICY_PRIORITIES = [
+  "Rapid Economic Growth through Free-Market Capitalism",
+  "Five Million Sustainable Jobs",
+  "Industrialization and Manufacturing",
+  "Hydropower and Renewable Energy Expansion",
+  "Agricultural Modernization",
+  "Tourism Development",
+  "Digital Government",
+  "Universal Quality Healthcare",
+  "Merit-Based Education",
+  "Judicial Reform",
+  "Anti-Corruption Measures",
+  "Youth Employment and Entrepreneurship",
+  "National Security and Border Management",
+  "Infrastructure Development",
+  "Environmental Sustainability"
+];
+
+export const LEADERSHIP_PHILOSOPHY = {
+  philosophy: "Politics is not about power; it is about responsibility. Leadership is measured not by promises made, but by lives improved. A nation becomes truly great when its citizens are free to dream, empowered to create, and confident that justice, opportunity, and dignity belong to everyone.",
+  motto: "Results over rhetoric. Service over power. Nation above politics.",
+  leadershipMotto: "Results over rhetoric. Service over power. Nation above politics.",
+  quotes: [
+    "Every Nepali deserves the opportunity to live with dignity, security, and hope.",
+    "A nation does not become great by chance—it becomes great when its people dare to dream, its institutions choose integrity, and its leaders place the nation above themselves."
+  ],
+  principles: [
+    { title: "Nation Above Self", desc: "Placing the sovereign interest and dignity of Nepal above personal or partisan gain." },
+    { title: "Service Before Power", desc: "Viewing leadership purely as public stewardship rather than an avenue to authority." },
+    { title: "Integrity Before Popularity", desc: "Standing for ethical truth and institutional honesty regardless of political trends." },
+    { title: "Unity Over Division", desc: "Bridging provincial, social, and economic divides to build a cohesive national spirit." },
+    { title: "Opportunity Through Enterprise", desc: "Empowering citizens with free enterprise, innovation, and private initiative." },
+    { title: "Compassion Through Action", desc: "Translating empathy into concrete medical, legal, and humanitarian relief." },
+    { title: "Accountability Without Exception", desc: "Zero tolerance for corruption and ensuring uncompromising public transparency." }
+  ],
+  pragmaticNationalism: "Dr. Naresh Bhatta believes that a nation's success should be measured not by ideology, but by outcomes. Every policy should be judged on one simple question: Does it improve the lives of the Nepali people? His approach combines economic freedom with responsible governance, encouraging private enterprise, entrepreneurship, innovation, and investment while ensuring the state fulfills its essential responsibilities in healthcare, education, justice, national security, infrastructure, and social protection. Rather than being bound by rigid political doctrines, he advocates pragmatic governance—adopting policies that are proven to work, whether they originate from the political left, right, or center. His guiding principle is that Nepal should embrace ideas based on evidence, effectiveness, and the national interest.",
+  visionNewNepal: "Dr. Bhatta envisions a Nepal where young people no longer leave their homeland because opportunity exists at home; where farmers prosper through modern agriculture; where industries manufacture products proudly bearing the label \"Made in Nepal\"; where every child receives quality education regardless of background; where every family can access quality healthcare without financial hardship; and where honest work, innovation, and integrity are rewarded. He believes Nepal can become one of Asia's most dynamic economies by embracing entrepreneurship, industrialization, hydropower, tourism, technology, scientific research, and good governance. Economic growth must create opportunity in every province and improve the lives of ordinary citizens."
+};
+
+export const PERSONAL_VALUES = [
+  "Patriotism",
+  "Integrity",
+  "Accountability",
+  "Meritocracy",
+  "Compassion",
+  "Courage",
+  "Transparency",
+  "National Unity",
+  "Service Above Self",
+  "Evidence-Based Policy",
+  "Pragmatic"
+];
+
+export const CORE_BELIEFS = [
+  {
+    title: "Pragmatic Nationalism",
+    description: "Every policy must be judged on one fundamental question: Does it improve the lives, prosperity, and security of the Nepali people?",
+    iconName: "ShieldCheck"
+  },
+  {
+    title: "Economic Freedom & Enterprise",
+    description: "Unlocking Nepal's true potential through free-market capitalism, industrialization, hydropower expansion, and generating 5 million sustainable jobs.",
+    iconName: "TrendingUp"
+  },
+  {
+    title: "Democratic Accountability",
+    description: "Upholding constitutional democracy, rule of law, anti-corruption transparency, and merit-based governance across all public institutions.",
+    iconName: "Scale"
+  },
+  {
+    title: "Universal Quality Healthcare & Education",
+    description: "Guaranteeing accessible healthcare and meritocracy in education as fundamental national priorities for every citizen regardless of geography.",
     iconName: "Stethoscope"
   }
 ];
@@ -57,58 +190,72 @@ export const CORE_BELIEFS = [
 export const MILESTONES: Milestone[] = [
   {
     id: "m1",
-    year: "2025 - Present",
-    category: "medical",
-    title: "Senior Resident Physician & Community Health Coordinator",
-    organization: "National Healthcare Network",
-    role: "Clinical Lead & Public Health Specialist",
-    description: "Pioneering rural telemedicine nodes and heading preventive health screenings across underserved sub-districts.",
-    impactMetric: "12,000+ Patients Consulted",
+    year: "2024 - Present",
+    category: "community",
+    title: "Legal Reform & National Policy Visionary",
+    organization: "Bachelor of Laws (LLB) & Public Policy Reform",
+    role: "Policy Reformer & Constitutional Scholar",
+    description: "Pursuing Bachelor of Laws (LLB) focused on constitutional governance, legislative reform, and anti-corruption policies for a Prosperous Nepal.",
+    impactMetric: "National Policy Blueprint",
     highlights: [
-      "Established 8 mobile clinic diagnostic units in remote villages.",
-      "Introduced digital health record tracking for chronic care patients."
+      "Formulating blueprints for free-market capitalism, 5 million jobs, and digital government.",
+      "Advocating for judicial reform, anti-corruption measures, and meritocratic governance."
     ]
   },
   {
     id: "m2",
-    year: "2023 - 2024",
-    category: "nsu",
-    title: "President & Senior Youth Advisor",
-    organization: "North South University Student Leadership Forum",
-    role: "NSU Executive Leader",
-    description: "Led 15,000+ student body representations, organized national youth summits, and facilitated campus health reform programs.",
-    impactMetric: "15k+ Students Engaged",
+    year: "2023",
+    category: "medical",
+    title: "Jajarkot Earthquake Relief & Healthcare Protection Advocacy",
+    organization: "Volunteer Medical Relief & Public Advocacy",
+    role: "Emergency Medical Responder",
+    description: "Led frontline medical relief during the 2023 Jajarkot earthquake and championed legal protections against violence directed toward healthcare workers.",
+    impactMetric: "Disaster Emergency Relief",
     highlights: [
-      "Spearheaded the NSU Annual National Youth Leadership Conference.",
-      "Launched student mental health helpline & wellness sanctuary."
+      "Deployed volunteer medical teams providing emergency trauma care and supplies to affected communities.",
+      "Spearheaded national campaigns for healthcare worker security and public justice."
     ]
   },
   {
     id: "m3",
-    year: "2021 - 2023",
-    category: "community",
-    title: "Founder & Director",
-    organization: "Youth Health & Social Impact Movement (YHSIM)",
-    role: "Movement Founder",
-    description: "Mobilized over 800 medical students and young volunteers for disaster relief, health camps, and youth mentorship.",
-    impactMetric: "45+ Health Camps Organized",
+    year: "2020 - 2022",
+    category: "student",
+    title: "Medical Education Reform Leader & COVID-19 Frontline",
+    organization: "Medical Student Struggle Committee & Frontline Healthcare",
+    role: "Coordinator & Spokesperson",
+    description: "Led nationwide student advocacy reducing undergraduate medical fees from ~NPR 6M to NPR 4M and served on the pandemic frontline.",
+    impactMetric: "NPR 2M Fee Cut / Student",
     highlights: [
-      "Distributed emergency medicine and food rations to flood victims.",
-      "Trained 1,200 youth volunteers in basic emergency first aid."
+      "Successfully advocated for affordable medical education across Nepal.",
+      "Served in emergency ICUs during COVID-19 pandemic and led Engineering Education Fee Quality Movement."
     ]
   },
   {
     id: "m4",
-    year: "2018 - 2021",
-    category: "student",
-    title: "Medical Student Association President",
-    organization: "Faculty of Medicine",
-    role: "Student President",
-    description: "Championed academic reform, peer-to-peer clinical tutoring, and international medical research exchange.",
-    impactMetric: "Awarded Best Campus Advocate",
+    year: "2017 - 2020",
+    category: "nsu",
+    title: "President, KU Student Welfare Council & Nepal Doctors Network",
+    organization: "Kathmandu University & Federation of Nepalese Medical Students",
+    role: "Past President",
+    description: "Elected leader representing medical students across Nepal, organizing 100+ health camps and championing civic accountability.",
+    impactMetric: "100+ Free Health Camps",
     highlights: [
-      "Published 3 peer-reviewed clinical studies on public health awareness.",
-      "Organized national medical quiz bowl and ethics symposium."
+      "Led Kathmandu University Student Welfare Council and Federation of Nepalese Medical Students.",
+      "Delivered free healthcare consultations to 25,000+ rural citizens across Nepal."
+    ]
+  },
+  {
+    id: "m5",
+    year: "2015",
+    category: "community",
+    title: "Gorkha Earthquake Emergency Medical Response",
+    organization: "Nepal Disaster Medical Relief Taskforce",
+    role: "Volunteer Medical Responder",
+    description: "Mobilized emergency medical aid and relief supplies during the devastating 7.8 magnitude Gorkha earthquake.",
+    impactMetric: "Emergency Aid Mobilized",
+    highlights: [
+      "Delivered trauma care, wound treatment, and hygiene supplies to rural earthquake survivors.",
+      "Demonstrated courage and service during one of Nepal's most critical humanitarian crises."
     ]
   }
 ];
@@ -117,47 +264,56 @@ export const ACADEMIC_RECORDS: AcademicRecord[] = [
   {
     id: "a1",
     type: "education",
-    title: "Bachelor of Medicine & Bachelor of Surgery (MBBS)",
-    institution: "Top Medical University",
-    year: "2018 - 2023",
-    details: "Graduated with High Honors in Community Medicine and Pathology. Class Representative & Valedictorian nominee.",
-    badge: "Honors Graduate"
+    title: "Bachelor of Laws (LLB)",
+    institution: "Nepal Law Faculty",
+    year: "Ongoing",
+    details: "Focused on constitutional law, governance, legislative reform, anti-corruption policies, and public policy.",
+    badge: "Ongoing LLB"
   },
   {
     id: "a2",
     type: "education",
-    title: "North South University (NSU) Leadership Fellow",
-    institution: "North South University",
-    year: "2019 - 2022",
-    details: "Specialized executive modules in Public Health Management, Institutional Governance, and Youth Diplomacy.",
-    badge: "NSU Fellow"
+    title: "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
+    institution: "Kathmandu University",
+    year: "Graduated",
+    details: "Comprehensive medical degree with strong academic focus on physiology, public health, and healthcare leadership.",
+    badge: "MBBS Physician"
   },
   {
     id: "a3",
-    type: "research",
-    title: "Preventive Cardiology in Low-Resource Urban Settings",
-    institution: "Journal of Asian Public Health",
-    year: "2024",
-    details: "Lead author examining blood pressure screening efficiency in community health camps.",
-    badge: "Lead Researcher"
+    type: "education",
+    title: "Higher Secondary Education (Science)",
+    institution: "National Education Board",
+    year: "Top Distinction",
+    details: "Ranked among the National Top 20 students in Science across Nepal.",
+    badge: "National Top 20"
   },
   {
     id: "a4",
-    type: "award",
-    title: "National Youth Leadership Award",
-    institution: "Ministry of Youth & Sports",
-    year: "2024",
-    details: "Recognized for outstanding contribution to youth mobilization and community emergency healthcare.",
-    badge: "National Award"
+    type: "education",
+    title: "School Leaving Certificate (SLC)",
+    institution: "Sudurpashchim School Board",
+    year: "Top Distinction",
+    details: "Ranked among the Top 3 students in the Sudurpashchim Region of Nepal.",
+    badge: "Top 3 Regional"
   },
   {
     id: "a5",
-    type: "certificate",
-    title: "Advanced Cardiovascular Life Support (ACLS) & Trauma",
-    institution: "International Resuscitation Board",
-    year: "2023",
-    details: "Certified lead emergency responder for critical care medicine.",
-    badge: "Certified Specialist"
+    type: "award",
+    title: "National Science Olympiad Winner",
+    institution: "National Science Association",
+    year: "Honour",
+    details: "Winner of the National Science Olympiad and District Topper (Class 8). Multiple awards in debate, public speaking, and science competitions.",
+    badge: "Olympiad Winner"
+  },
+  {
+    id: "a6",
+    type: "award",
+    title: "National Sports Distinction - Table Tennis",
+    institution: "Sudurpashchim Province Sports Council",
+    year: "5th National Games",
+    details: "National Table Tennis Player representing Sudurpashchim Province in the 5th National Games of Nepal.",
+    badge: "National Player"
   }
 ];
 
@@ -168,101 +324,101 @@ export const IMPACT_STATS: ImpactStat[] = [
     prefix: "",
     suffix: "+",
     label: "Patients Served",
-    description: "Free medical consultations, diagnostics, and essential prescription supplies delivered.",
+    description: "Free medical consultations, diagnostics, and prescriptions delivered in rural camps.",
     iconName: "UserCheck"
   },
   {
     id: "s2",
-    number: 50,
+    number: 100,
     prefix: "",
     suffix: "+",
     label: "Free Health Camps",
-    description: "Mobile clinics operated across remote rural districts and underserved urban slums.",
+    description: "Organized across remote villages and underserved provinces throughout Nepal.",
     iconName: "Hospital"
   },
   {
     id: "s3",
-    number: 18000,
-    prefix: "",
-    suffix: "+",
-    label: "Youth Mentored",
-    description: "Students trained in leadership, health advocacy, public speaking, and community action.",
+    number: 2,
+    prefix: "NPR ",
+    suffix: "M",
+    label: "Fee Cut / Student",
+    description: "Reduction in undergraduate medical tuition fees achieved through nationwide advocacy.",
     iconName: "GraduationCap"
   },
   {
     id: "s4",
-    number: 120,
+    number: 5,
     prefix: "",
-    suffix: "+",
-    label: "Keynote Speeches",
-    description: "Delivered across national university summits, medical congresses, and youth forums.",
-    iconName: "Mic"
+    suffix: "M",
+    label: "Jobs Target Vision",
+    description: "National economic policy target for youth employment, industrialization, and enterprise.",
+    iconName: "TrendingUp"
   }
 ];
 
 export const INITIATIVES: Initiative[] = [
   {
     id: "init-1",
-    category: "Healthcare",
-    title: "Rural Diagnostics & Health Bridge",
-    tagline: "Bringing specialized clinical care directly to doorstep communities.",
-    description: "A continuous mobile health clinic movement utilizing portable ultrasound and ECG devices to screen rural populations for non-communicable diseases.",
-    status: "Active",
-    metrics: "18,000+ Screenings",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
-    fullStory: "Rural healthcare often falters due to late diagnoses. Through Rural Diagnostics & Health Bridge, Dr. Abrar mobilized medical volunteers and portable diagnostic gear into villages where the nearest hospital is hours away. Over 18,000 individuals have received early hypertension, diabetes, and cardiovascular screenings free of charge.",
+    category: "Education Reform",
+    title: "Medical & Higher Education Reform Campaign",
+    tagline: "Making medical and technical education affordable, transparent, and merit-based.",
+    description: "A nationwide advocacy movement that reduced medical school fees by NPR 2 Million and established standards of quality and accountability in higher education.",
+    status: "Active Impact",
+    metrics: "NPR 2M Fee Cut Achieved",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=crop",
+    fullStory: "As Coordinator of the Medical Student Struggle Committee and leader of student welfare bodies, Dr. Naresh Bhatta led peaceful nationwide advocacy. The movement succeeded in reducing medical tuition fees from NPR 6 Million to NPR 4 Million, ensuring that medical education depends on intellect and dedication rather than wealth.",
     keyGoals: [
-      "Operate bi-weekly diagnostic camps in remote sub-districts.",
-      "Provide free follow-up tele-consultations for chronic patients.",
-      "Distribute basic emergency medications without cost."
+      "Ensure merit-based medical and technical university admissions.",
+      "Promote financial transparency in higher education tuition fees.",
+      "Advocate for academic quality, faculty standards, and student rights."
     ]
   },
   {
     id: "init-2",
-    category: "Youth Leadership",
-    title: "NSU NextGen Leadership Fellowship",
-    tagline: "Empowering university youth with ethical governance and public service skills.",
-    description: "An intensive 6-month leadership accelerator designed for campus change-makers, providing direct mentorship, public speaking training, and project seed funding.",
-    status: "Expanding",
-    metrics: "450+ Fellows Graduated",
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop",
-    fullStory: "Young people are eager to lead but often lack structured mentorship and practical execution frameworks. The NextGen Leadership Fellowship bridges this gap with rigorous workshops on project management, ethical communication, conflict resolution, and grassroots advocacy.",
+    category: "Healthcare Access",
+    title: "Rural Health Camps & Community Service",
+    tagline: "Extending essential healthcare to rural and underserved populations across Nepal.",
+    description: "Organized and participated in over 100 free health camps delivering consultations, medicines, and diagnostic checkups to remote villages.",
+    status: "Active",
+    metrics: "25,000+ Citizens Treated",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
+    fullStory: "Healthcare should never be a luxury dictated by geography or income. Through over 100 mobile health camps across Sudurpashchim and other remote regions of Nepal, Dr. Bhatta and volunteer teams provided free consultations, preventive care, and medication to underserved families.",
     keyGoals: [
-      "Host annual campus leadership bootcamps.",
-      "Fund student-led social impact micro-projects.",
-      "Connect emerging student leaders with national policy mentors."
+      "Provide free diagnostic checkups in remote rural districts.",
+      "Deliver essential medications and preventive health education.",
+      "Train local youth in emergency first response and community hygiene."
     ]
   },
   {
     id: "init-3",
-    category: "Education",
-    title: "MedMentors Academic Equity Network",
-    tagline: "Democratizing medical education and entrance coaching for underprivileged students.",
-    description: "A volunteer network of medical doctors providing free tutoring, entrance preparation, and scholarship counseling to talented rural students.",
-    status: "Active",
-    metrics: "120+ Medical Scholars",
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=crop",
-    fullStory: "Becoming a physician should depend on intellect and compassion, not financial background. MedMentors offers zero-cost preparatory courses, digital study materials, and one-on-one mentorship for aspiring medical students from low-income families.",
+    category: "Humanitarian Response",
+    title: "Disaster Emergency Relief Taskforce",
+    tagline: "Frontline medical response during earthquakes, pandemics, and national emergencies.",
+    description: "Deployed on the frontlines during the 2015 Gorkha Earthquake, COVID-19 pandemic, and 2023 Jajarkot Earthquake to save lives.",
+    status: "Active Deployment",
+    metrics: "3 Major National Crises",
+    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop",
+    fullStory: "When natural disasters strike Nepal, immediate medical intervention is critical. Dr. Bhatta served on the frontlines during the 2015 Gorkha Earthquake, provided continuous care in ICUs during the COVID-19 pandemic, and mobilized emergency medical relief to earthquake victims in Jajarkot in 2023.",
     keyGoals: [
-      "Maintain a 100% free digital library for medical entrance exams.",
-      "Provide 1-on-1 mentorship for high-performing rural applicants.",
-      "Offer stipend support for university textbooks."
+      "Deploy rapid response medical volunteer units within 24 hours.",
+      "Distribute emergency trauma supplies and clean drinking water.",
+      "Provide long-term health monitoring for disaster-affected families."
     ]
   },
   {
     id: "init-4",
-    category: "Social Programs",
-    title: "Flood Relief & Emergency Medical Taskforce",
-    tagline: "Rapid response medical relief during natural disasters and seasonal crises.",
-    description: "A deployed taskforce of trained doctors and student volunteers delivering water purification tablets, vaccines, and emergency wound treatment.",
-    status: "Active",
-    metrics: "3,500+ Flood Victims Relief",
-    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop",
-    fullStory: "When extreme weather hits coastal and riverbank areas, waterborne illnesses spike rapidly. Dr. Abrar's taskforce deploys within 24 hours of flood alerts with water purification systems, skin infection treatments, and emergency oral rehydration supplies.",
+    category: "Public Governance",
+    title: "Prosperous Nepal Policy Blueprint",
+    tagline: "Building a high-income, self-reliant Nepal through capitalism, enterprise, and good governance.",
+    description: "A comprehensive policy reform roadmap focusing on 5 million jobs, industrialization, hydropower expansion, tourism, and digital government.",
+    status: "Expanding Vision",
+    metrics: "5 Million Jobs Roadmap",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop",
+    fullStory: "Nepal possesses immense natural wealth, youth talent, and strategic potential. The Prosperous Nepal Blueprint outlines evidence-based reforms: fostering private enterprise, expanding hydropower exports, modernizing agriculture, reforming the judiciary, and creating a transparent digital government.",
     keyGoals: [
-      "Maintain a 24/7 disaster response medical kit inventory.",
-      "Partner with local boat owners for water-isolated village access.",
-      "Conduct post-disaster sanitation awareness campaigns."
+      "Drive free-market economic policies to generate 5 million jobs.",
+      "Expand hydropower generation and clean energy export.",
+      "Establish digital administrative governance and zero-tolerance anti-corruption."
     ]
   }
 ];
@@ -270,178 +426,178 @@ export const INITIATIVES: Initiative[] = [
 export const MEDIA_ITEMS: MediaItem[] = [
   {
     id: "med-1",
-    category: "Community",
-    title: "Rural Health Camp in Sylhet Division",
-    subtitle: "Over 800 villagers received medical checkups and free prescriptions.",
+    category: "Disaster Relief",
+    title: "Medical Relief Mission in Earthquake-Affected Jajarkot",
+    subtitle: "Delivering emergency trauma care and supplies to affected communities.",
     image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1000&auto=format&fit=crop",
-    date: "November 2024",
-    location: "Sylhet, Bangladesh"
+    date: "November 2023",
+    location: "Jajarkot, Sudurpashchim/Karnali, Nepal"
   },
   {
     id: "med-2",
     category: "Leadership",
-    title: "NSU Youth Leadership Summit Keynote",
-    subtitle: "Addressing 1,200 student leaders on ethical governance and social impact.",
+    title: "Kathmandu University Student Leadership Address",
+    subtitle: "Speaking on meritocracy, student welfare, and educational accessibility.",
     image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1000&auto=format&fit=crop",
-    date: "August 2024",
-    location: "Auditorium 1, North South University"
+    date: "August 2022",
+    location: "Kathmandu University, Dhulikhel"
   },
   {
     id: "med-3",
-    category: "Photography",
-    title: "Clinical Consultation in Ward 4",
-    subtitle: "Docu-series capturing the quiet human moments of clinical care.",
+    category: "Community Care",
+    title: "Rural Health Camp in Far-Western Nepal",
+    subtitle: "Providing free consultations to over 500 rural villagers.",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1000&auto=format&fit=crop",
-    date: "June 2024",
-    location: "Dhaka Central Hospital"
+    date: "May 2023",
+    location: "Sudurpashchim Province, Nepal"
   },
   {
     id: "med-4",
-    category: "Events",
-    title: "National Health Excellence Awards",
-    subtitle: "Receiving recognition for grassroots community healthcare initiatives.",
+    category: "Policy Forum",
+    title: "National Policy Conclave on Economic Reform",
+    subtitle: "Presenting strategies for youth employment, hydropower, and good governance.",
     image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1000&auto=format&fit=crop",
     date: "January 2025",
-    location: "International Convention City"
+    location: "Kathmandu, Nepal"
   }
 ];
 
 export const SPEECHES: Speech[] = [
   {
     id: "sp-1",
-    title: "Redefining Leadership in the Post-Pandemic World",
-    event: "National Youth Leadership Conclave",
-    location: "Main Convention Center, Dhaka",
-    date: "October 2024",
-    duration: "28 min",
-    category: "Youth Leadership",
-    summary: "Dr. Abrar delivers a powerful keynote on how young leaders must shift from title-seeking to purpose-building, emphasizing emotional intelligence and grassroots action.",
+    title: "Pragmatic Nationalism & The Blueprint for a Prosperous Nepal",
+    event: "National Policy Reform Conclave",
+    location: "Kathmandu, Nepal",
+    date: "January 2025",
+    duration: "32 min",
+    category: "National Vision",
+    summary: "Dr. Naresh Bhatta outlines a non-ideological, results-driven governance model focused on economic freedom, industrialization, 5M jobs, and institutional integrity.",
     keyTakeaways: [
-      "Leadership is an act of stewardship, not position.",
-      "Empathy is a measurable operational multiplier.",
-      "The standard you walk past is the standard you accept."
+      "Politics is not about power; it is about responsibility and lives improved.",
+      "Pragmatic nationalism judges policy strictly on outcomes for citizens.",
+      "Economic enterprise and good governance are the twin engines of Nepal's future."
     ],
-    quote: "“Your title gives you authority, but only your empathy grants you authentic influence.”"
+    quote: "“Results over rhetoric. Service over power. Nation above politics.”"
   },
   {
     id: "sp-2",
-    title: "Bridging the Chasm: Healthcare as a Human Right",
-    event: "Public Health Ethics Forum",
-    location: "Faculty of Medicine Auditorium",
-    date: "July 2024",
-    duration: "35 min",
-    category: "Medical Ethics",
-    summary: "An impassioned plea to future physicians to view healthcare as a pillar of social justice rather than purely a commercial transaction.",
+    title: "Education as a National Priority: Integrity, Merit & Affordability",
+    event: "Medical & Higher Education Reform Assembly",
+    location: "Kathmandu University Auditorium",
+    date: "September 2023",
+    duration: "25 min",
+    category: "Education Reform",
+    summary: "Reflecting on the successful medical tuition fee reduction campaign and calling for meritocracy across all higher education institutions in Nepal.",
     keyTakeaways: [
-      "Preventive care saves ten times more lives than late intervention.",
-      "Clinical excellence without cultural humility fails the patient.",
-      "Community trust is medicine's strongest diagnostic tool."
+      "Access to higher education must be earned by intellect and dedication, not wealth.",
+      "Institutions must be transparent, accountable, and student-centered.",
+      "Protecting healthcare professionals ensures a healthy nation."
     ],
-    quote: "“When a patient walks into your clinic, they bring not just symptoms, but their entire life story.”"
+    quote: "“When we make education affordable, we unlock the boundless potential of Nepal's youth.”"
   },
   {
     id: "sp-3",
-    title: "The NSU Legacy: Student Action & Civic Responsibility",
-    event: "NSU Student Orientation & Convocation",
-    location: "North South University Grand Plaza",
-    date: "March 2024",
-    duration: "22 min",
-    category: "Keynote",
-    summary: "Inspiring incoming students to leverage their academic privilege to create tangible, positive changes in surrounding communities.",
+    title: "Frontline Duty: Lessons in Courage from Earthquake Relief to COVID-19",
+    event: "Humanitarian Medical Service Forum",
+    location: "Nepal Doctors Network Conference",
+    date: "December 2023",
+    duration: "28 min",
+    category: "Humanitarian Service",
+    summary: "Sharing frontline experiences from the 2015 Gorkha Earthquake, COVID-19 ICUs, and 2023 Jajarkot Earthquake, urging young doctors to serve with compassionate courage.",
     keyTakeaways: [
-      "Use your student years to test ideas that serve others.",
-      "Failure in service is better than success in isolation.",
-      "Build networks based on shared values, not transactional gain."
+      "Crisis reveals true character; leadership means standing firm in the storm.",
+      "Grassroots health camps rebuild hope in underserved communities.",
+      "Nation above self in every call of duty."
     ],
-    quote: "“The measure of NSU is not just our ranking, but the hope we spark outside our gates.”"
+    quote: "“Leadership is measured not by promises made, but by lives improved when help is needed most.”"
   }
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",
-    quote: "Dr. Abrar didn't just diagnose my father's condition during the rural camp—he arranged the surgery and checked on us every week. He treated us like family.",
-    author: "Fatema Begum",
-    role: "Community Resident & Patient's Daughter",
-    organization: "Sylhet Rural District",
-    category: "Patient"
-  },
-  {
-    id: "t2",
-    quote: "As my student leader at NSU, Dr. Abrar showed me that leadership isn't about giving orders. It's about being the first person to arrive and the last to leave.",
-    author: "Tanvir Hossain",
-    role: "NSU Student Council Vice President",
-    organization: "North South University",
+    quote: "Dr. Naresh Bhatta led the movement that slashed medical fees by NPR 2 Million. Because of his courage, hundreds of talented students like me are studying medicine today.",
+    author: "Bikram Joshi",
+    role: "Medical Student & Student Union Representative",
+    organization: "Kathmandu University",
     category: "Student"
   },
   {
+    id: "t2",
+    quote: "During the Jajarkot earthquake, Dr. Bhatta's medical team arrived in our remote village with trauma medicines and warm care when we felt forgotten.",
+    author: "Ram Bahadur Thapa",
+    role: "Local Community Representative",
+    organization: "Jajarkot District, Nepal",
+    category: "Community Leader"
+  },
+  {
     id: "t3",
-    quote: "Rarely do we see a young physician balance rigorous clinical knowledge with such deep socio-political maturity and compassion for public health.",
-    author: "Prof. Dr. M. Rahman",
-    role: "Head of Community Medicine",
-    organization: "Medical Faculty Council",
+    quote: "Dr. Bhatta combines deep medical dedication with a clear legal and policy vision for Nepal's governance. He leads with integrity and pragmatic action.",
+    author: "Prof. Dr. K. Sharma",
+    role: "Senior Medical Educator",
+    organization: "Nepal Medical Council Forum",
     category: "Faculty"
   },
   {
     id: "t4",
-    quote: "His emergency medical taskforce was the first team to reach our flooded village when roads were cut off. His courage and coordination saved lives.",
-    author: "Rafiqul Islam",
-    role: "Union Parishad Chairman",
-    organization: "Sunamganj Disaster Committee",
-    category: "Community Leader"
+    quote: "Over 100 health camps in remote areas prove his commitment to public service. He doesn't just talk about change; he delivers tangible results.",
+    author: "Saraswati Bhattarai",
+    role: "Community Health Advocate",
+    organization: "Sudurpashchim Health Network",
+    category: "Patient"
   }
 ];
 
 export const ARTICLES: Article[] = [
   {
     id: "art-1",
-    title: "Why Young Physicians Must Master Public Policy and Civic Leadership",
-    subtitle: "Medical school teaches us how to heal individuals. Leadership teaches us how to heal society.",
-    category: "Healthcare",
-    readTime: "6 min read",
-    date: "December 18, 2024",
-    excerpt: "The stethoscope can diagnose a lung infection, but it cannot cure damp housing or contaminated groundwater. For medicine to fulfill its highest calling, doctors must step into public advocacy.",
+    title: "Pragmatic Nationalism: Why Outcomes Must Supersede Ideology in Nepal",
+    subtitle: "A non-doctrinaire approach to economic freedom, good governance, and national sovereignty.",
+    category: "Public Policy",
+    readTime: "7 min read",
+    date: "January 15, 2025",
+    excerpt: "Every policy in Nepal should be judged on one simple question: Does it improve the lives of the Nepali people? How pragmatic governance can unlock rapid development.",
     content: [
-      "Throughout medical training, we are drilled on cellular pathways, pharmacological dosage, and surgical technique. Yet when patients leave the hospital, they return to environments that created their illnesses in the first place.",
-      "As young doctors, we often feel helpless against systemic poverty, poor health literacy, and bureaucratic delay. But silence is an abdication of duty. When physicians enter policy discussions, we bring empirical truth and human stories to the table.",
-      "By combining clinical authority with civic organizing, we transform hospital bedside care into national health reform."
+      "For decades, Nepal's political debate has been bogged down by abstract ideological dogma. Meanwhile, our youth migrate abroad for employment, and critical infrastructure lags behind.",
+      "Pragmatic Nationalism bridges economic enterprise with accountable public service. By encouraging private investment, expanding hydropower, modernizing agriculture, and eliminating corruption, we build a self-reliant economy.",
+      "The goal is simple: an enabler government that empowers citizens to innovate, enterprise, and prosper with dignity."
     ],
     keyQuotes: [
-      "Medicine without public policy is merely triage on a broken bridge."
+      "Results over rhetoric. Service over power. Nation above politics."
     ]
   },
   {
     id: "art-2",
-    title: "The NSU Blueprint: Cultivating Ethical Student Leaders in Modern Academics",
-    subtitle: "How university campuses can become incubators for social purpose rather than diploma mills.",
-    category: "Leadership",
+    title: "The Battle for Affordable Medical Education in Nepal",
+    subtitle: "How student advocacy reduced medical fees by NPR 2 Million and protected academic standards.",
+    category: "Education Reform",
     readTime: "8 min read",
-    date: "November 04, 2024",
-    excerpt: "Higher education must do more than produce job-ready graduates. It must nurture courageous, empathetic civic leaders capable of steering nations through complex crises.",
+    date: "November 20, 2024",
+    excerpt: "Medical education should be accessible to those with merit and compassion, regardless of economic background. Reflections from the Medical Student Struggle Committee.",
     content: [
-      "During my tenure as an NSU student leader, I observed two competing philosophies of campus life: careerism vs. community stewardship. While individual ambition is natural, isolating youth from social challenges produces detached elites.",
-      "When we launched student-led health initiatives and governance forums at NSU, student engagement soared. Youth do not want passive lectures; they crave meaningful responsibility.",
-      "Every university should embed service-learning and peer mentorship into its core culture."
+      "When undergraduate medical fees approached NPR 6 Million, aspiring doctors from middle- and low-income families faced an impossible barrier.",
+      "Through organized advocacy, the Medical Student Struggle Committee mobilized medical students across Nepal. We insisted on cost transparency, reduction to NPR 4 Million, and strong quality controls.",
+      "True educational reform creates an environment where talent, integrity, and dedication determine success."
     ],
     keyQuotes: [
-      "A university's true legacy is measured by the character of its graduates when no one is watching."
+      "When education is affordable, a nation's youth becomes its greatest asset."
     ]
   },
   {
     id: "art-3",
-    title: "Preventive Care in Rural Villages: Small Interventions, Massive Dividends",
-    subtitle: "A practical reflection from 50+ free health camps across low-resource sub-districts.",
+    title: "Frontline Lessons from Disaster Medical Relief: Gorkha to Jajarkot",
+    subtitle: "Building resilient emergency healthcare networks for Nepal's vulnerable regions.",
     category: "Healthcare",
-    readTime: "5 min read",
-    date: "September 12, 2024",
-    excerpt: "A simple 2-minute blood pressure check in a village tea stall can prevent a catastrophic stroke 5 years later. Here is how mobile screening saves lives.",
+    readTime: "6 min read",
+    date: "October 05, 2024",
+    excerpt: "Experiencing emergency triage in the aftermath of major earthquakes highlights the urgent need for decentralized emergency healthcare and trained community responders.",
     content: [
-      "High blood pressure is known as the silent killer because it carries no symptoms until organ damage occurs. In rural areas, millions live with undetected hypertension.",
-      "Our mobile clinic model relies on low-cost digital monitors and trained youth volunteers. By screening villagers where they gather—bazaars, schools, community centers—we catch risks early.",
-      "Health empowerment begins with simple, accessible knowledge."
+      "When the ground shook during the 2015 Gorkha Earthquake and the 2023 Jajarkot Earthquake, roads were blocked and local health centers overwhelmed.",
+      "Mobilizing rapid volunteer medical units demonstrated that emergency preparedness saves lives. Decentralized health stocks and community first responders are essential.",
+      "Compassion through action is the foundation of public health resilience."
     ],
     keyQuotes: [
-      "An ounce of rural prevention is worth a ton of urban ICU care."
+      "In times of national crisis, duty requires us to stand on the frontlines."
     ]
   }
 ];
@@ -449,26 +605,27 @@ export const ARTICLES: Article[] = [
 export const FAQ_ITEMS: FAQItem[] = [
   {
     id: "faq-1",
-    question: "How can I invite Dr. Naresh Bhatta to speak at my university, summit, or conference?",
-    answer: "Dr. Naresh Bhatta frequently delivers keynote addresses on Youth Leadership, Medical Ethics, Public Health Policy, and Civic Responsibility. You can contact directly at +977 9851423026 or submit a request via the Contact section.",
+    question: "How can I invite Dr. Naresh Bhatta to speak at a conference, university, or youth summit?",
+    answer: "Dr. Naresh Bhatta frequently delivers keynote speeches on Pragmatic Nationalism, Public Policy Reform, Medical Education, and Youth Leadership. You can contact directly at +977 9851423026 or email drnareshbhatta@gmail.com.",
     category: "Speaking"
   },
   {
     id: "faq-2",
-    question: "How can I join or volunteer for the Rural Health Camps & Youth Initiatives?",
-    answer: "We welcome medical students, doctors, youth leaders, and general volunteers. Reach out via phone at 9851423026 or fill out the Volunteer Registration form on our Contact page.",
+    question: "How can I volunteer for Dr. Naresh Bhatta's Rural Health Camps & Disaster Relief initiatives?",
+    answer: "We welcome medical professionals, law students, youth volunteers, and civic advocates. Reach out via phone at +977 9851423026 or through the Contact page form.",
     category: "Volunteer"
   },
   {
     id: "faq-3",
-    question: "What is Dr. Naresh Bhatta's focus in public health and youth mentorship?",
-    answer: "Dr. Naresh Bhatta bridges healthcare equity with youth leadership development—focusing on rural telemedicine nodes, youth leadership fellowships, and emergency health taskforces.",
-    category: "General"
+    question: "What are Dr. Naresh Bhatta's key policy priorities for Nepal?",
+    answer: "His priorities include rapid economic growth through free-market capitalism, creating 5 million sustainable jobs, industrialization, hydropower expansion, digital government, universal quality healthcare, meritocratic education, and anti-corruption governance.",
+    category: "Policy"
   },
   {
     id: "faq-4",
-    question: "How can I contact Dr. Naresh Bhatta for medical or official inquiries?",
-    answer: "Direct phone contact is available at +977 9851423026. For clinical consultations or administrative requests, you can also email drnareshbhatta@gmail.com.",
-    category: "Consultation"
+    question: "What is Dr. Naresh Bhatta's background in medical education reform?",
+    answer: "As Coordinator & Spokesperson of the Medical Student Struggle Committee and Past President of student welfare bodies, he led advocacy that successfully reduced medical tuition fees from NPR 6M to NPR 4M.",
+    category: "General"
   }
 ];
+

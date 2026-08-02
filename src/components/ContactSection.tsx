@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, CheckCircle2, MapPin, Mail, Phone, ChevronDown, ChevronUp, Sparkles, MessageSquare } from 'lucide-react';
+import { Send, CheckCircle2, MapPin, Mail, Phone, ChevronDown, ChevronUp, Sparkles, MessageSquare, Facebook } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { FAQ_ITEMS } from '../data/biographyData';
 
@@ -41,10 +41,6 @@ export const ContactSection: React.FC = () => {
     <section id="contact" className="py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#E2E8F0]/60">
       {/* Header */}
       <div className="max-w-3xl mb-16">
-        <div className="text-xs uppercase tracking-widest text-[#0D9488] font-semibold mb-3 flex items-center gap-2">
-          <span className="w-8 h-px bg-[#0D9488]"></span>
-          <span>Section 11 · Public Engagement</span>
-        </div>
         <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#0F172A] tracking-tight">
           Connect & Collaborate
         </h2>
@@ -139,7 +135,7 @@ export const ContactSection: React.FC = () => {
                     type="text"
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    placeholder="e.g. North South University"
+                    placeholder="e.g. Kathmandu University"
                     className="w-full px-4 py-3 rounded-xl bg-[#FAF9F5] border border-[#E2E8F0] text-sm text-[#0F172A] focus:outline-none focus:border-[#D97706] transition-colors"
                   />
                 </div>
@@ -202,6 +198,12 @@ export const ContactSection: React.FC = () => {
                 <Phone className="w-4 h-4 text-[#10B981]" />
                 <a href={`tel:${biography.phone}`} className="font-mono font-bold text-[#0F172A] bg-[#0D9488] px-3 py-1 rounded-full border border-[#0F766E] hover:scale-105 transition-transform inline-flex items-center gap-1">
                   <span>+977 {biography.phone}</span>
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Facebook className="w-4 h-4 text-[#2563EB]" />
+                <a href="https://www.facebook.com/profile.php?id=61590934972699" target="_blank" rel="noopener noreferrer" className="hover:underline font-medium text-[#0F172A]">
+                  facebook.com/Dr.NareshBhatta
                 </a>
               </div>
             </div>

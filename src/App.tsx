@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TheBeginning } from './components/TheBeginning';
+import { NationalVision } from './components/NationalVision';
 import { TimelineFlow } from './components/TimelineFlow';
 import { VisionMission } from './components/VisionMission';
 import { LeadershipJourney } from './components/LeadershipJourney';
 import { AcademicJourney } from './components/AcademicJourney';
 import { CommunityImpact } from './components/CommunityImpact';
-import { CurrentInitiatives } from './components/CurrentInitiatives';
 import { MediaGallery } from './components/MediaGallery';
-import { SpeechesArchive } from './components/SpeechesArchive';
-import { Testimonials } from './components/Testimonials';
-import { BlogSection } from './components/BlogSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { AdminPanel } from './components/AdminPanel';
@@ -20,6 +17,35 @@ import { NavigationTab } from './types';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections: { id: NavigationTab; elemId: string }[] = [
+        { id: 'home', elemId: 'hero' },
+        { id: 'about', elemId: 'story' },
+        { id: 'vision', elemId: 'vision' },
+        { id: 'leadership', elemId: 'leadership' },
+        { id: 'journey', elemId: 'journey' },
+        { id: 'impact', elemId: 'impact' },
+        { id: 'academic', elemId: 'academic' },
+        { id: 'media', elemId: 'media' },
+        { id: 'contact', elemId: 'contact' },
+      ];
+
+      const scrollPosition = window.scrollY + 220;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i].elemId);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveTab(sections[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavigate = (tab: NavigationTab) => {
     setActiveTab(tab);
@@ -37,11 +63,7 @@ export default function App() {
       leadership: 'leadership',
       academic: 'academic',
       impact: 'impact',
-      initiatives: 'initiatives',
       media: 'media',
-      speeches: 'speeches',
-      testimonials: 'testimonials',
-      blog: 'blog',
       contact: 'contact',
     };
 
@@ -58,20 +80,36 @@ export default function App() {
         {/* Navigation Header & Lower Dock */}
         <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 
-        {/* Main Storytelling Sections */}
+        {/* Main Storytelling Sections in PDF Flow Sequence */}
         <main>
+          {/* 1. Hero — Opening Statement */}
           <Hero onNavigate={handleNavigate} />
+
+          {/* 2. Introduction — Who He Is */}
           <TheBeginning />
-          <TimelineFlow />
-          <VisionMission />
+
+          {/* 3. National Vision — Five Pillars */}
+          <NationalVision />
+
+          {/* Public Leadership — Simple Minimalist Graphical Grid */}
           <LeadershipJourney />
-          <AcademicJourney />
+
+          {/* 4. The Journey — Scroll-Driven Timeline */}
+          <TimelineFlow />
+
+          {/* 5. National Achievements & 6. Humanitarian Leadership */}
           <CommunityImpact />
-          <CurrentInitiatives />
+
+          {/* 7. Education & Distinctions */}
+          <AcademicJourney />
+
+          {/* 8. Policy Platform (15 Priorities) + 9. Philosophy & 7 Principles + 10. Vision for a New Nepal */}
+          <VisionMission />
+
+          {/* Supporting Media Section */}
           <MediaGallery />
-          <SpeechesArchive onNavigate={handleNavigate} />
-          <Testimonials />
-          <BlogSection />
+
+          {/* 11. Call to Action — Join the Movement */}
           <ContactSection />
         </main>
 

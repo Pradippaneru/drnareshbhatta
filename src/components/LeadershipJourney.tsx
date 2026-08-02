@@ -1,184 +1,120 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Building, Award, Check, Sparkles, Filter } from 'lucide-react';
-import { useContent } from '../context/ContentContext';
-import { Milestone } from '../types';
+import React from 'react';
+import { motion } from 'motion/react';
+import { ShieldCheck, Award, Users, Megaphone, GraduationCap, ArrowUpRight } from 'lucide-react';
 
 export const LeadershipJourney: React.FC = () => {
-  const { milestones } = useContent();
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'student' | 'nsu' | 'medical' | 'community'>('all');
-  const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
-
-  const filteredMilestones = categoryFilter === 'all'
-    ? milestones
-    : milestones.filter((m) => m.category === categoryFilter);
+  const leadershipItems = [
+    {
+      role: "Past President",
+      organization: "Kathmandu University Student Welfare Council",
+      tag: "University Governance",
+      icon: <GraduationCap className="w-5 h-5 text-[#1E3A8A]" />,
+      index: "01",
+    },
+    {
+      role: "Past President",
+      organization: "Nepal Doctors Network",
+      tag: "Healthcare Advocacy",
+      icon: <Award className="w-5 h-5 text-[#1E3A8A]" />,
+      index: "02",
+    },
+    {
+      role: "Past President",
+      organization: "Federation of Nepalese Medical Students",
+      tag: "National Medical Body",
+      icon: <Users className="w-5 h-5 text-[#1E3A8A]" />,
+      index: "03",
+    },
+    {
+      role: "Coordinator & Spokesperson",
+      organization: "Medical Student Struggle Committee",
+      tag: "National Reform Movement",
+      icon: <Megaphone className="w-5 h-5 text-[#DC2626]" />,
+      index: "04",
+    },
+    {
+      role: "National Student Leader",
+      organization: "Engineering Education Fee and Quality Movement",
+      tag: "Academic Reform",
+      icon: <ShieldCheck className="w-5 h-5 text-[#1E3A8A]" />,
+      index: "05",
+    },
+  ];
 
   return (
-    <section id="leadership" className="py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-        <div>
-          <div className="text-xs uppercase tracking-widest text-[#2D3B4E] font-semibold mb-3 flex items-center gap-2">
-            <span className="w-8 h-px bg-[#2D3B4E]"></span>
-            <span>Section 03 · Track Record</span>
+    <section id="leadership" className="py-20 sm:py-28 bg-[#FAF8F5] border-y border-[#E2E8F0] relative overflow-hidden">
+      {/* Background Graphical Accent Lines */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a08_1px,transparent_1px),linear-gradient(to_bottom,#0f172a08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-16">
+          <div className="text-xs uppercase tracking-widest text-[#DC2626] font-mono font-bold mb-3 flex items-center gap-2">
+            <span className="w-6 h-px bg-[#DC2626]"></span>
+            <span>Public Leadership</span>
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#171717] tracking-tight">
-            Leadership Journey
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#0F172A] tracking-tight">
+            Institutional Leadership & Service
           </h2>
-          <p className="text-base text-[#2B2B2B]/80 font-light mt-2 max-w-xl">
-            Key milestones spanning student governance at NSU, clinical residency leadership, and grassroots community organizing.
+          <div className="w-16 h-0.5 bg-[#DC2626] mt-3 mb-2 rounded-full"></div>
+          <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
+            Elected stewardship across national medical networks, student welfare councils, and public education reform movements.
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-2 p-1.5 bg-[#FAFAF8] rounded-2xl border border-[#D7D7D7]">
-          <button
-            onClick={() => setCategoryFilter('all')}
-            className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xl transition-all ${
-              categoryFilter === 'all'
-                ? 'bg-[#171717] text-[#F8F6F2] shadow-xs'
-                : 'text-[#171717]/70 hover:text-[#171717]'
-            }`}
-          >
-            All Tracks
-          </button>
-          <button
-            onClick={() => setCategoryFilter('nsu')}
-            className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xl transition-all ${
-              categoryFilter === 'nsu'
-                ? 'bg-[#171717] text-[#F8F6F2] shadow-xs'
-                : 'text-[#171717]/70 hover:text-[#171717]'
-            }`}
-          >
-            NSU Leadership
-          </button>
-          <button
-            onClick={() => setCategoryFilter('medical')}
-            className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xl transition-all ${
-              categoryFilter === 'medical'
-                ? 'bg-[#171717] text-[#F8F6F2] shadow-xs'
-                : 'text-[#171717]/70 hover:text-[#171717]'
-            }`}
-          >
-            Medical
-          </button>
-          <button
-            onClick={() => setCategoryFilter('community')}
-            className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xl transition-all ${
-              categoryFilter === 'community'
-                ? 'bg-[#171717] text-[#F8F6F2] shadow-xs'
-                : 'text-[#171717]/70 hover:text-[#171717]'
-            }`}
-          >
-            Community
-          </button>
+        {/* Minimalist Graphical Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {leadershipItems.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="p-7 sm:p-8 rounded-2xl bg-white border border-[#E2E8F0] hover:border-[#1E3A8A] transition-all duration-300 shadow-sm hover:shadow-xl group flex flex-col justify-between relative overflow-hidden"
+            >
+              {/* Corner Graphic Marker */}
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#FAF8F5] to-transparent pointer-events-none rounded-bl-full border-b border-l border-[#E2E8F0]/50 group-hover:from-[#1E3A8A]/5 transition-colors"></div>
+
+              <div>
+                {/* Header row: Index & Icon */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#E2E8F0] flex items-center justify-center group-hover:bg-[#1E3A8A]/5 group-hover:border-[#1E3A8A]/30 transition-colors">
+                      {item.icon}
+                    </div>
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <span className="font-mono text-xs font-bold text-[#DC2626] bg-[#DC2626]/5 px-2.5 py-1 rounded-md border border-[#DC2626]/10">
+                    {item.index}
+                  </span>
+                </div>
+
+                {/* Role Badge */}
+                <div className="inline-block px-3 py-1 rounded-full bg-[#0F172A] text-white text-xs font-mono font-semibold uppercase tracking-wider mb-3 group-hover:bg-[#1E3A8A] transition-colors">
+                  {item.role}
+                </div>
+
+                {/* Organization Title */}
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0F172A] leading-snug tracking-tight mb-4 group-hover:text-[#1E3A8A] transition-colors">
+                  {item.organization}
+                </h3>
+              </div>
+
+              {/* Minimal Bottom Graphical Divider */}
+              <div className="pt-4 mt-6 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#64748B] font-mono">
+                <span>Elected Public Service</span>
+                <ArrowUpRight className="w-4 h-4 text-[#94A3B8] group-hover:text-[#1E3A8A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* Interactive Timeline */}
-      <div className="relative border-l-2 border-[#D7D7D7] ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
-        {filteredMilestones.map((milestone, idx) => (
-          <motion.div
-            key={milestone.id}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="relative group cursor-pointer"
-            onClick={() => setSelectedMilestone(milestone)}
-          >
-            {/* Timeline Dot Indicator */}
-            <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-5 h-5 rounded-full bg-[#F8F6F2] border-4 border-[#171717] group-hover:border-[#C8A96A] group-hover:scale-125 transition-all shadow-xs"></div>
-
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#FAFAF8] border border-[#D7D7D7] group-hover:border-[#C8A96A] group-hover:shadow-md transition-all">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                <span className="px-3 py-1 rounded-full bg-[#2D3B4E]/10 text-[#2D3B4E] text-xs font-semibold uppercase tracking-wider">
-                  {milestone.year}
-                </span>
-                {milestone.impactMetric && (
-                  <span className="px-3 py-1 rounded-full bg-[#C8A96A]/20 text-[#171717] text-xs font-bold border border-[#C8A96A]/40">
-                    {milestone.impactMetric}
-                  </span>
-                )}
-              </div>
-
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#171717] mb-1 group-hover:text-[#2D3B4E] transition-colors">
-                {milestone.title}
-              </h3>
-
-              <div className="text-xs uppercase tracking-widest text-[#2D3B4E] font-medium mb-4 flex items-center gap-2">
-                <Building className="w-3.5 h-3.5 text-[#C8A96A]" />
-                <span>{milestone.organization}</span>
-              </div>
-
-              <p className="text-sm text-[#2B2B2B] leading-relaxed font-light mb-4">
-                {milestone.description}
-              </p>
-
-              {/* Highlights */}
-              <div className="space-y-2 border-t border-[#D7D7D7]/60 pt-4">
-                {milestone.highlights.map((item, i) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-[#2B2B2B]/80">
-                    <Check className="w-3.5 h-3.5 text-[#C8A96A] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Selected Milestone Modal */}
-      <AnimatePresence>
-        {selectedMilestone && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#171717]/60 backdrop-blur-sm p-6 flex items-center justify-center"
-            onClick={() => setSelectedMilestone(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#FAFAF8] border border-[#D7D7D7] rounded-2xl p-8 max-w-lg w-full shadow-2xl relative"
-            >
-              <div className="text-xs uppercase tracking-widest text-[#2D3B4E] font-semibold mb-2">
-                {selectedMilestone.year} · {selectedMilestone.category.toUpperCase()}
-              </div>
-              <h3 className="font-serif text-3xl font-bold text-[#171717] mb-2">
-                {selectedMilestone.title}
-              </h3>
-              <div className="text-sm text-[#2D3B4E] font-medium mb-4">
-                {selectedMilestone.organization}
-              </div>
-              <p className="text-sm text-[#2B2B2B] leading-relaxed font-light mb-6">
-                {selectedMilestone.description}
-              </p>
-              <div className="space-y-2 bg-[#F8F6F2] p-4 rounded-xl mb-6">
-                <div className="text-xs font-semibold text-[#171717] uppercase tracking-wider mb-2">
-                  Key Achievements
-                </div>
-                {selectedMilestone.highlights.map((h, i) => (
-                  <div key={i} className="text-xs text-[#2B2B2B] flex items-start gap-2">
-                    <Sparkles className="w-3 h-3 text-[#C8A96A] shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={() => setSelectedMilestone(null)}
-                className="w-full py-2.5 bg-[#171717] text-[#F8F6F2] rounded-xl text-xs uppercase tracking-wider font-semibold hover:bg-[#2D3B4E] transition-colors"
-              >
-                Close Milestone View
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
+
+
+
