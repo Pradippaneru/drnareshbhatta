@@ -108,9 +108,13 @@ interface ContentContextType {
   adminLogout: () => void;
   adminPassword: string;
   changeAdminPassword: (newPass: string) => void;
-  // Dynamic sketch / main image
+  // Dynamic sketch / main image / section images
   profilePortrait: string;
   setProfilePortrait: (imgUrlOrBase64: string) => void;
+  heroPortrait: string;
+  setHeroPortrait: (imgUrlOrBase64: string) => void;
+  meetPortrait: string;
+  setMeetPortrait: (imgUrlOrBase64: string) => void;
   resetToDefaults: () => void;
 }
 
@@ -296,6 +300,16 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return portraitImage;
   });
 
+  const [heroPortrait, setHeroPortraitState] = useState<string>(() => {
+    const saved = localStorage.getItem('dr_naresh_hero_portrait');
+    return saved || localStorage.getItem('dr_naresh_portrait') || portraitImage;
+  });
+
+  const [meetPortrait, setMeetPortraitState] = useState<string>(() => {
+    const saved = localStorage.getItem('dr_naresh_meet_portrait');
+    return saved || localStorage.getItem('dr_naresh_portrait') || portraitImage;
+  });
+
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
     return sessionStorage.getItem('dr_naresh_admin_auth') === 'true';
   });
@@ -357,6 +371,22 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   }, [profilePortrait]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('dr_naresh_hero_portrait', heroPortrait);
+    } catch (e) {
+      console.warn('LocalStorage hero portrait write warning:', e);
+    }
+  }, [heroPortrait]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('dr_naresh_meet_portrait', meetPortrait);
+    } catch (e) {
+      console.warn('LocalStorage meet portrait write warning:', e);
+    }
+  }, [meetPortrait]);
+
   // Firebase Firestore Real-Time Sync & Seeding
   useEffect(() => {
     let unsubscribeBio: () => void = () => {};
@@ -373,11 +403,19 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             setBiography(bioData);
           }
           if (data.profilePortrait) setProfilePortraitState(data.profilePortrait);
+          if (data.heroPortrait) setHeroPortraitState(data.heroPortrait);
+          else if (data.profilePortrait) setHeroPortraitState(data.profilePortrait);
+
+          if (data.meetPortrait) setMeetPortraitState(data.meetPortrait);
+          else if (data.profilePortrait) setMeetPortraitState(data.profilePortrait);
+
           if (data.adminPassword) setAdminPassword(data.adminPassword);
         } else {
           setDoc(doc(db, 'site_settings', 'main'), {
             biography: BIOGRAPHY,
             profilePortrait: portraitImage,
+            heroPortrait: portraitImage,
+            meetPortrait: portraitImage,
             adminPassword: 'admin123'
           }).catch(console.error);
         }
@@ -671,6 +709,26 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setDoc(doc(db, 'site_settings', 'main'), { profilePortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
   };
 
+  const setHeroPortrait = (imgUrlOrBase64: string) => {
+    setHeroPortraitState(imgUrlOrBase64);
+    try {
+      localStorage.setItem('dr_naresh_hero_portrait', imgUrlOrBase64);
+    } catch (e) {
+      console.warn('LocalStorage hero write warning:', e);
+    }
+    setDoc(doc(db, 'site_settings', 'main'), { heroPortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
+  };
+
+  const setMeetPortrait = (imgUrlOrBase64: string) => {
+    setMeetPortraitState(imgUrlOrBase64);
+    try {
+      localStorage.setItem('dr_naresh_meet_portrait', imgUrlOrBase64);
+    } catch (e) {
+      console.warn('LocalStorage meet write warning:', e);
+    }
+    setDoc(doc(db, 'site_settings', 'main'), { meetPortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
+  };
+
   const adminLogin = (pass: string): boolean => {
     if (pass === adminPassword || pass === 'drnaresh2026' || pass === '9851423026') {
       setIsAdminLoggedIn(true);
@@ -756,6 +814,10 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       changeAdminPassword,
       profilePortrait,
       setProfilePortrait,
+      heroPortrait,
+      setHeroPortrait,
+      meetPortrait,
+      setMeetPortrait,
       resetToDefaults
     }}>
       {children}

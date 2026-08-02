@@ -10,7 +10,7 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const { biography, profilePortrait } = useContent();
+  const { biography, heroPortrait, profilePortrait } = useContent();
 
   return (
     <section id="hero" className="relative min-h-[85vh] pt-28 sm:pt-36 pb-20 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
@@ -167,7 +167,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.9, delay: 0.3 }}
-                src={profilePortrait || portraitImage}
+                src={heroPortrait || profilePortrait || portraitImage}
                 alt={`${biography.name} - Official Portrait`}
                 referrerPolicy="no-referrer"
                 className="w-auto h-[460px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"

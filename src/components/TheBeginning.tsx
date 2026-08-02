@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 export const TheBeginning: React.FC = () => {
-  const { biography, profilePortrait } = useContent();
+  const { biography, meetPortrait, profilePortrait } = useContent();
 
   return (
     <section id="story" className="py-20 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
@@ -34,7 +34,7 @@ export const TheBeginning: React.FC = () => {
         >
           <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#E2E8F0] bg-white">
             <img
-              src={profilePortrait}
+              src={meetPortrait || profilePortrait}
               alt={`${biography.name} Portrait`}
               referrerPolicy="no-referrer"
               className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
