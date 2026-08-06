@@ -1113,16 +1113,13 @@ export const AdminPanel: React.FC = () => {
                               <input
                                 type="file"
                                 accept="image/*"
-                                onChange={(e) => {
+                                onChange={async (e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      if (typeof reader.result === 'string') {
-                                        setHeroPortrait(reader.result);
-                                      }
-                                    };
-                                    reader.readAsDataURL(file);
+                                    const compressed = await compressImage(file, 1200, 1200, 0.85);
+                                    if (compressed) {
+                                      setHeroPortrait(compressed);
+                                    }
                                   }
                                 }}
                                 className="hidden"
@@ -1178,16 +1175,13 @@ export const AdminPanel: React.FC = () => {
                               <input
                                 type="file"
                                 accept="image/*"
-                                onChange={(e) => {
+                                onChange={async (e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      if (typeof reader.result === 'string') {
-                                        setMeetPortrait(reader.result);
-                                      }
-                                    };
-                                    reader.readAsDataURL(file);
+                                    const compressed = await compressImage(file, 1200, 1200, 0.85);
+                                    if (compressed) {
+                                      setMeetPortrait(compressed);
+                                    }
                                   }
                                 }}
                                 className="hidden"

@@ -24,13 +24,13 @@ export const TheBeginning: React.FC = () => {
 
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-        {/* Left Column: Portrait Photo */}
+        {/* Left Column: Portrait Photo (Hidden on Mobile view, visible on Desktop lg+) */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="lg:col-span-5 relative"
+          className="hidden lg:block lg:col-span-5 relative"
         >
           <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#E2E8F0] bg-white">
             <img
