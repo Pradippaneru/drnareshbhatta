@@ -776,8 +776,9 @@ export const AdminPanel: React.FC = () => {
                     </button>
                   </form>
 
-                  <div className="p-3 rounded-xl bg-[#0D9488]/10 border border-[#0D9488]/30 text-[11px] text-[#0F172A]">
-                    <strong>Default Login Passcode:</strong> <code className="font-mono bg-white px-1.5 py-0.5 rounded">drnaresh2026</code> or <code className="font-mono bg-white px-1.5 py-0.5 rounded">9851423026</code>
+                  <div className="p-3 rounded-xl bg-[#0F172A]/5 border border-[#E2E8F0] text-[11px] text-[#64748B] flex items-center justify-center gap-1.5 font-medium">
+                    <Shield className="w-3.5 h-3.5 text-[#0D9488]" />
+                    <span>Protected Admin Portal · Restricted & Authorized Access Only</span>
                   </div>
                 </div>
               ) : (
