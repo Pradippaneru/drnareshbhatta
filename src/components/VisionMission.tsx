@@ -236,34 +236,37 @@ export const VisionMission: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="p-8 sm:p-12 rounded-2xl bg-white text-[#0F172A] shadow-md relative overflow-hidden border border-[#E2E8F0]"
+            className="relative rounded-3xl bg-[#0F172A] text-white p-8 sm:p-14 md:p-20 overflow-hidden shadow-2xl border border-[#1E293B]"
           >
-            <div className="max-w-4xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF8F5] text-[#DC2626] border border-[#E2E8F0] text-xs font-bold uppercase tracking-wider mb-6">
-                A Vision for a New Nepal
+            {/* Geometric Diamond Backdrop Vectors matching reference screenshot */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#38BDF8_1px,transparent_1px)] [background-size:32px_32px]"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#1E293B]/40 via-[#0F172A] to-[#1E293B]/40 transform rotate-45 rounded-3xl border border-white/5 pointer-events-none"></div>
+
+            <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 sm:space-y-10">
+              {/* Top Eyebrow */}
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-8 h-[1px] bg-[#D97706]"></span>
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#D97706]">
+                  A Vision for a New Nepal
+                </span>
+                <span className="w-8 h-[1px] bg-[#D97706]"></span>
               </div>
 
-              <div className="space-y-6 text-[#334155] font-serif text-lg sm:text-xl leading-relaxed">
-                <p className="font-normal text-[#0F172A]">
-                  Dr. Bhatta envisions a Nepal where young people no longer leave their homeland because opportunity exists at home; where farmers prosper through modern agriculture; where industries manufacture products proudly bearing the label <span className="font-bold text-[#1E3A8A] bg-[#1E3A8A]/5 px-2 py-0.5 rounded">"Made in Nepal"</span>; where every child receives quality education regardless of background; where every family can access quality healthcare without financial hardship; and where honest work, innovation, and integrity are rewarded.
-                </p>
+              {/* Main Headline */}
+              <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-[1.15] tracking-tight max-w-3xl mx-auto">
+                A Nepal where opportunity exists at home.
+              </h3>
 
-                <p className="font-normal text-[#1E293B]">
-                  He believes Nepal can become one of Asia's most dynamic economies by embracing entrepreneurship, industrialization, hydropower, tourism, technology, scientific research, and good governance. Economic growth must create opportunity in every province and improve the lives of ordinary citizens.
-                </p>
+              {/* Central Paragraph */}
+              <p className="font-sans text-base sm:text-lg text-[#CBD5E1] leading-relaxed max-w-2xl sm:max-w-3xl mx-auto font-normal text-center">
+                He envisions a Nepal where young people no longer leave their homeland because opportunity exists at home; where farmers prosper through modern agriculture; where industries manufacture products proudly bearing the label "Made in Nepal"; where every child receives quality education regardless of background; and where honest work, innovation, and integrity are rewarded.
+              </p>
 
-                <p className="font-medium text-[#0F172A] border-l-4 border-[#DC2626] pl-5 py-1 bg-[#FAF8F5] rounded-r-lg">
-                  His vision is not simply to increase national wealth, but to ensure that prosperity reaches villages and cities alike, strengthening families, expanding opportunity, and restoring confidence in the future.
+              {/* Quote in Warm Amber Serif */}
+              <div className="pt-4 sm:pt-6">
+                <p className="font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#E5A93C] font-normal leading-relaxed max-w-3xl mx-auto text-center">
+                  "A nation does not become great by chance — it becomes great when its people dare to dream, its institutions choose integrity, and its leaders place the nation above themselves."
                 </p>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#E2E8F0] mt-8 pt-6 text-xs text-[#475569]">
-                <div className="font-semibold text-[#0F172A]">
-                  Dr. Naresh Bhatta <span className="font-normal text-[#64748B]">· Public Policy Reformer & Physician</span>
-                </div>
-                <div className="font-mono text-[#DC2626] font-bold uppercase tracking-wider">
-                  Results Over Rhetoric · Service Over Power
-                </div>
               </div>
             </div>
           </motion.div>

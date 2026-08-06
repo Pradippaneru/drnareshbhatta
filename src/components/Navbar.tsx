@@ -12,10 +12,9 @@ const NAV_ITEMS: { id: NavigationTab; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'Story' },
   { id: 'journey' as NavigationTab, label: 'Journey' },
-  { id: 'vision', label: 'Vision' },
   { id: 'leadership', label: 'Leadership' },
+  { id: 'vision', label: 'Vision' },
   { id: 'academic', label: 'Academics' },
-  { id: 'impact', label: 'Impact' },
   { id: 'media', label: 'Media' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -59,16 +58,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
           {/* Logo & Identity */}
           <button
             onClick={() => handleLinkClick('home')}
-            className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
+            className="flex items-center gap-2 text-left group focus:outline-none cursor-pointer"
+            aria-label="Home"
           >
-            <div className="px-3 py-1 rounded-lg bg-[#0F172A] text-white font-bold font-mono text-xs tracking-wider shadow-xs group-hover:scale-105 transition-transform flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-pulse"></span>
-              <span>DR. NARESH®</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className="font-serif text-lg font-bold tracking-tight text-[#0F172A] leading-none group-hover:text-[#DC2626] transition-colors">
-                Dr. Naresh Bhatta
-              </div>
+            <div className="w-8 h-8 rounded-full bg-[#0F172A] text-white flex items-center justify-center font-serif font-bold text-xs shadow-xs group-hover:bg-[#DC2626] transition-colors">
+              NB
             </div>
           </button>
 

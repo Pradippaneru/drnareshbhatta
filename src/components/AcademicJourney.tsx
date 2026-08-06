@@ -42,8 +42,8 @@ export const AcademicJourney: React.FC = () => {
         </div>
 
         {/* Main Title Heading */}
-        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1E232A] tracking-tight mb-14 sm:mb-20">
-          Earned, not inherited.
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1E232A] tracking-tight mb-14 sm:mb-20">
+          Education, Honours & Distinctions
         </h2>
 
         {/* 2-Column Grid */}

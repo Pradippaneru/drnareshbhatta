@@ -22,14 +22,17 @@ export const AdminPanel: React.FC = () => {
     mediaItems, addMediaItem, updateMediaItem, deleteMediaItem,
     contactMessages, markMessageRead, deleteContactMessage,
     isAdminLoggedIn, adminLogin, adminLogout, adminPassword, changeAdminPassword,
-    profilePortrait, setProfilePortrait, resetToDefaults
+    profilePortrait, setProfilePortrait,
+    heroPortrait, setHeroPortrait,
+    meetPortrait, setMeetPortrait,
+    resetToDefaults
   } = useContent();
 
   const [isOpen, setIsOpen] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState<
-    'profile' | 'pictures' | 'flow' | 'leadership' | 'academic' | 'impact' | 'initiatives' | 'media' | 'speeches' | 'blog' | 'testimonials' | 'messages' | 'security'
+    'profile' | 'pictures' | 'journey' | 'leadership' | 'initiatives' | 'academic' | 'media' | 'blog' | 'messages' | 'security'
   >('profile');
 
   // Local state for bio form
@@ -670,16 +673,17 @@ export const AdminPanel: React.FC = () => {
 
   return (
     <>
-      {/* Floating Admin Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      {/* Floating Admin Trigger Button (Small Lock Icon Only) */}
+      <div className="fixed bottom-5 right-5 z-40">
         <button
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0F172A] text-[#14B8A6] hover:bg-[#0D9488] hover:text-white transition-all shadow-xl border border-[#0D9488]/40 cursor-pointer font-mono text-xs font-bold"
+          title="Admin CMS Control"
+          aria-label="Admin CMS Control"
+          className="relative w-11 h-11 rounded-full bg-[#0F172A] text-[#14B8A6] hover:bg-[#0D9488] hover:text-white transition-all shadow-xl border border-[#0D9488]/40 cursor-pointer flex items-center justify-center group"
         >
-          <Lock className="w-4 h-4 text-[#14B8A6]" />
-          <span>Admin CMS Panel</span>
+          <Lock className="w-4.5 h-4.5 text-[#14B8A6] group-hover:text-white transition-colors" />
           {unreadCount > 0 && (
-            <span className="w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center animate-pulse">
+            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center animate-pulse border-2 border-[#0F172A]">
               {unreadCount}
             </span>
           )}
@@ -780,7 +784,7 @@ export const AdminPanel: React.FC = () => {
                 /* Admin Dashboard Main Content */
                 <div className="flex-1 overflow-y-auto pt-4 space-y-6">
                   {/* Navigation Tabs */}
-                  <div className="flex flex-wrap items-center gap-2 border-b border-[#E2E8F0] pb-3">
+                  <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-3 border-b border-[#E2E8F0] whitespace-nowrap shrink-0">
                     <button
                       onClick={() => setActiveTab('profile')}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -802,13 +806,13 @@ export const AdminPanel: React.FC = () => {
                     </button>
 
                     <button
-                      onClick={() => setActiveTab('flow')}
+                      onClick={() => setActiveTab('journey')}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'flow' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
+                        activeTab === 'journey' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
                       }`}
                     >
                       <Layers className="w-3.5 h-3.5" />
-                      <span>Flow Timeline ({flowCards.length})</span>
+                      <span>Journey ({flowCards.length})</span>
                     </button>
 
                     <button
@@ -822,6 +826,16 @@ export const AdminPanel: React.FC = () => {
                     </button>
 
                     <button
+                      onClick={() => setActiveTab('initiatives')}
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                        activeTab === 'initiatives' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
+                      }`}
+                    >
+                      <Heart className="w-3.5 h-3.5" />
+                      <span>Policy & Vision ({initiatives.length})</span>
+                    </button>
+
+                    <button
                       onClick={() => setActiveTab('academic')}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
                         activeTab === 'academic' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
@@ -829,26 +843,6 @@ export const AdminPanel: React.FC = () => {
                     >
                       <GraduationCap className="w-3.5 h-3.5" />
                       <span>Academic ({academicRecords.length})</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('impact')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'impact' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Users className="w-3.5 h-3.5" />
-                      <span>Impact ({impactStats.length})</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('initiatives')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'initiatives' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Heart className="w-3.5 h-3.5" />
-                      <span>Initiatives ({initiatives.length})</span>
                     </button>
 
                     <button
@@ -862,16 +856,6 @@ export const AdminPanel: React.FC = () => {
                     </button>
 
                     <button
-                      onClick={() => setActiveTab('speeches')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'speeches' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Mic className="w-3.5 h-3.5" />
-                      <span>Speeches ({speeches.length})</span>
-                    </button>
-
-                    <button
                       onClick={() => setActiveTab('blog')}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
                         activeTab === 'blog' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
@@ -879,16 +863,6 @@ export const AdminPanel: React.FC = () => {
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>Essays ({blogPosts.length})</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('testimonials')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'testimonials' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Quote className="w-3.5 h-3.5" />
-                      <span>Testimonials ({testimonials.length})</span>
                     </button>
 
                     <button
@@ -1105,26 +1079,159 @@ export const AdminPanel: React.FC = () => {
 
                   {/* TAB 2: Upload Pictures & Media */}
                   {activeTab === 'pictures' && (
-                    <div className="space-y-6">
+                    <div className="space-y-8">
+                      {/* 1. Hero Section Photo */}
                       <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#E2E8F0] space-y-4">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                              Upload Profile / Sketch Picture
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#DC2626] text-white font-mono text-[10px] font-bold uppercase tracking-wider">
+                              Section 1: Hero
+                            </span>
+                            <h3 className="font-serif text-lg font-bold text-[#0F172A] mt-1">
+                              Hero Section Photo
                             </h3>
                             <p className="text-xs text-[#2B2B2B]/70">
-                              Upload a new photo file or pencil sketch portrait to replace the primary image dynamically.
+                              Primary portrait displayed prominently on the top Hero greeting screen.
+                            </p>
+                          </div>
+                          <ImageIcon className="w-6 h-6 text-[#DC2626]" />
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
+                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md">
+                            <img
+                              src={heroPortrait || profilePortrait}
+                              alt="Hero Portrait Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          <div className="space-y-3 flex-1 w-full">
+                            <label className="block w-full py-3 px-4 rounded-xl border-2 border-dashed border-[#DC2626]/40 bg-white text-center text-xs font-bold text-[#0F172A] cursor-pointer hover:bg-[#DC2626]/10 transition-colors">
+                              <Upload className="w-4 h-4 inline mr-2 text-[#DC2626]" />
+                              <span>Upload Hero Image File from Device</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => {
+                                      if (typeof reader.result === 'string') {
+                                        setHeroPortrait(reader.result);
+                                      }
+                                    };
+                                    reader.readAsDataURL(file);
+                                  }
+                                }}
+                                className="hidden"
+                              />
+                            </label>
+
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#64748B] mb-1">
+                                Or Paste Hero Custom Image URL
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="https://..."
+                                value={heroPortrait.startsWith('data:') ? '' : heroPortrait}
+                                onChange={(e) => setHeroPortrait(e.target.value)}
+                                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 2. Story / Meet Section Photo */}
+                      <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#E2E8F0] space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#1E3A8A] text-white font-mono text-[10px] font-bold uppercase tracking-wider">
+                              Section 2: Story / Meet
+                            </span>
+                            <h3 className="font-serif text-lg font-bold text-[#0F172A] mt-1">
+                              Story / Meet Section Photo
+                            </h3>
+                            <p className="text-xs text-[#2B2B2B]/70">
+                              Secondary photo displayed alongside Dr. Naresh Bhatta's biographical story.
+                            </p>
+                          </div>
+                          <Camera className="w-6 h-6 text-[#1E3A8A]" />
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
+                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#1E3A8A] bg-white shrink-0 shadow-md">
+                            <img
+                              src={meetPortrait || profilePortrait}
+                              alt="Story Meet Portrait Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          <div className="space-y-3 flex-1 w-full">
+                            <label className="block w-full py-3 px-4 rounded-xl border-2 border-dashed border-[#1E3A8A]/40 bg-white text-center text-xs font-bold text-[#0F172A] cursor-pointer hover:bg-[#1E3A8A]/10 transition-colors">
+                              <Upload className="w-4 h-4 inline mr-2 text-[#1E3A8A]" />
+                              <span>Upload Story/Meet Image File from Device</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => {
+                                      if (typeof reader.result === 'string') {
+                                        setMeetPortrait(reader.result);
+                                      }
+                                    };
+                                    reader.readAsDataURL(file);
+                                  }
+                                }}
+                                className="hidden"
+                              />
+                            </label>
+
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#64748B] mb-1">
+                                Or Paste Story/Meet Custom Image URL
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="https://..."
+                                value={meetPortrait.startsWith('data:') ? '' : meetPortrait}
+                                onChange={(e) => setMeetPortrait(e.target.value)}
+                                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 3. General Profile Photo */}
+                      <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#E2E8F0] space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#0F172A] text-white font-mono text-[10px] font-bold uppercase tracking-wider">
+                              Default Fallback
+                            </span>
+                            <h3 className="font-serif text-lg font-bold text-[#0F172A] mt-1">
+                              General Profile / Sketch Picture
+                            </h3>
+                            <p className="text-xs text-[#2B2B2B]/70">
+                              Fallback portrait used across site components if specific section images are unassigned.
                             </p>
                           </div>
                           <ImageIcon className="w-6 h-6 text-[#0F172A]" />
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
-                          {/* Live Image Preview */}
                           <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md">
                             <img
                               src={profilePortrait}
-                              alt="Current Dr. Naresh Bhatta Portrait"
+                              alt="Default Portrait Preview"
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -1141,135 +1248,160 @@ export const AdminPanel: React.FC = () => {
                               />
                             </label>
 
-                            <div className="text-[11px] text-[#2B2B2B]/60 text-center font-mono">
-                              Supported formats: JPG, PNG, WEBP, SVG (Auto base64 conversion)
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#64748B] mb-1">
+                                Or Paste Custom Image URL
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="https://..."
+                                value={profilePortrait.startsWith('data:') ? '' : profilePortrait}
+                                onChange={(e) => setProfilePortrait(e.target.value)}
+                                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
+                              />
                             </div>
                           </div>
-                        </div>
-                      </div>
-
-                      {/* Direct URL Input */}
-                      <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#E2E8F0] space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#0F172A]">
-                          Or Paste Custom Image URL
-                        </label>
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            placeholder="https://images.unsplash.com/photo..."
-                            value={profilePortrait.startsWith('data:') ? '' : profilePortrait}
-                            onChange={(e) => setProfilePortrait(e.target.value)}
-                            className="flex-1 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
-                          />
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* TAB 3: Journey Flow Cards Management */}
-                  {activeTab === 'flow' && (
+                  {/* TAB: Journey Timeline */}
+                  {activeTab === 'journey' && (
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
-                        <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                          Interactive Timeline Nodes ({flowCards.length})
-                        </h3>
+                        <div>
+                          <h3 className="font-serif text-lg font-bold text-[#0F172A]">
+                            Journey Timeline Milestones ({flowCards.length})
+                          </h3>
+                          <p className="text-xs text-[#2B2B2B]/70">
+                            Manage timeline milestone cards displayed in The Journey section.
+                          </p>
+                        </div>
                         <button
                           onClick={() => setShowAddFlow(!showAddFlow)}
                           className="px-3.5 py-1.5 rounded-full bg-[#0D9488] text-white font-bold text-xs uppercase tracking-wider border border-[#0F766E] hover:bg-[#0F172A] hover:text-[#FAF9F5] transition-colors flex items-center gap-1 cursor-pointer"
                         >
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add New Year Card</span>
+                          {showAddFlow ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                          <span>{showAddFlow ? 'Close Form' : 'Add Journey Event'}</span>
                         </button>
                       </div>
 
-                      {/* Add Card Form */}
                       {showAddFlow && (
-                        <form onSubmit={handleAddFlowSubmit} className="p-5 rounded-2xl bg-[#FAF9F5] border border-[#0F172A] space-y-3">
-                          <h4 className="font-serif text-sm font-bold text-[#0F172A]">New Flow Node Entry</h4>
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <input
-                              type="text"
-                              placeholder="Year (e.g. '26)"
-                              value={newFlow.year}
-                              onChange={(e) => setNewFlow({ ...newFlow, year: e.target.value })}
-                              className="px-3 py-1.5 rounded-lg border text-xs font-bold"
-                              required
-                            />
-                            <input
-                              type="text"
-                              placeholder="Full Year (e.g. 2026)"
-                              value={newFlow.fullYear}
-                              onChange={(e) => setNewFlow({ ...newFlow, fullYear: e.target.value })}
-                              className="px-3 py-1.5 rounded-lg border text-xs"
-                              required
-                            />
-                            <input
-                              type="text"
-                              placeholder="Tag (e.g. Innovation)"
-                              value={newFlow.handleTag}
-                              onChange={(e) => setNewFlow({ ...newFlow, handleTag: e.target.value })}
-                              className="px-3 py-1.5 rounded-lg border text-xs"
-                            />
-                            <input
-                              type="text"
-                              placeholder="Handle (@clinical_2026)"
-                              value={newFlow.handle}
-                              onChange={(e) => setNewFlow({ ...newFlow, handle: e.target.value })}
-                              className="px-3 py-1.5 rounded-lg border text-xs"
+                        <form onSubmit={handleAddFlowSubmit} className="p-5 rounded-2xl bg-[#FAF9F5] border-2 border-[#0F172A] space-y-4">
+                          <h4 className="font-serif text-sm font-bold text-[#0F172A]">
+                            Create New Journey Timeline Milestone
+                          </h4>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase mb-1">Short Year Badge (e.g. '26)</label>
+                              <input
+                                type="text"
+                                value={newFlow.year}
+                                onChange={(e) => setNewFlow({ ...newFlow, year: e.target.value })}
+                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-mono"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase mb-1">Full Year (e.g. 2026)</label>
+                              <input
+                                type="text"
+                                value={newFlow.fullYear}
+                                onChange={(e) => setNewFlow({ ...newFlow, fullYear: e.target.value })}
+                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-mono"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase mb-1">Handle / Tag</label>
+                              <input
+                                type="text"
+                                value={newFlow.handleTag}
+                                onChange={(e) => setNewFlow({ ...newFlow, handleTag: e.target.value })}
+                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-bold"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase mb-1">Milestone Title</label>
+                              <input
+                                type="text"
+                                placeholder="Milestone Title"
+                                value={newFlow.title}
+                                onChange={(e) => setNewFlow({ ...newFlow, title: e.target.value })}
+                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-bold"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold uppercase mb-1">Subtitle / Context</label>
+                              <input
+                                type="text"
+                                placeholder="Subtitle / Role"
+                                value={newFlow.subtitle}
+                                onChange={(e) => setNewFlow({ ...newFlow, subtitle: e.target.value })}
+                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-bold uppercase mb-1">Key Quote / Impact Statement</label>
+                            <textarea
+                              placeholder="Key quote or description..."
+                              value={newFlow.quote}
+                              onChange={(e) => setNewFlow({ ...newFlow, quote: e.target.value })}
+                              className="w-full px-3 py-2 rounded-lg border text-xs bg-white italic font-serif"
+                              rows={2}
                             />
                           </div>
 
-                          <input
-                            type="text"
-                            placeholder="Milestone Title"
-                            value={newFlow.title}
-                            onChange={(e) => setNewFlow({ ...newFlow, title: e.target.value })}
-                            className="w-full px-3 py-1.5 rounded-lg border text-xs font-bold"
-                            required
-                          />
-
-                          <textarea
-                            placeholder="Subtitle / Description"
-                            value={newFlow.subtitle}
-                            onChange={(e) => setNewFlow({ ...newFlow, subtitle: e.target.value })}
-                            className="w-full px-3 py-1.5 rounded-lg border text-xs"
-                            rows={2}
-                          />
-
-                          <button
-                            type="submit"
-                            className="px-4 py-2 rounded-lg bg-[#0F172A] text-white text-xs font-bold uppercase cursor-pointer"
-                          >
-                            Save Node Entry
-                          </button>
+                          <div className="flex justify-end gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setShowAddFlow(false)}
+                              className="px-4 py-2 rounded-lg border text-xs font-bold"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="px-5 py-2 rounded-lg bg-[#0F172A] text-white text-xs font-bold uppercase"
+                            >
+                              Save Journey Card
+                            </button>
+                          </div>
                         </form>
                       )}
 
-                      {/* List of Existing Cards */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {flowCards.map((card) => (
-                          <div key={card.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between">
+                          <div key={card.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-2">
                             <div>
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="font-serif text-3xl font-bold text-[#0F172A]">
-                                  {card.year}
+                              <div className="flex items-center justify-between text-xs mb-1">
+                                <span className="font-mono font-bold bg-[#DC2626] text-white px-2 py-0.5 rounded text-[10px]">
+                                  {card.fullYear || card.year}
                                 </span>
-                                <span className="text-xs font-mono bg-[#0D9488] px-2 py-0.5 rounded font-bold">
-                                  {card.fullYear}
+                                <span className="uppercase text-[10px] font-bold text-[#0D9488]">
+                                  {card.handleTag}
                                 </span>
                               </div>
-                              <h4 className="font-bold text-xs text-[#0F172A] mb-1">{card.title}</h4>
-                              <p className="text-[11px] text-[#2B2B2B]/70 leading-relaxed mb-3">{card.subtitle}</p>
+                              <h4 className="font-bold text-sm text-[#0F172A] mt-1">{card.title}</h4>
+                              <p className="text-xs text-[#475569]">{card.subtitle}</p>
+                              <p className="text-xs text-[#0F172A] italic font-serif mt-2">"{card.quote}"</p>
                             </div>
 
-                            <div className="flex items-center justify-between border-t pt-2 mt-2 text-xs">
-                              <span className="font-mono text-[10px] text-[#2B2B2B]/60">{card.handle}</span>
+                            <div className="flex items-center justify-end gap-2 border-t pt-2">
                               <button
                                 onClick={() => deleteFlowCard(card.id)}
-                                className="p-1 text-red-600 hover:bg-red-50 rounded cursor-pointer"
-                                title="Delete node"
+                                className="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold cursor-pointer"
                               >
-                                <Trash2 className="w-3.5 h-3.5" />
+                                Delete
                               </button>
                             </div>
                           </div>
@@ -1644,152 +1776,7 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   )}
 
-                  {/* TAB: Community Impact Stats */}
-                  {activeTab === 'impact' && (
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                            Community Impact Counters ({impactStats.length})
-                          </h3>
-                          <p className="text-xs text-[#2B2B2B]/70">
-                            Update real-world statistics, patients served, workshops delivered, and relief missions.
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (showAddImpact) {
-                              setShowAddImpact(false);
-                              setEditingImpactId(null);
-                            } else {
-                              setEditingImpactId(null);
-                              setImpactForm({
-                                number: 10000,
-                                prefix: '',
-                                suffix: '+',
-                                label: '',
-                                description: '',
-                                iconName: 'Users'
-                              });
-                              setShowAddImpact(true);
-                            }
-                          }}
-                          className="px-3.5 py-1.5 rounded-full bg-[#0D9488] text-white font-bold text-xs uppercase tracking-wider border border-[#0F766E] hover:bg-[#0F172A] hover:text-[#FAF9F5] transition-colors flex items-center gap-1 cursor-pointer"
-                        >
-                          {showAddImpact ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                          <span>{showAddImpact ? 'Close Form' : 'Add Impact Counter'}</span>
-                        </button>
-                      </div>
 
-                      {showAddImpact && (
-                        <form onSubmit={handleSaveImpact} className="p-5 rounded-2xl bg-[#FAF9F5] border-2 border-[#0F172A] space-y-4">
-                          <h4 className="font-serif text-sm font-bold text-[#0F172A]">
-                            {editingImpactId ? 'Edit Impact Stat' : 'Add Impact Counter'}
-                          </h4>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Target Number</label>
-                              <input
-                                type="number"
-                                placeholder="15000"
-                                value={impactForm.number}
-                                onChange={(e) => setImpactForm({ ...impactForm, number: parseInt(e.target.value) || 0 })}
-                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-mono font-bold"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Prefix / Suffix</label>
-                              <div className="flex gap-2">
-                                <input
-                                  type="text"
-                                  placeholder="Prefix (e.g. $)"
-                                  value={impactForm.prefix}
-                                  onChange={(e) => setImpactForm({ ...impactForm, prefix: e.target.value })}
-                                  className="w-1/2 px-2 py-2 rounded-lg border text-xs bg-white"
-                                />
-                                <input
-                                  type="text"
-                                  placeholder="Suffix (e.g. +)"
-                                  value={impactForm.suffix}
-                                  onChange={(e) => setImpactForm({ ...impactForm, suffix: e.target.value })}
-                                  className="w-1/2 px-2 py-2 rounded-lg border text-xs bg-white"
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Stat Label</label>
-                              <input
-                                type="text"
-                                placeholder="e.g. Free Patients Treated"
-                                value={impactForm.label}
-                                onChange={(e) => setImpactForm({ ...impactForm, label: e.target.value })}
-                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-bold"
-                                required
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] font-bold uppercase mb-1">Description</label>
-                            <input
-                              type="text"
-                              placeholder="e.g. Through 45 free medical camps in remote mountain villages."
-                              value={impactForm.description}
-                              onChange={(e) => setImpactForm({ ...impactForm, description: e.target.value })}
-                              className="w-full px-3 py-2 rounded-lg border text-xs bg-white"
-                            />
-                          </div>
-
-                          <div className="flex justify-end gap-2">
-                            <button
-                              type="button"
-                              onClick={() => setShowAddImpact(false)}
-                              className="px-4 py-2 rounded-lg border text-xs font-bold"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="px-5 py-2 rounded-lg bg-[#0F172A] text-white text-xs font-bold uppercase"
-                            >
-                              {editingImpactId ? 'Update Stat' : 'Save Stat'}
-                            </button>
-                          </div>
-                        </form>
-                      )}
-
-                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                        {impactStats.map((s) => (
-                          <div key={s.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-2">
-                            <div>
-                              <div className="font-serif text-2xl font-bold text-[#0F172A]">
-                                {s.prefix}{s.number.toLocaleString()}{s.suffix}
-                              </div>
-                              <h4 className="font-bold text-xs text-[#0F172A] mt-1">{s.label}</h4>
-                              <p className="text-[11px] text-[#2B2B2B]/70 mt-1">{s.description}</p>
-                            </div>
-
-                            <div className="flex items-center justify-end gap-2 border-t pt-2">
-                              <button
-                                onClick={() => handleStartEditImpact(s)}
-                                className="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-xs font-bold"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => deleteImpactStat(s.id)}
-                                className="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   {/* TAB: Speeches & Keynotes */}
                   {activeTab === 'speeches' && (
@@ -2177,155 +2164,7 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   )}
 
-                  {/* TAB: Testimonials */}
-                  {activeTab === 'testimonials' && (
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                            Endorsements & Testimonials ({testimonials.length})
-                          </h3>
-                          <p className="text-xs text-[#2B2B2B]/70">
-                            Manage endorsements from patient families, medical faculty, and youth leaders.
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (showAddTestimonial) {
-                              setShowAddTestimonial(false);
-                              setEditingTestimonialId(null);
-                            } else {
-                              setEditingTestimonialId(null);
-                              setTestimonialForm({
-                                quote: '',
-                                author: '',
-                                role: '',
-                                organization: '',
-                                category: 'Community Leader'
-                              });
-                              setShowAddTestimonial(true);
-                            }
-                          }}
-                          className="px-3.5 py-1.5 rounded-full bg-[#0D9488] text-white font-bold text-xs uppercase tracking-wider border border-[#0F766E] hover:bg-[#0F172A] hover:text-[#FAF9F5] transition-colors flex items-center gap-1 cursor-pointer"
-                        >
-                          {showAddTestimonial ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                          <span>{showAddTestimonial ? 'Close Form' : 'Add Testimonial'}</span>
-                        </button>
-                      </div>
 
-                      {showAddTestimonial && (
-                        <form onSubmit={handleSaveTestimonial} className="p-5 rounded-2xl bg-[#FAF9F5] border-2 border-[#0F172A] space-y-4">
-                          <h4 className="font-serif text-sm font-bold text-[#0F172A]">
-                            {editingTestimonialId ? 'Edit Endorsement' : 'Add Endorsement'}
-                          </h4>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Author Name</label>
-                              <input
-                                type="text"
-                                placeholder="Full Name"
-                                value={testimonialForm.author}
-                                onChange={(e) => setTestimonialForm({ ...testimonialForm, author: e.target.value })}
-                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-bold"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Role / Designation</label>
-                              <input
-                                type="text"
-                                placeholder="e.g. Senior Medical Officer"
-                                value={testimonialForm.role}
-                                onChange={(e) => setTestimonialForm({ ...testimonialForm, role: e.target.value })}
-                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-bold uppercase mb-1">Category</label>
-                              <select
-                                value={testimonialForm.category}
-                                onChange={(e) => setTestimonialForm({ ...testimonialForm, category: e.target.value })}
-                                className="w-full px-3 py-2 rounded-lg border text-xs bg-white font-bold"
-                              >
-                                <option value="Patient">Patient</option>
-                                <option value="Student">Student</option>
-                                <option value="Faculty">Faculty</option>
-                                <option value="Community Leader">Community Leader</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] font-bold uppercase mb-1">Organization / Location</label>
-                            <input
-                              type="text"
-                              placeholder="e.g. Bir Hospital, Kathmandu"
-                              value={testimonialForm.organization}
-                              onChange={(e) => setTestimonialForm({ ...testimonialForm, organization: e.target.value })}
-                              className="w-full px-3 py-2 rounded-lg border text-xs bg-white"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] font-bold uppercase mb-1">Testimonial Quote</label>
-                            <textarea
-                              placeholder="“Dr. Naresh's leadership transformed our...”"
-                              value={testimonialForm.quote}
-                              onChange={(e) => setTestimonialForm({ ...testimonialForm, quote: e.target.value })}
-                              className="w-full px-3 py-2 rounded-lg border text-xs bg-white italic font-serif"
-                              rows={3}
-                              required
-                            />
-                          </div>
-
-                          <div className="flex justify-end gap-2">
-                            <button
-                              type="button"
-                              onClick={() => setShowAddTestimonial(false)}
-                              className="px-4 py-2 rounded-lg border text-xs font-bold"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="px-5 py-2 rounded-lg bg-[#0F172A] text-white text-xs font-bold uppercase"
-                            >
-                              {editingTestimonialId ? 'Update Endorsement' : 'Save Endorsement'}
-                            </button>
-                          </div>
-                        </form>
-                      )}
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {testimonials.map((t) => (
-                          <div key={t.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-2">
-                            <div>
-                              <span className="font-mono text-[10px] bg-[#0D9488] px-2 py-0.5 rounded font-bold uppercase">{t.category}</span>
-                              <p className="text-xs text-[#0F172A] italic font-serif mt-2">"{t.quote}"</p>
-                              <div className="mt-2 text-xs font-bold text-[#0F172A]">{t.author}</div>
-                              <div className="text-[11px] text-[#2D3B4E]">{t.role} {t.organization ? `· ${t.organization}` : ''}</div>
-                            </div>
-
-                            <div className="flex items-center justify-end gap-2 border-t pt-2">
-                              <button
-                                onClick={() => handleStartEditTestimonial(t)}
-                                className="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-xs font-bold"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => deleteTestimonial(t.id)}
-                                className="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   {/* TAB 4: Current Initiatives & Programs Management */}
                   {activeTab === 'initiatives' && (

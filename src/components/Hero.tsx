@@ -13,36 +13,36 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { biography, heroPortrait, profilePortrait } = useContent();
 
   return (
-    <section id="hero" className="relative min-h-[85vh] pt-28 sm:pt-36 pb-20 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
       {/* Paper Grain Overlay */}
       <div className="absolute inset-0 bg-grain opacity-40 pointer-events-none -z-10"></div>
 
       {/* 50% / 50% Split Screen Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-8 items-center w-full">
         
         {/* LEFT COLUMN (50% Width on Desktop) */}
-        <div className="lg:col-span-6 space-y-6 z-10">
+        <div className="lg:col-span-6 space-y-4 sm:space-y-6 z-10">
           
           {/* Headline Name & Slogan */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-3"
+            className="space-y-2.5 sm:space-y-3"
           >
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#0F172A] leading-tight sm:whitespace-nowrap">
               Dr. Naresh Bhatta
             </h1>
             <div className="text-sm sm:text-base md:text-lg xl:text-xl text-[#334155] font-normal leading-relaxed flex items-start gap-2">
               <span className="shrink-0 text-[#334155] font-medium mt-0.5">-</span>
-              <span className="leading-relaxed">
-                <span className="inline-block whitespace-nowrap">National Leader</span>
-                <span className="mx-1.5 inline-block">|</span>
-                <span className="inline-block whitespace-nowrap">Healthcare Professional</span>
-                <span className="mx-1.5 inline-block">|</span>
-                <span className="inline-block whitespace-nowrap">Public Policy Reformer</span>
-                <span className="mx-1.5 inline-block">|</span>
-                <span className="inline-block whitespace-nowrap">Advocate for a Prosperous Nepal</span>
+              <span className="leading-relaxed flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>National Leader</span>
+                <span className="text-[#94A3B8] hidden sm:inline">|</span>
+                <span>Healthcare Professional</span>
+                <span className="text-[#94A3B8] hidden sm:inline">|</span>
+                <span>Public Policy Reformer</span>
+                <span className="text-[#94A3B8] hidden sm:inline">|</span>
+                <span>Advocate for a Prosperous Nepal</span>
               </span>
             </div>
           </motion.div>
@@ -53,11 +53,11 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap items-center gap-3.5 pt-2"
+            className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2"
           >
             <button
               onClick={() => onNavigate('journey')}
-              className="px-6 py-3 bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#DC2626] transition-all shadow-md hover:shadow-lg flex items-center gap-2 group cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#DC2626] transition-all shadow-md hover:shadow-lg flex items-center gap-2 group cursor-pointer"
             >
               <span>Explore Journey</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -65,7 +65,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
             <button
               onClick={() => onNavigate('initiatives')}
-              className="px-6 py-3 bg-white text-[#0F172A] border border-[#E2E8F0] font-bold text-xs uppercase tracking-wider rounded-full hover:border-[#0F172A] hover:bg-[#FAF9F5] transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#0F172A] border border-[#E2E8F0] font-bold text-xs uppercase tracking-wider rounded-full hover:border-[#0F172A] hover:bg-[#FAF9F5] transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
             >
               <span>Community Initiatives</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#DC2626]" />
@@ -74,7 +74,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         </div>
 
         {/* RIGHT COLUMN (50% Width on Desktop) */}
-        <div className="lg:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[540px]">
+        <div className="lg:col-span-6 relative flex items-center justify-center min-h-[340px] sm:min-h-[540px]">
           
           {/* ARTISTIC NEPAL FLAG BACKGROUND (Watercolor / Brush-stroke Effect at 20-30% Opacity) */}
           <motion.div
@@ -92,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none select-none -z-10"
           >
             <svg
-              className="w-full max-w-lg h-auto filter drop-shadow-lg"
+              className="w-full max-w-xs sm:max-w-lg h-auto filter drop-shadow-lg"
               viewBox="0 0 400 450"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md my-4 flex items-end justify-center"
+            className="relative w-full max-w-md my-0 sm:my-4 flex items-end justify-center"
           >
             {/* Soft Ambient Radial Shadow behind portrait */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-gradient-to-t from-[#0F172A]/15 to-transparent rounded-full blur-xl pointer-events-none -z-10"></div>
@@ -170,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 src={heroPortrait || profilePortrait || portraitImage}
                 alt={`${biography.name} - Official Portrait`}
                 referrerPolicy="no-referrer"
-                className="w-auto h-[460px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
+                className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
               />
             </div>
           </motion.div>

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TheBeginning } from './components/TheBeginning';
-import { NationalVision } from './components/NationalVision';
 import { TimelineFlow } from './components/TimelineFlow';
-import { VisionMission } from './components/VisionMission';
 import { LeadershipJourney } from './components/LeadershipJourney';
+import { HumanitarianLeadership, NationalAchievements } from './components/CommunityImpact';
+import { NationalVision } from './components/NationalVision';
+import { VisionMission } from './components/VisionMission';
 import { AcademicJourney } from './components/AcademicJourney';
-import { CommunityImpact } from './components/CommunityImpact';
 import { MediaGallery } from './components/MediaGallery';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -23,10 +23,9 @@ export default function App() {
       const sections: { id: NavigationTab; elemId: string }[] = [
         { id: 'home', elemId: 'hero' },
         { id: 'about', elemId: 'story' },
-        { id: 'vision', elemId: 'vision' },
-        { id: 'leadership', elemId: 'leadership' },
         { id: 'journey', elemId: 'journey' },
-        { id: 'impact', elemId: 'impact' },
+        { id: 'leadership', elemId: 'leadership' },
+        { id: 'vision', elemId: 'vision' },
         { id: 'academic', elemId: 'academic' },
         { id: 'media', elemId: 'media' },
         { id: 'contact', elemId: 'contact' },
@@ -59,10 +58,10 @@ export default function App() {
       home: 'hero',
       about: 'story',
       journey: 'journey',
-      vision: 'vision',
       leadership: 'leadership',
+      vision: 'vision',
       academic: 'academic',
-      impact: 'impact',
+      impact: 'academic',
       media: 'media',
       contact: 'contact',
     };
@@ -80,36 +79,39 @@ export default function App() {
         {/* Navigation Header & Lower Dock */}
         <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 
-        {/* Main Storytelling Sections in PDF Flow Sequence */}
+        {/* Main Storytelling Sections in Restructured Flow Sequence */}
         <main>
-          {/* 1. Hero — Opening Statement */}
+          {/* 1. Home — Hero Greeting */}
           <Hero onNavigate={handleNavigate} />
 
-          {/* 2. Introduction — Who He Is */}
+          {/* 2. Story — Meet Dr. Naresh Bhatta */}
           <TheBeginning />
 
-          {/* 3. National Vision — Five Pillars */}
-          <NationalVision />
-
-          {/* Public Leadership — Simple Minimalist Graphical Grid */}
-          <LeadershipJourney />
-
-          {/* 4. The Journey — Scroll-Driven Timeline */}
+          {/* 3. The Journey — Timeline & Milestones */}
           <TimelineFlow />
 
-          {/* 5. National Achievements & 6. Humanitarian Leadership */}
-          <CommunityImpact />
+          {/* 4. Leadership — Public Leadership & Humanitarian Crisis Relief */}
+          <div id="leadership" className="space-y-0">
+            <LeadershipJourney />
+            <HumanitarianLeadership />
+          </div>
 
-          {/* 7. Education & Distinctions */}
-          <AcademicJourney />
+          {/* 5. Vision — Five Pillars, Policy Agenda, 7 Principles & Vision for New Nepal */}
+          <div id="vision" className="space-y-0">
+            <NationalVision />
+            <VisionMission />
+          </div>
 
-          {/* 8. Policy Platform (15 Priorities) + 9. Philosophy & 7 Principles + 10. Vision for a New Nepal */}
-          <VisionMission />
+          {/* 6. Academics — Education, Honours & National Achievements */}
+          <div id="academic" className="space-y-0">
+            <AcademicJourney />
+            <NationalAchievements />
+          </div>
 
-          {/* Supporting Media Section */}
+          {/* 7. Media Gallery & Publications */}
           <MediaGallery />
 
-          {/* 11. Call to Action — Join the Movement */}
+          {/* 8. Call to Action — Connect */}
           <ContactSection />
         </main>
 

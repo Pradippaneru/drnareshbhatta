@@ -49,7 +49,6 @@ export const TimelineFlow: React.FC = () => {
       title: "MBBS",
       description: "Built a strong academic interest in physiology, public health, and healthcare leadership — the foundation for a career defined by service, not status.",
       badge: "MEDICAL DEGREE",
-      photoText: "Med-school era clinical rounds photo",
       icon: <HeartHandshake className="w-5 h-5 text-[#1E3A8A]" />,
       details: [
         "Earned Bachelor of Medicine, Bachelor of Surgery (MBBS) degree.",
@@ -77,7 +76,6 @@ export const TimelineFlow: React.FC = () => {
       title: "COVID-19 & earthquake response",
       description: "Served on the frontline during the COVID-19 pandemic, and joined volunteer medical relief missions after the 2015 Gorkha and 2023 Jajarkot earthquakes.",
       badge: "HUMANITARIAN",
-      photoText: "Frontline & earthquake relief mission photo",
       icon: <ShieldAlert className="w-5 h-5 text-[#1E3A8A]" />,
       details: [
         "Continuous ICU and emergency ward shifts during COVID-19 pandemic waves.",
@@ -186,14 +184,6 @@ export const TimelineFlow: React.FC = () => {
                       <p className="text-sm text-[#475569] leading-relaxed font-normal mb-4">
                         {node.description}
                       </p>
-
-                      {/* Photo Placeholder Frame if present */}
-                      {node.photoText && (
-                        <div className="mt-4 mb-4 p-3 rounded-xl border border-dashed border-[#E2E8F0] bg-[#FAF8F5] text-center font-mono text-xs text-[#64748B] flex items-center justify-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-[#1E3A8A]"></span>
-                          <span>{node.photoText}</span>
-                        </div>
-                      )}
 
                       <div className={`pt-4 border-t border-[#E2E8F0] flex items-center ${
                         isEven ? 'md:justify-start' : 'md:justify-end'
