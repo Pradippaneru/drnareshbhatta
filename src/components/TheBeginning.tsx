@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
-import portraitImage from '../assets/images/dr_abrar_portrait_1784881890848.jpg';
+import portraitImage from '../assets/images/dr_naresh_bhatta_portrait_1786291605566.jpg';
 
 export const TheBeginning: React.FC = () => {
   const { biography, meetPortrait, profilePortrait, isContentLoading } = useContent();

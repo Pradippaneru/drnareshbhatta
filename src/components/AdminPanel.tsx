@@ -171,8 +171,8 @@ export const AdminPanel: React.FC = () => {
 
   // Picture Upload state & handler
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  // Helper to compress and resize image files before base64 conversion to avoid Firestore/LocalStorage size limits
-  const compressImage = (file: File, maxWidth = 1200, maxHeight = 1200, quality = 0.85): Promise<string> => {
+  // Helper to compress and resize image files before base64 conversion to fit within Firestore's 1MB size limit
+  const compressImage = (file: File, maxWidth = 1000, maxHeight = 1000, quality = 0.75): Promise<string> => {
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -201,7 +201,16 @@ export const AdminPanel: React.FC = () => {
           }
 
           ctx.drawImage(img, 0, 0, width, height);
-          const compressed = canvas.toDataURL('image/jpeg', quality);
+
+          let currentQuality = quality;
+          let compressed = canvas.toDataURL('image/jpeg', currentQuality);
+
+          // Force max base64 size under ~650 KB (750,000 chars) to guarantee it fits in Firestore database
+          while (compressed.length > 750000 && currentQuality > 0.25) {
+            currentQuality -= 0.1;
+            compressed = canvas.toDataURL('image/jpeg', currentQuality);
+          }
+
           resolve(compressed);
         };
         img.onerror = () => resolve(e.target?.result as string);

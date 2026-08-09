@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
-import portraitImage from '../assets/images/dr_abrar_portrait_1784881890848.jpg';
+import portraitImage from '../assets/images/dr_naresh_bhatta_portrait_1786291605566.jpg';
 import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
 import { 
   collection, 
@@ -408,10 +408,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           }
           if (data.profilePortrait) setProfilePortraitState(data.profilePortrait);
           if (data.heroPortrait) setHeroPortraitState(data.heroPortrait);
-          else if (data.profilePortrait) setHeroPortraitState(data.profilePortrait);
-
           if (data.meetPortrait) setMeetPortraitState(data.meetPortrait);
-          else if (data.profilePortrait) setMeetPortraitState(data.profilePortrait);
 
           if (data.adminPassword) setAdminPassword(data.adminPassword);
         } else {
@@ -436,19 +433,56 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const syncCollection = <T extends { id: string }>(
       collName: string, 
       setter: React.Dispatch<React.SetStateAction<T[]>>, 
-      defaultData: T[]
+      defaultData: T[],
+      storageKey?: string
     ) => {
       try {
         return onSnapshot(collection(db, collName), (snapshot) => {
           if (snapshot.empty && defaultData.length > 0) {
-            defaultData.forEach(item => {
+            let initialItems = defaultData;
+            if (storageKey) {
+              const saved = localStorage.getItem(storageKey);
+              if (saved) {
+                try {
+                  const parsed = JSON.parse(saved);
+                  if (Array.isArray(parsed) && parsed.length > 0) {
+                    initialItems = parsed;
+                  }
+                } catch (e) {
+                  console.warn('LocalStorage parse warning for', collName, e);
+                }
+              }
+            }
+            initialItems.forEach(item => {
               setDoc(doc(db, collName, item.id), item).catch(console.error);
             });
+            setter(initialItems);
           } else if (!snapshot.empty) {
             const items: T[] = [];
             snapshot.forEach(docSnap => {
               items.push({ ...docSnap.data(), id: docSnap.id } as T);
             });
+
+            // Automatically upload any locally saved items that are missing from Firestore database
+            if (storageKey) {
+              const saved = localStorage.getItem(storageKey);
+              if (saved) {
+                try {
+                  const parsed = JSON.parse(saved);
+                  if (Array.isArray(parsed)) {
+                    parsed.forEach((localItem: T) => {
+                      if (!items.some(remoteItem => remoteItem.id === localItem.id)) {
+                        setDoc(doc(db, collName, localItem.id), localItem).catch(console.error);
+                        items.push(localItem);
+                      }
+                    });
+                  }
+                } catch (e) {
+                  console.warn('LocalStorage check warning for', collName, e);
+                }
+              }
+            }
+
             setter(items);
           }
         }, (err) => console.warn(`Firestore listener warning for ${collName}:`, err));
@@ -458,16 +492,16 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       }
     };
 
-    const unSubFlow = syncCollection('flow_cards', setFlowCards, DEFAULT_FLOW_CARDS);
-    const unSubMilestones = syncCollection('milestones', setMilestones, MILESTONES);
-    const unSubAcademic = syncCollection('academic_records', setAcademicRecords, ACADEMIC_RECORDS);
-    const unSubImpact = syncCollection('impact_stats', setImpactStats, IMPACT_STATS);
-    const unSubTestimonials = syncCollection('testimonials', setTestimonials, TESTIMONIALS);
-    const unSubBlogs = syncCollection('blog_posts', setBlogPosts, ARTICLES);
-    const unSubSpeeches = syncCollection('speeches', setSpeeches, SPEECHES);
-    const unSubInitiatives = syncCollection('initiatives', setInitiatives, INITIATIVES);
-    const unSubMedia = syncCollection('media_items', setMediaItems, MEDIA_ITEMS);
-    const unSubMessages = syncCollection('contact_messages', setContactMessages, []);
+    const unSubFlow = syncCollection('flow_cards', setFlowCards, DEFAULT_FLOW_CARDS, 'dr_naresh_flowcards');
+    const unSubMilestones = syncCollection('milestones', setMilestones, MILESTONES, 'dr_naresh_milestones');
+    const unSubAcademic = syncCollection('academic_records', setAcademicRecords, ACADEMIC_RECORDS, 'dr_naresh_academic');
+    const unSubImpact = syncCollection('impact_stats', setImpactStats, IMPACT_STATS, 'dr_naresh_impact');
+    const unSubTestimonials = syncCollection('testimonials', setTestimonials, TESTIMONIALS, 'dr_naresh_testimonials');
+    const unSubBlogs = syncCollection('blog_posts', setBlogPosts, ARTICLES, 'dr_naresh_blogs');
+    const unSubSpeeches = syncCollection('speeches', setSpeeches, SPEECHES, 'dr_naresh_speeches');
+    const unSubInitiatives = syncCollection('initiatives', setInitiatives, INITIATIVES, 'dr_naresh_initiatives');
+    const unSubMedia = syncCollection('media_items', setMediaItems, MEDIA_ITEMS, 'dr_naresh_media');
+    const unSubMessages = syncCollection('contact_messages', setContactMessages, [], 'dr_naresh_messages');
 
     return () => {
       unsubscribeBio();
