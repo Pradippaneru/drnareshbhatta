@@ -3,8 +3,14 @@ import { motion } from 'motion/react';
 import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
+import portraitImage from '../assets/images/dr_abrar_portrait_1784881890848.jpg';
+
 export const TheBeginning: React.FC = () => {
-  const { biography, meetPortrait, profilePortrait } = useContent();
+  const { biography, meetPortrait, profilePortrait, isContentLoading } = useContent();
+
+  const currentMeet = meetPortrait || profilePortrait || portraitImage;
+  const isCustomMeet = Boolean(currentMeet && currentMeet !== portraitImage);
+  const showSkeleton = isContentLoading && !isCustomMeet;
 
   return (
     <section id="story" className="py-20 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
@@ -33,12 +39,18 @@ export const TheBeginning: React.FC = () => {
           className="hidden lg:block lg:col-span-5 relative"
         >
           <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#E2E8F0] bg-white">
-            <img
-              src={meetPortrait || profilePortrait}
-              alt={`${biography.name} Portrait`}
-              referrerPolicy="no-referrer"
-              className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
-            />
+            {showSkeleton ? (
+              <div className="w-full h-[450px] bg-gradient-to-t from-slate-200/80 via-slate-100/60 to-slate-200/30 animate-pulse rounded-2xl flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-slate-300/40 animate-ping"></div>
+              </div>
+            ) : (
+              <img
+                src={currentMeet}
+                alt={`${biography.name} Portrait`}
+                referrerPolicy="no-referrer"
+                className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
+              />
+            )}
           </div>
         </motion.div>
 

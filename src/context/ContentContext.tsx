@@ -102,6 +102,8 @@ interface ContentContextType {
   addContactMessage: (msg: Omit<ContactMessage, 'id' | 'timestamp' | 'read'>) => void;
   markMessageRead: (id: string) => void;
   deleteContactMessage: (id: string) => void;
+  // Loading state
+  isContentLoading: boolean;
   // Auth state
   isAdminLoggedIn: boolean;
   adminLogin: (password: string) => boolean;
@@ -318,6 +320,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return localStorage.getItem('dr_naresh_admin_password') || 'admin123';
   });
 
+  const [isContentLoading, setIsContentLoading] = useState<boolean>(true);
+
   // LocalStorage Sync
   useEffect(() => {
     localStorage.setItem('dr_naresh_biography', JSON.stringify(biography));
@@ -419,9 +423,14 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             adminPassword: 'admin123'
           }).catch(console.error);
         }
-      }, (err) => console.warn('Firestore bio listener warning:', err));
+        setIsContentLoading(false);
+      }, (err) => {
+        console.warn('Firestore bio listener warning:', err);
+        setIsContentLoading(false);
+      });
     } catch (e) {
       console.warn('Firestore bio error:', e);
+      setIsContentLoading(false);
     }
 
     const syncCollection = <T extends { id: string }>(
@@ -807,6 +816,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       addContactMessage,
       markMessageRead,
       deleteContactMessage,
+      isContentLoading,
       isAdminLoggedIn,
       adminLogin,
       adminLogout,
