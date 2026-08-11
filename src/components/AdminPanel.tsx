@@ -864,10 +864,7 @@ export const AdminPanel: React.FC = () => {
                     </button>
                   </form>
 
-                  <div className="p-3 rounded-xl bg-[#0F172A]/5 border border-[#E2E8F0] text-[11px] text-[#64748B] flex items-center justify-center gap-1.5 font-medium">
-                    <Shield className="w-3.5 h-3.5 text-[#0D9488]" />
-                    <span>Protected Admin Portal · Brute-Force Rate Limiting Active</span>
-                  </div>
+
                 </div>
               ) : (
                 /* Admin Dashboard Main Content */
