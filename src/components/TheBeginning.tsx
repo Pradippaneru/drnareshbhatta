@@ -49,10 +49,7 @@ export const TheBeginning: React.FC = () => {
                 alt={`${biography.name} Portrait`}
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src !== portraitImage) {
-                    target.src = portraitImage;
-                  }
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
                 }}
                 className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
               />

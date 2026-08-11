@@ -1183,6 +1183,9 @@ export const AdminPanel: React.FC = () => {
                             <img
                               src={heroPortrait || profilePortrait}
                               alt="Hero Portrait Preview"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).style.display = 'none';
+                              }}
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -1245,6 +1248,9 @@ export const AdminPanel: React.FC = () => {
                             <img
                               src={meetPortrait || profilePortrait}
                               alt="Story Meet Portrait Preview"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).style.display = 'none';
+                              }}
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -1307,6 +1313,9 @@ export const AdminPanel: React.FC = () => {
                             <img
                               src={profilePortrait}
                               alt="Default Portrait Preview"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).style.display = 'none';
+                              }}
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -2398,6 +2407,9 @@ export const AdminPanel: React.FC = () => {
                                 <img
                                   src={initiativeForm.image}
                                   alt="Preview"
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                  }}
                                   className="w-20 h-14 object-cover rounded-lg border shrink-0 bg-gray-100"
                                 />
                               )}
@@ -2444,7 +2456,14 @@ export const AdminPanel: React.FC = () => {
                           <div key={item.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-3">
                             <div className="space-y-2">
                               <div className="relative h-32 rounded-xl overflow-hidden bg-black">
-                                <img src={item.image} alt={item.title} className="w-full h-full object-cover opacity-90" />
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                  }}
+                                  className="w-full h-full object-cover opacity-90"
+                                />
                                 <div className="absolute top-2 left-2 flex gap-1">
                                   <span className="px-2 py-0.5 rounded bg-black/80 text-white text-[10px] font-bold">
                                     {item.category}
@@ -2604,6 +2623,9 @@ export const AdminPanel: React.FC = () => {
                                 <img
                                   src={mediaForm.image}
                                   alt="Preview"
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                  }}
                                   className="w-20 h-16 object-cover rounded-lg border shrink-0 bg-gray-100"
                                 />
                               )}
@@ -2650,7 +2672,14 @@ export const AdminPanel: React.FC = () => {
                           <div key={item.id} className="p-3.5 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-2">
                             <div className="space-y-2">
                               <div className="relative h-36 rounded-xl overflow-hidden bg-black">
-                                <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                  }}
+                                  className="w-full h-full object-cover"
+                                />
                                 <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 text-white text-[10px] font-bold">
                                   {item.category}
                                 </span>

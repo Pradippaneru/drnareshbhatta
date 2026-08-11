@@ -180,10 +180,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   alt={`${biography.name} - Official Portrait`}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src !== portraitImage) {
-                      target.src = portraitImage;
-                    }
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
                   }}
                   className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
                 />
