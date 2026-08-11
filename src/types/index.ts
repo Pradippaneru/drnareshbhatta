@@ -6,6 +6,7 @@ export type NavigationTab =
   | 'leadership'
   | 'academic'
   | 'impact'
+  | 'initiatives'
   | 'media'
   | 'contact';
 

@@ -61,7 +61,8 @@ export default function App() {
       leadership: 'leadership',
       vision: 'vision',
       academic: 'academic',
-      impact: 'academic',
+      impact: 'humanitarian',
+      initiatives: 'humanitarian',
       media: 'media',
       contact: 'contact',
     };
