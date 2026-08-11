@@ -40,7 +40,7 @@ export const NATIONAL_VISION = [
     iconName: "TrendingUp"
   },
   {
-    title: "Strong Democracy",
+    title: "Participatory Democracy",
     description: "Protect constitutional democracy, strengthen democratic institutions, uphold the rule of law, and ensure accountable governance.",
     iconName: "Scale"
   },

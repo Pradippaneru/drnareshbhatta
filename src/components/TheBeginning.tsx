@@ -8,9 +8,8 @@ import portraitImage from '../assets/images/dr_naresh_bhatta_portrait_1786291605
 export const TheBeginning: React.FC = () => {
   const { biography, meetPortrait, profilePortrait, isContentLoading } = useContent();
 
-  const currentMeet = meetPortrait || profilePortrait || portraitImage;
-  const isCustomMeet = Boolean(currentMeet && currentMeet !== portraitImage);
-  const showSkeleton = isContentLoading && !isCustomMeet;
+  const currentMeet = meetPortrait || profilePortrait;
+  const showSkeleton = isContentLoading && !currentMeet;
 
   return (
     <section id="story" className="py-20 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
@@ -43,7 +42,7 @@ export const TheBeginning: React.FC = () => {
               <div className="w-full h-[450px] bg-gradient-to-t from-slate-200/80 via-slate-100/60 to-slate-200/30 animate-pulse rounded-2xl flex items-center justify-center">
                 <div className="w-12 h-12 rounded-full bg-slate-300/40 animate-ping"></div>
               </div>
-            ) : (
+            ) : currentMeet ? (
               <img
                 src={currentMeet}
                 alt={`${biography.name} Portrait`}
@@ -53,7 +52,7 @@ export const TheBeginning: React.FC = () => {
                 }}
                 className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
               />
-            )}
+            ) : null}
           </div>
         </motion.div>
 

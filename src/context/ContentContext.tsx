@@ -299,17 +299,17 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (saved && saved !== pencilSketchPortrait) {
       return saved;
     }
-    return portraitImage;
+    return '';
   });
 
   const [heroPortrait, setHeroPortraitState] = useState<string>(() => {
     const saved = localStorage.getItem('dr_naresh_hero_portrait');
-    return saved || localStorage.getItem('dr_naresh_portrait') || portraitImage;
+    return saved || localStorage.getItem('dr_naresh_portrait') || '';
   });
 
   const [meetPortrait, setMeetPortraitState] = useState<string>(() => {
     const saved = localStorage.getItem('dr_naresh_meet_portrait');
-    return saved || localStorage.getItem('dr_naresh_portrait') || portraitImage;
+    return saved || localStorage.getItem('dr_naresh_portrait') || '';
   });
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
@@ -419,9 +419,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         } else {
           setDoc(doc(db, 'site_settings', 'main'), {
             biography: BIOGRAPHY,
-            profilePortrait: portraitImage,
-            heroPortrait: portraitImage,
-            meetPortrait: portraitImage,
+            profilePortrait: '',
+            heroPortrait: '',
+            meetPortrait: '',
             adminPassword: 'drnaresh2026',
             adminPasswordHint: 'Year/Prefix (drnaresh2026) or official phone number'
           }).catch(console.error);

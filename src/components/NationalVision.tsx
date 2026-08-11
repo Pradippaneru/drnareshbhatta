@@ -19,7 +19,7 @@ export const NationalVision: React.FC = () => {
         'Build a high-income Nepal through capitalism, entrepreneurship, industrialization, innovation, infrastructure development, tourism, hydropower, agriculture modernization, and technology.',
     },
     {
-      title: 'Strong Democracy',
+      title: 'Participatory Democracy',
       description:
         'Protect constitutional democracy, strengthen democratic institutions, uphold the rule of law, and ensure accountable governance.',
     },

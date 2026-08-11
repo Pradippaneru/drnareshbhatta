@@ -12,9 +12,8 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { biography, heroPortrait, profilePortrait, isContentLoading } = useContent();
 
-  const currentPortrait = heroPortrait || profilePortrait || portraitImage;
-  const isCustomPortrait = Boolean(currentPortrait && currentPortrait !== portraitImage);
-  const showSkeleton = isContentLoading && !isCustomPortrait;
+  const currentPortrait = heroPortrait || profilePortrait;
+  const showSkeleton = isContentLoading && !currentPortrait;
 
   return (
     <section id="hero" className="relative pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
@@ -171,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="w-[280px] sm:w-[380px] h-[350px] sm:h-[520px] rounded-3xl bg-gradient-to-t from-slate-200/80 via-slate-100/60 to-slate-200/30 animate-pulse border border-slate-200/60 shadow-sm flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-slate-300/40 animate-ping"></div>
                 </div>
-              ) : (
+              ) : currentPortrait ? (
                 <motion.img
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -184,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   }}
                   className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
                 />
-              )}
+              ) : null}
             </div>
           </motion.div>
         </div>
