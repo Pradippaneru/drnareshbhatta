@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
-import portraitImage from '../assets/images/dr_naresh_bhatta_portrait_1786291605566.jpg';
 import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
 import { 
   collection, 
@@ -130,7 +129,7 @@ const DEFAULT_FLOW_CARDS: FlowCardItem[] = [
     handle: "@policy_reformer",
     handleTag: "Policy Reformer",
     timestamp: "Present · Active",
-    avatar: portraitImage,
+    avatar: "",
     quote: "“Pragmatic Nationalism: Every policy must be judged on one fundamental question: Does it improve the lives of the Nepali people?”",
     details: [
       "Pursuing LLB with a focus on constitutional governance, legislative reform, and anti-corruption frameworks.",
@@ -294,23 +293,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     ];
   });
 
-  const [profilePortrait, setProfilePortraitState] = useState<string>(() => {
-    const saved = localStorage.getItem('dr_naresh_portrait');
-    if (saved && saved !== pencilSketchPortrait) {
-      return saved;
-    }
-    return '';
-  });
-
-  const [heroPortrait, setHeroPortraitState] = useState<string>(() => {
-    const saved = localStorage.getItem('dr_naresh_hero_portrait');
-    return saved || localStorage.getItem('dr_naresh_portrait') || '';
-  });
-
-  const [meetPortrait, setMeetPortraitState] = useState<string>(() => {
-    const saved = localStorage.getItem('dr_naresh_meet_portrait');
-    return saved || localStorage.getItem('dr_naresh_portrait') || '';
-  });
+  const [profilePortrait, setProfilePortraitState] = useState<string>('');
+  const [heroPortrait, setHeroPortraitState] = useState<string>('');
+  const [meetPortrait, setMeetPortraitState] = useState<string>('');
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
     return sessionStorage.getItem('dr_naresh_admin_auth') === 'true';
@@ -371,30 +356,6 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     localStorage.setItem('dr_naresh_messages', JSON.stringify(contactMessages));
   }, [contactMessages]);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('dr_naresh_portrait', profilePortrait);
-    } catch (e) {
-      console.warn('LocalStorage portrait write warning:', e);
-    }
-  }, [profilePortrait]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('dr_naresh_hero_portrait', heroPortrait);
-    } catch (e) {
-      console.warn('LocalStorage hero portrait write warning:', e);
-    }
-  }, [heroPortrait]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('dr_naresh_meet_portrait', meetPortrait);
-    } catch (e) {
-      console.warn('LocalStorage meet portrait write warning:', e);
-    }
-  }, [meetPortrait]);
-
   // Firebase Firestore Real-Time Sync & Seeding
   useEffect(() => {
     let unsubscribeBio: () => void = () => {};
@@ -410,9 +371,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             }
             setBiography(bioData);
           }
-          if (data.profilePortrait) setProfilePortraitState(data.profilePortrait);
-          if (data.heroPortrait) setHeroPortraitState(data.heroPortrait);
-          if (data.meetPortrait) setMeetPortraitState(data.meetPortrait);
+          const p = data.profilePortrait || '';
+          const h = data.heroPortrait || p;
+          const m = data.meetPortrait || p;
+
+          setProfilePortraitState(p);
+          setHeroPortraitState(h);
+          setMeetPortraitState(m);
 
           if (data.adminPassword) setAdminPassword(data.adminPassword);
           if (data.adminPasswordHint) setAdminPasswordHintState(data.adminPasswordHint);
@@ -748,34 +713,28 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     deleteDoc(doc(db, 'contact_messages', id)).catch(console.error);
   };
 
-  const setProfilePortrait = (imgUrlOrBase64: string) => {
-    setProfilePortraitState(imgUrlOrBase64);
-    try {
-      localStorage.setItem('dr_naresh_portrait', imgUrlOrBase64);
-    } catch (e) {
-      console.warn('LocalStorage write warning:', e);
-    }
-    setDoc(doc(db, 'site_settings', 'main'), { profilePortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
+  const setProfilePortrait = (imgUrl: string) => {
+    setProfilePortraitState(imgUrl);
+    setDoc(doc(db, 'site_settings', 'main'), { 
+      profilePortrait: imgUrl,
+      updatedAt: new Date().toISOString()
+    }, { merge: true }).catch(console.error);
   };
 
-  const setHeroPortrait = (imgUrlOrBase64: string) => {
-    setHeroPortraitState(imgUrlOrBase64);
-    try {
-      localStorage.setItem('dr_naresh_hero_portrait', imgUrlOrBase64);
-    } catch (e) {
-      console.warn('LocalStorage hero write warning:', e);
-    }
-    setDoc(doc(db, 'site_settings', 'main'), { heroPortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
+  const setHeroPortrait = (imgUrl: string) => {
+    setHeroPortraitState(imgUrl);
+    setDoc(doc(db, 'site_settings', 'main'), { 
+      heroPortrait: imgUrl,
+      updatedAt: new Date().toISOString()
+    }, { merge: true }).catch(console.error);
   };
 
-  const setMeetPortrait = (imgUrlOrBase64: string) => {
-    setMeetPortraitState(imgUrlOrBase64);
-    try {
-      localStorage.setItem('dr_naresh_meet_portrait', imgUrlOrBase64);
-    } catch (e) {
-      console.warn('LocalStorage meet write warning:', e);
-    }
-    setDoc(doc(db, 'site_settings', 'main'), { meetPortrait: imgUrlOrBase64 }, { merge: true }).catch(console.error);
+  const setMeetPortrait = (imgUrl: string) => {
+    setMeetPortraitState(imgUrl);
+    setDoc(doc(db, 'site_settings', 'main'), { 
+      meetPortrait: imgUrl,
+      updatedAt: new Date().toISOString()
+    }, { merge: true }).catch(console.error);
   };
 
   const adminLogin = (pass: string): boolean => {
@@ -812,7 +771,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setSpeeches(SPEECHES);
     setInitiatives(INITIATIVES);
     setMediaItems(MEDIA_ITEMS);
-    setProfilePortraitState(portraitImage);
+    setProfilePortraitState('');
+    setHeroPortraitState('');
+    setMeetPortraitState('');
     localStorage.clear();
   };
 

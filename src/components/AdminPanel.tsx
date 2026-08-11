@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { useContent, FlowCardItem } from '../context/ContentContext';
 import { Milestone, AcademicRecord, ImpactStat, Initiative, MediaItem, Speech, Testimonial, Article } from '../types';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../lib/firebase';
 
 export const AdminPanel: React.FC = () => {
   const { 
@@ -245,34 +247,56 @@ export const AdminPanel: React.FC = () => {
     });
   };
 
+  const [isUploadingPortrait, setIsUploadingPortrait] = useState<boolean>(false);
+
+  const uploadFileToStorage = async (file: File, folder: string = 'portraits'): Promise<string> => {
+    try {
+      const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+      const storageRef = ref(storage, `site_media/${folder}/${Date.now()}_${cleanFileName}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadUrl = await getDownloadURL(snapshot.ref);
+      return downloadUrl;
+    } catch (err) {
+      console.warn('Firebase Storage upload warning, falling back to compressed image:', err);
+      const compressed = await compressImage(file, 1200, 1200, 0.85);
+      return compressed || '';
+    }
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const compressedBase64 = await compressImage(file, 1200, 1200, 0.85);
-      if (compressedBase64) {
-        setImagePreview(compressedBase64);
-        setProfilePortrait(compressedBase64);
+      setIsUploadingPortrait(true);
+      const url = await uploadFileToStorage(file, 'portraits');
+      if (url) {
+        setImagePreview(url);
+        setProfilePortrait(url);
       }
+      setIsUploadingPortrait(false);
     }
   };
 
   const handleInitiativeFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const compressedBase64 = await compressImage(file, 1200, 1200, 0.85);
-      if (compressedBase64) {
-        setInitiativeForm(prev => ({ ...prev, image: compressedBase64 }));
+      setIsUploadingPortrait(true);
+      const url = await uploadFileToStorage(file, 'initiatives');
+      if (url) {
+        setInitiativeForm(prev => ({ ...prev, image: url }));
       }
+      setIsUploadingPortrait(false);
     }
   };
 
   const handleMediaFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const compressedBase64 = await compressImage(file, 1200, 1200, 0.85);
-      if (compressedBase64) {
-        setMediaForm(prev => ({ ...prev, image: compressedBase64 }));
+      setIsUploadingPortrait(true);
+      const url = await uploadFileToStorage(file, 'media');
+      if (url) {
+        setMediaForm(prev => ({ ...prev, image: url }));
       }
+      setIsUploadingPortrait(false);
     }
   };
 
@@ -1179,15 +1203,19 @@ export const AdminPanel: React.FC = () => {
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
-                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md">
-                            <img
-                              src={heroPortrait || profilePortrait}
-                              alt="Hero Portrait Preview"
-                              onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).style.display = 'none';
-                              }}
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md flex items-center justify-center">
+                            {(heroPortrait || profilePortrait) ? (
+                              <img
+                                src={heroPortrait || profilePortrait}
+                                alt="Hero Portrait Preview"
+                                onError={(e) => {
+                                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                }}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-[10px] text-gray-400 font-sans p-2 text-center">No image</span>
+                            )}
                           </div>
 
                           <div className="space-y-3 flex-1 w-full">
@@ -1200,10 +1228,12 @@ export const AdminPanel: React.FC = () => {
                                 onChange={async (e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    const compressed = await compressImage(file, 1200, 1200, 0.85);
-                                    if (compressed) {
-                                      setHeroPortrait(compressed);
+                                    setIsUploadingPortrait(true);
+                                    const url = await uploadFileToStorage(file, 'portraits');
+                                    if (url) {
+                                      setHeroPortrait(url);
                                     }
+                                    setIsUploadingPortrait(false);
                                   }
                                 }}
                                 className="hidden"
@@ -1217,7 +1247,7 @@ export const AdminPanel: React.FC = () => {
                               <input
                                 type="text"
                                 placeholder="https://..."
-                                value={heroPortrait.startsWith('data:') ? '' : heroPortrait}
+                                value={heroPortrait}
                                 onChange={(e) => setHeroPortrait(e.target.value)}
                                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
                               />
@@ -1244,15 +1274,19 @@ export const AdminPanel: React.FC = () => {
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
-                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#1E3A8A] bg-white shrink-0 shadow-md">
-                            <img
-                              src={meetPortrait || profilePortrait}
-                              alt="Story Meet Portrait Preview"
-                              onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).style.display = 'none';
-                              }}
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-28 h-36 rounded-2xl overflow-hidden border-2 border-[#1E3A8A] bg-white shrink-0 shadow-md flex items-center justify-center">
+                            {(meetPortrait || profilePortrait) ? (
+                              <img
+                                src={meetPortrait || profilePortrait}
+                                alt="Story Meet Portrait Preview"
+                                onError={(e) => {
+                                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                }}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-[10px] text-gray-400 font-sans p-2 text-center">No image</span>
+                            )}
                           </div>
 
                           <div className="space-y-3 flex-1 w-full">
@@ -1265,10 +1299,12 @@ export const AdminPanel: React.FC = () => {
                                 onChange={async (e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    const compressed = await compressImage(file, 1200, 1200, 0.85);
-                                    if (compressed) {
-                                      setMeetPortrait(compressed);
+                                    setIsUploadingPortrait(true);
+                                    const url = await uploadFileToStorage(file, 'portraits');
+                                    if (url) {
+                                      setMeetPortrait(url);
                                     }
+                                    setIsUploadingPortrait(false);
                                   }
                                 }}
                                 className="hidden"
@@ -1282,7 +1318,7 @@ export const AdminPanel: React.FC = () => {
                               <input
                                 type="text"
                                 placeholder="https://..."
-                                value={meetPortrait.startsWith('data:') ? '' : meetPortrait}
+                                value={meetPortrait}
                                 onChange={(e) => setMeetPortrait(e.target.value)}
                                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
                               />
@@ -1309,15 +1345,19 @@ export const AdminPanel: React.FC = () => {
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
-                          <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md">
-                            <img
-                              src={profilePortrait}
-                              alt="Default Portrait Preview"
-                              onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).style.display = 'none';
-                              }}
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-[#0F172A] bg-white shrink-0 shadow-md flex items-center justify-center">
+                            {profilePortrait ? (
+                              <img
+                                src={profilePortrait}
+                                alt="Default Portrait Preview"
+                                onError={(e) => {
+                                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                }}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-[10px] text-gray-400 font-sans p-2 text-center">No image</span>
+                            )}
                           </div>
 
                           <div className="space-y-3 flex-1 w-full">
@@ -1339,7 +1379,7 @@ export const AdminPanel: React.FC = () => {
                               <input
                                 type="text"
                                 placeholder="https://..."
-                                value={profilePortrait.startsWith('data:') ? '' : profilePortrait}
+                                value={profilePortrait}
                                 onChange={(e) => setProfilePortrait(e.target.value)}
                                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
                               />
@@ -2456,14 +2496,16 @@ export const AdminPanel: React.FC = () => {
                           <div key={item.id} className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-3">
                             <div className="space-y-2">
                               <div className="relative h-32 rounded-xl overflow-hidden bg-black">
-                                <img
-                                  src={item.image}
-                                  alt={item.title}
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                  }}
-                                  className="w-full h-full object-cover opacity-90"
-                                />
+                                {item.image ? (
+                                  <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    onError={(e) => {
+                                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                    }}
+                                    className="w-full h-full object-cover opacity-90"
+                                  />
+                                ) : null}
                                 <div className="absolute top-2 left-2 flex gap-1">
                                   <span className="px-2 py-0.5 rounded bg-black/80 text-white text-[10px] font-bold">
                                     {item.category}
@@ -2672,14 +2714,16 @@ export const AdminPanel: React.FC = () => {
                           <div key={item.id} className="p-3.5 rounded-2xl bg-white border border-[#E2E8F0] flex flex-col justify-between space-y-2">
                             <div className="space-y-2">
                               <div className="relative h-36 rounded-xl overflow-hidden bg-black">
-                                <img
-                                  src={item.image}
-                                  alt={item.title}
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                  }}
-                                  className="w-full h-full object-cover"
-                                />
+                                {item.image ? (
+                                  <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    onError={(e) => {
+                                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                    }}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : null}
                                 <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 text-white text-[10px] font-bold">
                                   {item.category}
                                 </span>

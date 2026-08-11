@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 // Load firebase-applet-config.json safely if it exists locally, without breaking builds when gitignored
 const localConfigs = import.meta.glob('../../firebase-applet-config.json', { eager: true }) as Record<string, { default?: Record<string, string> }>;
@@ -28,3 +29,6 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 export const db = databaseId 
   ? getFirestore(app, databaseId)
   : getFirestore(app);
+
+export const storage = getStorage(app);
+

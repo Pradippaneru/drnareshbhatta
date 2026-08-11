@@ -200,15 +200,17 @@ export const HumanitarianLeadership: React.FC = () => {
             className="group relative rounded-3xl overflow-hidden bg-[#0F172A] text-white shadow-xl min-h-[380px] flex flex-col justify-end p-8 border border-[#1E293B]"
           >
             {/* Background Image with Overlay */}
-            <img
-              src={mission.image}
-              alt={mission.title}
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = 'none';
-              }}
-              className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:scale-105 group-hover:opacity-45 transition-all duration-700 pointer-events-none"
-            />
+            {mission.image ? (
+              <img
+                src={mission.image}
+                alt={mission.title}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
+                className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:scale-105 group-hover:opacity-45 transition-all duration-700 pointer-events-none"
+              />
+            ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/70 to-transparent"></div>
 
             <div className="relative z-10 space-y-3">

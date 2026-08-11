@@ -59,15 +59,17 @@ export const MediaGallery: React.FC = () => {
             onClick={() => setActiveLightboxItem(item)}
           >
             <div className="h-80 sm:h-96 overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                }}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
-              />
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                />
+              ) : null}
             </div>
 
             {/* Hover & Always-On Overlay */}
@@ -123,15 +125,17 @@ export const MediaGallery: React.FC = () => {
               </button>
 
               <div className="max-h-[70vh] bg-[#171717] flex items-center justify-center overflow-hidden">
-                <img
-                  src={activeLightboxItem.image}
-                  alt={activeLightboxItem.title}
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  }}
-                  className="w-full h-full object-contain max-h-[70vh]"
-                />
+                {activeLightboxItem.image ? (
+                  <img
+                    src={activeLightboxItem.image}
+                    alt={activeLightboxItem.title}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    }}
+                    className="w-full h-full object-contain max-h-[70vh]"
+                  />
+                ) : null}
               </div>
 
               <div className="p-8">

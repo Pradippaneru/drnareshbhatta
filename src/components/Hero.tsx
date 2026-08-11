@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { NavigationTab } from '../types';
-import portraitImage from '../assets/images/dr_naresh_bhatta_portrait_1786291605566.jpg';
 
 interface HeroProps {
   onNavigate: (tab: NavigationTab) => void;
