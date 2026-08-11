@@ -317,7 +317,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   });
 
   const [adminPassword, setAdminPassword] = useState<string>(() => {
-    return localStorage.getItem('dr_naresh_admin_password') || 'admin123';
+    return localStorage.getItem('dr_naresh_admin_password') || 'drnaresh2026';
+  });
+
+  const [adminPasswordHint, setAdminPasswordHintState] = useState<string>(() => {
+    return localStorage.getItem('dr_naresh_admin_hint') || 'Year/Prefix (drnaresh2026) or official phone number';
   });
 
   const [isContentLoading, setIsContentLoading] = useState<boolean>(true);
@@ -411,13 +415,15 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           if (data.meetPortrait) setMeetPortraitState(data.meetPortrait);
 
           if (data.adminPassword) setAdminPassword(data.adminPassword);
+          if (data.adminPasswordHint) setAdminPasswordHintState(data.adminPasswordHint);
         } else {
           setDoc(doc(db, 'site_settings', 'main'), {
             biography: BIOGRAPHY,
             profilePortrait: portraitImage,
             heroPortrait: portraitImage,
             meetPortrait: portraitImage,
-            adminPassword: 'admin123'
+            adminPassword: 'drnaresh2026',
+            adminPasswordHint: 'Year/Prefix (drnaresh2026) or official phone number'
           }).catch(console.error);
         }
         setIsContentLoading(false);
@@ -789,6 +795,10 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const changeAdminPassword = (newPass: string) => {
     setAdminPassword(newPass);
     localStorage.setItem('dr_naresh_admin_password', newPass);
+
+    setDoc(doc(db, 'site_settings', 'main'), {
+      adminPassword: newPass
+    }, { merge: true }).catch(console.error);
   };
 
   const resetToDefaults = () => {

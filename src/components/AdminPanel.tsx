@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Lock, Key, LogOut, Upload, Image as ImageIcon, Plus, Trash2, Edit3, 
   Check, X, Shield, RefreshCw, FileText, Phone, Mail, User, Sparkles, MessageSquare, Layers, Heart, Camera, FolderPlus,
-  GraduationCap, Award, Mic, BookOpen, Users, Quote
+  GraduationCap, Award, Mic, BookOpen, Users, Quote, AlertTriangle, Clock, CheckCircle2
 } from 'lucide-react';
 import { useContent, FlowCardItem } from '../context/ContentContext';
 import { Milestone, AcademicRecord, ImpactStat, Initiative, MediaItem, Speech, Testimonial, Article } from '../types';
@@ -31,6 +31,29 @@ export const AdminPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
+
+  // Brute force rate-limiting state
+  const [failedAttempts, setFailedAttempts] = useState<number>(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
+  const [remainingLockoutSecs, setRemainingLockoutSecs] = useState<number>(0);
+
+  // Live countdown timer for security lockout
+  useEffect(() => {
+    if (!lockoutUntil) return;
+    const interval = setInterval(() => {
+      const secsLeft = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      if (secsLeft <= 0) {
+        setLockoutUntil(null);
+        setRemainingLockoutSecs(0);
+        setFailedAttempts(0);
+        setLoginError('');
+      } else {
+        setRemainingLockoutSecs(secsLeft);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockoutUntil]);
+
   const [activeTab, setActiveTab] = useState<
     'profile' | 'pictures' | 'journey' | 'leadership' | 'initiatives' | 'academic' | 'media' | 'blog' | 'messages' | 'security'
   >('profile');
@@ -167,6 +190,7 @@ export const AdminPanel: React.FC = () => {
 
   // Password change state
   const [newPass, setNewPass] = useState('');
+  const [newHint, setNewHint] = useState('');
   const [passSaved, setPassSaved] = useState(false);
 
   // Picture Upload state & handler
@@ -634,11 +658,29 @@ export const AdminPanel: React.FC = () => {
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      setLoginError(`Security lockout active. Please wait ${remainingLockoutSecs} second(s).`);
+      return;
+    }
+
     if (adminLogin(passwordInput)) {
       setLoginError('');
       setPasswordInput('');
+      setFailedAttempts(0);
+      setLockoutUntil(null);
     } else {
-      setLoginError('Invalid password. Default is: drnaresh2026 or 9851423026');
+      const nextAttempts = failedAttempts + 1;
+      setFailedAttempts(nextAttempts);
+      setPasswordInput('');
+
+      if (nextAttempts >= 5) {
+        const lockTime = Date.now() + 60000;
+        setLockoutUntil(lockTime);
+        setRemainingLockoutSecs(60);
+        setLoginError('Security Lockout Activated: 5 invalid attempts detected. Access blocked for 60 seconds to prevent brute-force attacks.');
+      } else {
+        setLoginError(`Invalid passcode. ${5 - nextAttempts} attempt(s) remaining before security lockout.`);
+      }
     }
   };
 
@@ -766,137 +808,166 @@ export const AdminPanel: React.FC = () => {
                         placeholder="Enter admin passcode"
                         value={passwordInput}
                         onChange={(e) => setPasswordInput(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl bg-white border border-[#E2E8F0] text-sm font-mono text-center focus:outline-none focus:border-[#0D9488]"
+                        disabled={!!lockoutUntil}
+                        className="w-full px-4 py-3 rounded-xl bg-white border border-[#E2E8F0] text-sm font-mono text-center focus:outline-none focus:border-[#0D9488] disabled:bg-slate-100 disabled:text-slate-400"
                         autoFocus
                       />
                     </div>
 
                     {loginError && (
-                      <div className="text-xs text-red-600 font-semibold bg-red-50 p-2.5 rounded-lg border border-red-200">
-                        {loginError}
+                      <div className="space-y-2 text-left">
+                        <div className="text-xs text-red-600 font-semibold bg-red-50 p-3 rounded-xl border border-red-200 flex items-start gap-2">
+                          <AlertTriangle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                          <div>
+                            <span>{loginError}</span>
+                            {remainingLockoutSecs > 0 && (
+                              <div className="mt-2 font-mono font-bold text-red-700 bg-red-100/80 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5 text-[11px]">
+                                <Clock className="w-3.5 h-3.5 text-red-600 animate-spin" />
+                                <span>Try again in {remainingLockoutSecs} second(s)</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     )}
 
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-xl bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#0D9488] transition-colors shadow-md cursor-pointer"
+                      disabled={!!lockoutUntil}
+                      className="w-full py-3 rounded-xl bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#0D9488] transition-colors shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Unlock Admin Panel
+                      {lockoutUntil ? `Portal Locked (${remainingLockoutSecs}s)` : 'Unlock Admin Panel'}
                     </button>
                   </form>
 
                   <div className="p-3 rounded-xl bg-[#0F172A]/5 border border-[#E2E8F0] text-[11px] text-[#64748B] flex items-center justify-center gap-1.5 font-medium">
                     <Shield className="w-3.5 h-3.5 text-[#0D9488]" />
-                    <span>Protected Admin Portal · Restricted & Authorized Access Only</span>
+                    <span>Protected Admin Portal · Brute-Force Rate Limiting Active</span>
                   </div>
                 </div>
               ) : (
                 /* Admin Dashboard Main Content */
                 <div className="flex-1 overflow-y-auto pt-4 space-y-6">
-                  {/* Navigation Tabs */}
-                  <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-3 border-b border-[#E2E8F0] whitespace-nowrap shrink-0">
-                    <button
-                      onClick={() => setActiveTab('profile')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'profile' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <User className="w-3.5 h-3.5" />
-                      <span>Biography & Info</span>
-                    </button>
+                  {/* Admin Navigation Header Bar */}
+                  <div className="space-y-3 border-b border-[#E2E8F0] pb-4">
+                    {/* Primary Fast Access Row */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        onClick={() => setActiveTab('messages')}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-sm ${
+                          activeTab === 'messages' 
+                            ? 'bg-[#0D9488] text-white ring-2 ring-[#0D9488]/30' 
+                            : 'bg-teal-50 text-[#0D9488] border border-teal-200 hover:bg-teal-100'
+                        }`}
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        <span>Visitor Messages ({contactMessages.length})</span>
+                        {unreadCount > 0 && (
+                          <span className="px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px] font-bold animate-pulse">
+                            {unreadCount} UNREAD
+                          </span>
+                        )}
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('pictures')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'pictures' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload Pictures</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('security')}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-sm ${
+                          activeTab === 'security' 
+                            ? 'bg-[#0F172A] text-white ring-2 ring-[#0F172A]/30' 
+                            : 'bg-slate-100 text-[#0F172A] border border-slate-200 hover:bg-slate-200'
+                        }`}
+                      >
+                        <Shield className="w-4 h-4 text-[#14B8A6]" />
+                        <span>Security & Passcode</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('journey')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'journey' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Layers className="w-3.5 h-3.5" />
-                      <span>Journey ({flowCards.length})</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('profile')}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer ${
+                          activeTab === 'profile' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-slate-200 hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <User className="w-4 h-4" />
+                        <span>Biography & Info</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('leadership')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'leadership' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Leadership ({milestones.length})</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('pictures')}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer ${
+                          activeTab === 'pictures' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-slate-200 hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <Upload className="w-4 h-4" />
+                        <span>Upload Pictures</span>
+                      </button>
+                    </div>
 
-                    <button
-                      onClick={() => setActiveTab('initiatives')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'initiatives' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Heart className="w-3.5 h-3.5" />
-                      <span>Policy & Vision ({initiatives.length})</span>
-                    </button>
+                    {/* Content Sections Row */}
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#64748B] mr-1">
+                        Content Sections:
+                      </span>
 
-                    <button
-                      onClick={() => setActiveTab('academic')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'academic' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <GraduationCap className="w-3.5 h-3.5" />
-                      <span>Academic ({academicRecords.length})</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('journey')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'journey' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <Layers className="w-3.5 h-3.5" />
+                        <span>Journey ({flowCards.length})</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('media')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'media' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Camera className="w-3.5 h-3.5" />
-                      <span>Gallery ({mediaItems.length})</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('leadership')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'leadership' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Leadership ({milestones.length})</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('blog')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'blog' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>Essays ({blogPosts.length})</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('initiatives')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'initiatives' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <Heart className="w-3.5 h-3.5" />
+                        <span>Policy & Vision ({initiatives.length})</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('messages')}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer relative ${
-                        activeTab === 'messages' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <MessageSquare className="w-3.5 h-3.5" />
-                      <span>Inquiries ({contactMessages.length})</span>
-                      {unreadCount > 0 && (
-                        <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                      )}
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('academic')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'academic' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <GraduationCap className="w-3.5 h-3.5" />
+                        <span>Academic ({academicRecords.length})</span>
+                      </button>
 
-                    <button
-                      onClick={() => setActiveTab('security')}
-                      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                        activeTab === 'security' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] hover:bg-[#E2E8F0]'
-                      }`}
-                    >
-                      <Key className="w-3.5 h-3.5" />
-                      <span>Security</span>
-                    </button>
+                      <button
+                        onClick={() => setActiveTab('media')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'media' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>Gallery ({mediaItems.length})</span>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab('blog')}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                          activeTab === 'blog' ? 'bg-[#0F172A] text-white' : 'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0]'
+                        }`}
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Essays ({blogPosts.length})</span>
+                      </button>
+                    </div>
                   </div>
 
                   {/* TAB 1: Profile & Contact Details */}
@@ -2620,58 +2691,94 @@ export const AdminPanel: React.FC = () => {
                   {/* TAB 6: Contact Messages & Inquiries */}
                   {activeTab === 'messages' && (
                     <div className="space-y-4">
-                      <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                        Incoming Visitor Messages ({contactMessages.length})
-                      </h3>
+                      <div className="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-[#E2E8F0]">
+                        <div>
+                          <h3 className="font-serif text-lg font-bold text-[#0F172A] flex items-center gap-2">
+                            <MessageSquare className="w-5 h-5 text-[#0D9488]" />
+                            Incoming Visitor Messages & Inquiries
+                          </h3>
+                          <p className="text-xs text-[#64748B]">
+                            All contact submissions sent by site visitors ({contactMessages.length} total, {unreadCount} unread)
+                          </p>
+                        </div>
+                        {unreadCount > 0 && (
+                          <button
+                            onClick={() => contactMessages.forEach(m => markMessageRead(m.id))}
+                            className="px-3 py-1.5 bg-teal-100 text-[#0D9488] rounded-xl text-xs font-bold hover:bg-teal-200 transition-colors cursor-pointer"
+                          >
+                            Mark All Read
+                          </button>
+                        )}
+                      </div>
 
                       {contactMessages.length === 0 ? (
-                        <div className="p-8 text-center text-xs text-[#2B2B2B]/60 bg-[#FAF9F5] rounded-2xl">
-                          No messages received yet.
+                        <div className="p-12 text-center text-xs text-[#2B2B2B]/60 bg-white border border-[#E2E8F0] rounded-2xl space-y-2">
+                          <MessageSquare className="w-8 h-8 text-slate-300 mx-auto" />
+                          <div className="font-bold text-[#0F172A]">No visitor messages received yet.</div>
+                          <p className="text-[#64748B] max-w-sm mx-auto">
+                            When site visitors submit inquiries via the "Get in Touch" or "Schedule Consultation" forms, their messages will appear here.
+                          </p>
                         </div>
                       ) : (
                         <div className="space-y-3">
                           {contactMessages.map((msg) => (
                             <div
                               key={msg.id}
-                              className={`p-4 rounded-2xl border ${
-                                msg.read ? 'bg-white border-[#E2E8F0]' : 'bg-[#0D9488]/10 border-[#0D9488]'
-                              } space-y-2`}
+                              className={`p-5 rounded-2xl border transition-all ${
+                                msg.read 
+                                  ? 'bg-white border-[#E2E8F0]' 
+                                  : 'bg-teal-50/70 border-[#0D9488] shadow-sm'
+                              } space-y-3`}
                             >
-                              <div className="flex items-center justify-between text-xs">
-                                <div className="font-bold text-[#0F172A]">{msg.name} ({msg.organization || 'Individual'})</div>
-                                <div className="font-mono text-[10px] text-[#2B2B2B]/60">{msg.timestamp}</div>
+                              <div className="flex items-start justify-between flex-wrap gap-2 text-xs">
+                                <div>
+                                  <div className="font-bold text-[#0F172A] text-sm flex items-center gap-2">
+                                    <span>{msg.name}</span>
+                                    <span className="text-xs font-normal text-[#64748B]">
+                                      ({msg.organization || 'Individual'})
+                                    </span>
+                                    {!msg.read && (
+                                      <span className="px-2 py-0.5 rounded-full bg-red-500 text-white text-[9px] font-bold uppercase tracking-wider">
+                                        New
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="font-mono text-[11px] text-[#64748B] bg-slate-100 px-2.5 py-1 rounded-lg">
+                                  {msg.timestamp}
+                                </div>
                               </div>
 
                               <div className="flex flex-wrap gap-3 text-xs text-[#2B2B2B]">
-                                <a href={`tel:${msg.phone}`} className="font-mono font-bold text-green-700 flex items-center gap-1">
-                                  <Phone className="w-3 h-3" /> {msg.phone}
+                                <a href={`tel:${msg.phone}`} className="font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 hover:bg-emerald-100 flex items-center gap-1.5">
+                                  <Phone className="w-3.5 h-3.5" /> {msg.phone}
                                 </a>
-                                <a href={`mailto:${msg.email}`} className="text-blue-700 flex items-center gap-1">
-                                  <Mail className="w-3 h-3" /> {msg.email}
+                                <a href={`mailto:${msg.email}`} className="text-blue-700 font-mono bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200 hover:bg-blue-100 flex items-center gap-1.5">
+                                  <Mail className="w-3.5 h-3.5" /> {msg.email}
                                 </a>
-                                <span className="bg-[#0F172A] text-white px-2 py-0.5 rounded text-[10px] uppercase font-bold">
+                                <span className="bg-[#0F172A] text-white px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold tracking-wider flex items-center">
                                   {msg.purpose}
                                 </span>
                               </div>
 
-                              <p className="text-xs text-[#0F172A] bg-[#FAF9F5] p-2.5 rounded-xl border border-[#E2E8F0]/60">
+                              <div className="text-xs text-[#0F172A] bg-slate-50 p-3.5 rounded-xl border border-[#E2E8F0] leading-relaxed">
                                 "{msg.message}"
-                              </p>
+                              </div>
 
-                              <div className="flex items-center justify-end gap-2 pt-1">
+                              <div className="flex items-center justify-end gap-2 pt-1 border-t border-[#E2E8F0]/60">
                                 {!msg.read && (
                                   <button
                                     onClick={() => markMessageRead(msg.id)}
-                                    className="px-2.5 py-1 bg-green-100 text-green-800 rounded-md text-[10px] font-bold cursor-pointer"
+                                    className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold hover:bg-emerald-200 flex items-center gap-1 cursor-pointer"
                                   >
-                                    Mark as Read
+                                    <Check className="w-3.5 h-3.5" /> Mark as Read
                                   </button>
                                 )}
                                 <button
                                   onClick={() => deleteContactMessage(msg.id)}
-                                  className="p-1 text-red-600 hover:bg-red-50 rounded cursor-pointer"
+                                  className="px-3 py-1 bg-red-50 text-red-700 hover:bg-red-100 rounded-lg text-xs font-bold flex items-center gap-1 cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" /> Delete
                                 </button>
                               </div>
                             </div>
@@ -2681,15 +2788,21 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   )}
 
-                  {/* TAB 5: Security Settings */}
+                  {/* TAB 5: Security Settings & Passcode */}
                   {activeTab === 'security' && (
-                    <div className="space-y-6 max-w-md mx-auto py-4">
-                      <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-[#E2E8F0] space-y-4">
-                        <h3 className="font-serif text-lg font-bold text-[#0F172A]">
-                          Change Admin Passcode
-                        </h3>
+                    <div className="space-y-6 max-w-lg mx-auto py-4">
+                      <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-4">
+                        <div className="flex items-center gap-2 text-[#0F172A]">
+                          <Shield className="w-5 h-5 text-[#0D9488]" />
+                          <h3 className="font-serif text-lg font-bold">
+                            Admin Security & Passcode Control
+                          </h3>
+                        </div>
+                        <p className="text-xs text-[#64748B] leading-relaxed">
+                          Update your admin backend passcode below. Changes take effect immediately and are stored securely in your persistent database.
+                        </p>
 
-                        <form onSubmit={handleChangePasswordSubmit} className="space-y-3">
+                        <form onSubmit={handleChangePasswordSubmit} className="space-y-4">
                           <div>
                             <label className="block text-xs font-bold uppercase tracking-wider text-[#0F172A] mb-1">
                               New Passcode
@@ -2699,24 +2812,54 @@ export const AdminPanel: React.FC = () => {
                               placeholder="Enter new admin passcode"
                               value={newPass}
                               onChange={(e) => setNewPass(e.target.value)}
-                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E2E8F0] text-xs font-mono"
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-[#E2E8F0] text-xs font-mono focus:bg-white focus:outline-none focus:border-[#0D9488]"
                               required
                             />
                           </div>
 
                           {passSaved && (
-                            <div className="text-xs text-green-700 font-bold bg-green-50 p-2 rounded">
-                              Passcode successfully updated!
+                            <div className="text-xs text-green-700 font-bold bg-green-50 p-3 rounded-xl border border-green-200 flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+                              <span>Passcode successfully updated and saved!</span>
                             </div>
                           )}
 
                           <button
                             type="submit"
-                            className="w-full py-2.5 rounded-xl bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#2D3B4E] cursor-pointer"
+                            className="w-full py-2.5 rounded-xl bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#0D9488] transition-colors cursor-pointer"
                           >
                             Update Passcode
                           </button>
                         </form>
+                      </div>
+
+                      {/* Active Security Safeguards Info Box */}
+                      <div className="p-5 rounded-2xl bg-[#0F172A] text-white space-y-3 shadow-md">
+                        <div className="flex items-center gap-2">
+                          <Lock className="w-4 h-4 text-[#14B8A6]" />
+                          <h4 className="font-serif text-sm font-bold text-white">Active System Protections</h4>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                          <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                            <div className="font-bold text-[#14B8A6] flex items-center gap-1.5">
+                              <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                              Brute-Force Defense
+                            </div>
+                            <p className="text-[11px] text-slate-300 leading-normal">
+                              5 consecutive invalid attempts trigger a mandatory 60-second lockout.
+                            </p>
+                          </div>
+
+                          <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                            <div className="font-bold text-[#14B8A6] flex items-center gap-1.5">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-teal-400" />
+                              Protected Persistence
+                            </div>
+                            <p className="text-[11px] text-slate-300 leading-normal">
+                              All CMS updates are synced to Firestore & local storage.
+                            </p>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-center justify-between">
