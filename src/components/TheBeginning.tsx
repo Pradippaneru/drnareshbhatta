@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import defaultPortrait from '../assets/images/naresh_bhatta.jpg';
+import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 
 export const TheBeginning: React.FC = () => {
   const { biography, meetPortrait, profilePortrait } = useContent();

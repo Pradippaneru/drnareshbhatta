@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
 import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
-import defaultPortrait from '../assets/images/naresh_bhatta.jpg';
+import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 import { 
   collection, 
   doc, 
@@ -374,9 +374,24 @@ const CANONICAL_PORTRAIT_URL = defaultPortrait;
             }
             setBiography(bioData);
           }
-          const rawP = typeof data.profilePortrait === 'string' ? data.profilePortrait.trim() : '';
-          const rawH = typeof data.heroPortrait === 'string' ? data.heroPortrait.trim() : '';
-          const rawM = typeof data.meetPortrait === 'string' ? data.meetPortrait.trim() : '';
+          let rawP = typeof data.profilePortrait === 'string' ? data.profilePortrait.trim() : '';
+          let rawH = typeof data.heroPortrait === 'string' ? data.heroPortrait.trim() : '';
+          let rawM = typeof data.meetPortrait === 'string' ? data.meetPortrait.trim() : '';
+
+          // Override old placeholder/stock URLs from Firestore with Dr. Naresh Bhatta's actual photo
+          const isPlaceholder = (url: string) => !url || url.includes('unsplash.com') || url.includes('dr_abrar') || url.includes('178488') || url.includes('dr_naresh_bhatta_portrait');
+          let needUpdate = false;
+          if (isPlaceholder(rawP)) { rawP = CANONICAL_PORTRAIT_URL; needUpdate = true; }
+          if (isPlaceholder(rawH)) { rawH = CANONICAL_PORTRAIT_URL; needUpdate = true; }
+          if (isPlaceholder(rawM)) { rawM = CANONICAL_PORTRAIT_URL; needUpdate = true; }
+
+          if (needUpdate) {
+            setDoc(doc(db, 'site_settings', 'main'), {
+              profilePortrait: CANONICAL_PORTRAIT_URL,
+              heroPortrait: CANONICAL_PORTRAIT_URL,
+              meetPortrait: CANONICAL_PORTRAIT_URL
+            }, { merge: true }).catch(console.error);
+          }
 
           const p = rawP.length > 0 ? rawP : CANONICAL_PORTRAIT_URL;
           const h = rawH.length > 0 ? rawH : p;
