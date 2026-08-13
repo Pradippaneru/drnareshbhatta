@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { NavigationTab } from '../types';
@@ -26,12 +25,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <div className="lg:col-span-6 space-y-4 sm:space-y-6 z-10">
           
           {/* Headline Name & Slogan */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-2.5 sm:space-y-3"
-          >
+          <div className="space-y-2.5 sm:space-y-3">
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#0F172A] leading-tight sm:whitespace-nowrap">
               Dr. Naresh Bhatta
             </h1>
@@ -47,19 +41,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <span>Advocate for a Prosperous Nepal</span>
               </span>
             </div>
-          </motion.div>
-
+          </div>
 
           {/* CTA Buttons outside image in left column */}
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2"
-          >
+          <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
             <button
               onClick={() => onNavigate('journey')}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#DC2626] transition-all shadow-md hover:shadow-lg flex items-center gap-2 group cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0F172A] text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-[#DC2626] transition-colors shadow-md hover:shadow-lg flex items-center gap-2 group cursor-pointer"
             >
               <span>Explore Journey</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -67,32 +55,19 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
             <button
               onClick={() => onNavigate('initiatives')}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#0F172A] border border-[#E2E8F0] font-bold text-xs uppercase tracking-wider rounded-full hover:border-[#0F172A] hover:bg-[#FAF9F5] transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#0F172A] border border-[#E2E8F0] font-bold text-xs uppercase tracking-wider rounded-full hover:border-[#0F172A] hover:bg-[#FAF9F5] transition-colors shadow-2xs flex items-center gap-2 cursor-pointer"
             >
               <span>Community Initiatives</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#DC2626]" />
             </button>
-          </motion.div>
+          </div>
         </div>
 
         {/* RIGHT COLUMN (50% Width on Desktop) */}
         <div className="lg:col-span-6 relative flex items-center justify-center min-h-[340px] sm:min-h-[540px]">
           
-          {/* ARTISTIC NEPAL FLAG BACKGROUND (Watercolor / Brush-stroke Effect at 20-30% Opacity) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ 
-              opacity: [0.22, 0.30, 0.22], 
-              scale: 1,
-              y: [0, -6, 0]
-            }}
-            transition={{ 
-              opacity: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
-              y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
-              scale: { duration: 0.8 }
-            }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none -z-10"
-          >
+          {/* ARTISTIC NEPAL FLAG BACKGROUND (Static backdrop at 25% opacity) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none -z-10 opacity-25">
             <svg
               className="w-full max-w-xs sm:max-w-lg h-auto filter drop-shadow-lg"
               viewBox="0 0 400 450"
@@ -151,23 +126,18 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 ))}
               </g>
             </svg>
-          </motion.div>
+          </div>
 
-          {/* SEAMLESS BLENDED PORTRAIT DISPLAY */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md my-0 sm:my-4 flex items-end justify-center"
-          >
+          {/* INSTANTLY RENDERED PORTRAIT DISPLAY */}
+          <div className="relative w-full max-w-md my-0 sm:my-4 flex items-end justify-center">
             {/* Soft Ambient Radial Shadow behind portrait */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-gradient-to-t from-[#0F172A]/15 to-transparent rounded-full blur-xl pointer-events-none -z-10"></div>
 
             {/* Frameless Blended Image Container */}
-            <div className="relative w-full flex items-end justify-center group">
+            <div className="relative w-full flex items-end justify-center">
               <img
                 src={heroImage}
-                alt={`${biography.name} - Official Portrait`}
+                alt={`${biography?.name || 'Dr. Naresh Bhatta'} - Official Portrait`}
                 referrerPolicy="no-referrer"
                 fetchPriority="high"
                 decoding="async"
@@ -175,17 +145,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                   maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                 }}
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (!target.dataset.failed) {
-                    target.dataset.failed = 'true';
-                    target.src = '/naresh_bhatta_final.jpg';
-                  }
-                }}
-                className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
+                className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
       </div>
