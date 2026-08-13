@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TheBeginning } from './components/TheBeginning';
@@ -122,6 +123,7 @@ export default function App() {
         {/* Editorial Footer */}
         <Footer onNavigate={handleNavigate} />
       </div>
+      <SpeedInsights />
     </ContentProvider>
   );
 }
