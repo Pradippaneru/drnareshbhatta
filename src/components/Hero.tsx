@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { NavigationTab } from '../types';
+import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 
 interface HeroProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -11,8 +12,7 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { biography } = useContent();
 
-  // Static hero image referencing the official public portrait
-  const heroImage = '/naresh_bhatta_final.jpg';
+  const heroImage = defaultPortrait;
 
   return (
     <section id="hero" className="relative pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
@@ -174,6 +174,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 style={{
                   WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                   maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                }}
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (!target.dataset.failed) {
+                    target.dataset.failed = 'true';
+                    target.src = '/naresh_bhatta_final.jpg';
+                  }
                 }}
                 className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
               />
