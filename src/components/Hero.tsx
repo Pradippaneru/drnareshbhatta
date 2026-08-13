@@ -3,16 +3,16 @@ import { motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { NavigationTab } from '../types';
+import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 
 interface HeroProps {
   onNavigate: (tab: NavigationTab) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const { biography } = useContent();
+  const { biography, heroPortrait, profilePortrait } = useContent();
 
-  // Static image path from public/ folder for instant browser loading
-  const staticHeroImage = '/naresh_bhatta_final.jpg';
+  const currentHeroImage = heroPortrait || profilePortrait || defaultPortrait || '/naresh_bhatta_final.jpg';
 
   return (
     <section id="hero" className="relative pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
@@ -166,18 +166,23 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             {/* Frameless Blended Image Container */}
             <div className="relative w-full flex items-end justify-center group">
               <img
-                src={staticHeroImage}
+                src={currentHeroImage}
                 alt={`${biography.name} - Official Portrait`}
                 referrerPolicy="no-referrer"
                 fetchPriority="high"
                 decoding="async"
+                style={{
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                }}
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
-                  if (target.src !== staticHeroImage) {
-                    target.src = staticHeroImage;
+                  if (!target.dataset.failed) {
+                    target.dataset.failed = 'true';
+                    target.src = '/naresh_bhatta_final.jpg';
                   }
                 }}
-                className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-all duration-700 group-hover:scale-[1.02] [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
+                className="w-auto h-[350px] sm:h-[520px] max-w-full object-contain object-bottom filter drop-shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
               />
             </div>
           </motion.div>

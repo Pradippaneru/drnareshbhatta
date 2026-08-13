@@ -293,7 +293,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     ];
   });
 
-const CANONICAL_PORTRAIT_URL = defaultPortrait;
+const CANONICAL_PORTRAIT_URL = '/naresh_bhatta_final.jpg';
 
   const [profilePortrait, setProfilePortraitState] = useState<string>(CANONICAL_PORTRAIT_URL);
   const [heroPortrait, setHeroPortraitState] = useState<string>(CANONICAL_PORTRAIT_URL);
@@ -377,8 +377,8 @@ const CANONICAL_PORTRAIT_URL = defaultPortrait;
           let rawH = typeof data.heroPortrait === 'string' ? data.heroPortrait.trim() : '';
           let rawM = typeof data.meetPortrait === 'string' ? data.meetPortrait.trim() : '';
 
-          // Override old placeholder/stock URLs from Firestore with Dr. Naresh Bhatta's actual photo
-          const isPlaceholder = (url: string) => !url || url.includes('unsplash.com') || url.includes('dr_abrar') || url.includes('178488') || url.includes('dr_naresh_bhatta_portrait');
+          // Override old placeholder/stock URLs and stale dev /assets/ hashes from Firestore with Dr. Naresh Bhatta's actual photo
+          const isPlaceholder = (url: string) => !url || url.includes('unsplash.com') || url.includes('dr_abrar') || url.includes('178488') || url.includes('dr_naresh_bhatta_portrait') || url.includes('/assets/') || url.startsWith('blob:');
           let needUpdate = false;
           if (isPlaceholder(rawP)) { rawP = CANONICAL_PORTRAIT_URL; needUpdate = true; }
           if (isPlaceholder(rawH)) { rawH = CANONICAL_PORTRAIT_URL; needUpdate = true; }

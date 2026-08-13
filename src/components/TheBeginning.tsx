@@ -43,8 +43,9 @@ export const TheBeginning: React.FC = () => {
               decoding="async"
               onError={(e) => {
                 const target = e.currentTarget as HTMLImageElement;
-                if (target.src !== defaultPortrait) {
-                  target.src = defaultPortrait;
+                if (!target.dataset.failed) {
+                  target.dataset.failed = 'true';
+                  target.src = '/naresh_bhatta_final.jpg';
                 }
               }}
               className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
