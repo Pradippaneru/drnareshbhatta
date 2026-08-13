@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
-import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
 import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 import { 
   collection, 
