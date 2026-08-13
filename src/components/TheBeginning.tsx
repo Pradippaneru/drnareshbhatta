@@ -2,12 +2,12 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Facebook, Instagram, Twitter, Youtube, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import defaultPortrait from '../assets/images/naresh_bhatta.jpg';
 
 export const TheBeginning: React.FC = () => {
-  const { biography, meetPortrait, profilePortrait, isContentLoading } = useContent();
+  const { biography, meetPortrait, profilePortrait } = useContent();
 
-  const currentMeet = meetPortrait || profilePortrait;
-  const showSkeleton = isContentLoading && !currentMeet;
+  const currentMeet = meetPortrait || profilePortrait || defaultPortrait;
 
   return (
     <section id="story" className="py-20 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto border-t border-[#D7D7D7]/60">
@@ -36,21 +36,19 @@ export const TheBeginning: React.FC = () => {
           className="hidden lg:block lg:col-span-5 relative"
         >
           <div className="relative rounded-2xl overflow-hidden shadow-lg border border-[#E2E8F0] bg-white">
-            {showSkeleton ? (
-              <div className="w-full h-[450px] bg-gradient-to-t from-slate-200/80 via-slate-100/60 to-slate-200/30 animate-pulse rounded-2xl flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-slate-300/40 animate-ping"></div>
-              </div>
-            ) : currentMeet ? (
-              <img
-                src={currentMeet}
-                alt={`${biography.name} Portrait`}
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                }}
-                className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
-              />
-            ) : null}
+            <img
+              src={currentMeet}
+              alt={`${biography.name} Portrait`}
+              referrerPolicy="no-referrer"
+              decoding="async"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                if (target.src !== defaultPortrait) {
+                  target.src = defaultPortrait;
+                }
+              }}
+              className="w-full h-auto max-h-[550px] object-cover object-top rounded-2xl"
+            />
           </div>
         </motion.div>
 

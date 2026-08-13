@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BIOGRAPHY, MILESTONES, ACADEMIC_RECORDS, IMPACT_STATS, ARTICLES, SPEECHES, FAQ_ITEMS, INITIATIVES, MEDIA_ITEMS, TESTIMONIALS } from '../data/biographyData';
 import { Milestone, AcademicRecord, ImpactStat, Article, Speech, FAQItem, Initiative, MediaItem, Testimonial } from '../types';
 import pencilSketchPortrait from '../assets/images/dr_abrar_pencil_sketch_1784883239603.jpg';
+import defaultPortrait from '../assets/images/naresh_bhatta.jpg';
 import { 
   collection, 
   doc, 
@@ -293,9 +294,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     ];
   });
 
-  const [profilePortrait, setProfilePortraitState] = useState<string>('');
-  const [heroPortrait, setHeroPortraitState] = useState<string>('');
-  const [meetPortrait, setMeetPortraitState] = useState<string>('');
+const CANONICAL_PORTRAIT_URL = defaultPortrait;
+
+  const [profilePortrait, setProfilePortraitState] = useState<string>(CANONICAL_PORTRAIT_URL);
+  const [heroPortrait, setHeroPortraitState] = useState<string>(CANONICAL_PORTRAIT_URL);
+  const [meetPortrait, setMeetPortraitState] = useState<string>(CANONICAL_PORTRAIT_URL);
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
     return sessionStorage.getItem('dr_naresh_admin_auth') === 'true';
@@ -371,9 +374,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             }
             setBiography(bioData);
           }
-          const p = data.profilePortrait || '';
-          const h = data.heroPortrait || p;
-          const m = data.meetPortrait || p;
+          const rawP = typeof data.profilePortrait === 'string' ? data.profilePortrait.trim() : '';
+          const rawH = typeof data.heroPortrait === 'string' ? data.heroPortrait.trim() : '';
+          const rawM = typeof data.meetPortrait === 'string' ? data.meetPortrait.trim() : '';
+
+          const p = rawP.length > 0 ? rawP : CANONICAL_PORTRAIT_URL;
+          const h = rawH.length > 0 ? rawH : p;
+          const m = rawM.length > 0 ? rawM : p;
 
           setProfilePortraitState(p);
           setHeroPortraitState(h);
@@ -384,9 +391,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         } else {
           setDoc(doc(db, 'site_settings', 'main'), {
             biography: BIOGRAPHY,
-            profilePortrait: '',
-            heroPortrait: '',
-            meetPortrait: '',
+            profilePortrait: CANONICAL_PORTRAIT_URL,
+            heroPortrait: CANONICAL_PORTRAIT_URL,
+            meetPortrait: CANONICAL_PORTRAIT_URL,
             adminPassword: 'drnaresh2026',
             adminPasswordHint: 'Year/Prefix (drnaresh2026) or official phone number'
           }).catch(console.error);
@@ -771,9 +778,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setSpeeches(SPEECHES);
     setInitiatives(INITIATIVES);
     setMediaItems(MEDIA_ITEMS);
-    setProfilePortraitState('');
-    setHeroPortraitState('');
-    setMeetPortraitState('');
+    setProfilePortraitState(CANONICAL_PORTRAIT_URL);
+    setHeroPortraitState(CANONICAL_PORTRAIT_URL);
+    setMeetPortraitState(CANONICAL_PORTRAIT_URL);
     localStorage.clear();
   };
 

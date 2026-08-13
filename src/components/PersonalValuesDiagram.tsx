@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 export interface ValueItem {
   id: string;
@@ -171,14 +171,12 @@ export const PersonalValuesDiagram: React.FC = () => {
             const isActive = activeValue.id === val.id;
 
             return (
-              <motion.button
+              <button
                 key={val.id}
                 onClick={() => setActiveValue(val)}
-                onMouseEnter={() => setActiveValue(val)}
-                whileHover={{ scale: 1.1 }}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 z-20 w-24 h-24 rounded-full flex items-center justify-center p-3 text-center transition-all duration-300 cursor-pointer ${
+                className={`absolute -translate-x-1/2 -translate-y-1/2 z-20 w-24 h-24 rounded-full flex items-center justify-center p-3 text-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
                   isActive
-                    ? 'bg-white shadow-xl scale-108 z-30 border-2'
+                    ? 'bg-white shadow-xl scale-105 z-30 border-2'
                     : 'bg-white shadow-xs hover:shadow-md border border-[#E2E8F0]'
                 }`}
                 style={{
@@ -193,20 +191,19 @@ export const PersonalValuesDiagram: React.FC = () => {
                 }`}>
                   {val.name}
                 </span>
-              </motion.button>
+              </button>
             );
           })}
         </div>
 
         {/* Selected Value Explanation Card below the Wheel */}
-        <AnimatePresence mode="wait">
+        <div className="mt-6">
           <motion.div
             key={activeValue.id}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="mt-6 p-5 sm:p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left z-20 relative"
+            transition={{ duration: 0.15 }}
+            className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left z-20 relative"
           >
             <div 
               className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 border border-[#E2E8F0] font-serif font-bold text-lg"
@@ -231,7 +228,7 @@ export const PersonalValuesDiagram: React.FC = () => {
               </p>
             </div>
           </motion.div>
-        </AnimatePresence>
+        </div>
 
         {/* Mobile & Tablet Responsive Grid Layout (< lg) */}
         <div className="block lg:hidden mt-6">
