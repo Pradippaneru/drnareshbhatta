@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { NavigationTab } from '../types';
-import defaultPortrait from '../assets/images/naresh_bhatta_final.jpg';
 
 interface HeroProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -11,7 +10,7 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { biography } = useContent();
 
-  const heroImage = defaultPortrait;
+  const heroImage = '/naresh_bhatta_final.jpg';
 
   return (
     <section id="hero" className="relative pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-10 lg:px-16 max-w-7xl mx-auto flex items-center justify-center overflow-hidden">
